@@ -522,12 +522,14 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  she
 Verb Phrase:  would have faired better
+Noun Phrase:  she
+Verb Phrase:  Were
 [{'word': 'she', 'label': 'PRP'}]
 [{'word': 'would', 'label': 'MD'}, {'word': 'have', 'label': 'VB'}, {'word': 'faired', 'label': 'VBN'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'have', 'label': 'VB'}, {'word': 'faired', 'label': 'VBN'}], 'np': [{'word': 'she', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'she', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VBD'}]}, {'np': [{'word': 'she', 'label': 'PRP'}], 'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'have', 'label': 'VB'}, {'word': 'faired', 'label': 'VBN'}]}]
-Got: [{'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'have', 'label': 'VB'}, {'word': 'faired', 'label': 'VBN'}], 'np': [{'word': 'she', 'label': 'PRP'}]}]
+[{'word': 'she', 'label': 'PRP'}]
+[{'word': 'Were', 'label': 'VBD'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'have', 'label': 'VB'}, {'word': 'faired', 'label': 'VBN'}], 'np': [{'word': 'she', 'label': 'PRP'}]}, {'vp': [{'word': 'Were', 'label': 'VBD'}], 'np': [{'word': 'she', 'label': 'PRP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -749,10 +751,14 @@ Tree:
   (NP (NNP Jane))
   (. .))
 Verb Subject Pairs: 
-{'subjects_with_verbs': []}
+Noun Phrase:  Jane
+Verb Phrase:  said
+[{'word': 'Jane', 'label': 'NNP'}]
+[{'word': 'said', 'label': 'VBD'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'Swinging', 'label': 'VBG'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}, {'np': [{'word': 'Jane', 'label': 'NNP'}], 'vp': [{'word': 'said', 'label': 'VBD'}]}]
-Got: []
+Got: [{'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]
 
 
 
@@ -1059,10 +1065,12 @@ Processed Sentence:  Here is the book.
 Tree: 
  (SINV (ADVP (RB Here)) (VP (VBZ is)) (NP (DT the) (NN book)) (. .))
 Verb Subject Pairs: 
-{'subjects_with_verbs': []}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'book', 'label': 'NN'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: []
+Noun Phrase:  the book
+Verb Phrase:  is
+[{'word': 'book', 'label': 'NN'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'book', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1104,10 +1112,14 @@ Tree:
         (PP (TO to) (NP (RB so) (JJ few))))))
   (. .))
 Verb Subject Pairs: 
-{'subjects_with_verbs': []}
+Noun Phrase:  so much
+Verb Phrase:  has
+[]
+[{'word': 'has', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'has', 'label': 'VBZ'}], 'np': []}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'so', 'label': 'RB'}, {'word': 'much', 'label': 'RB'}], 'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}, {'word': 'owed', 'label': 'VBN'}]}]
-Got: []
+Got: [{'vp': [{'word': 'has', 'label': 'VBZ'}], 'np': []}]
 
 
 
@@ -1122,10 +1134,12 @@ Tree:
     (VP (VBG dealing) (PP (IN with) (NP (NN ordnance)))))
   (. .))
 Verb Subject Pairs: 
-{'subjects_with_verbs': []}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'chapter', 'label': 'NN'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: []
+Noun Phrase:  the chapter dealing with ordnance
+Verb Phrase:  is
+[{'word': 'chapter', 'label': 'NN'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'chapter', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1150,4 +1164,4 @@ PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 
-TEST ACCURACY:  0.5416666666666666
+TEST ACCURACY:  0.6041666666666666

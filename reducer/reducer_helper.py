@@ -46,6 +46,9 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
         pairs += verb_subject_for_declarative_clause(s)
 
+    for s in tree.subtrees(lambda t: t.label() == 'SINV'):
+        pairs += verb_subject_for_subject_inversion(s)
+
     return { 'subjects_with_verbs': pairs }
 
 # MARK: Extracting pairs from various clauses:
@@ -74,13 +77,34 @@ def verb_subject_for_sbarq(tree):
     Returns list of subject, verb pairs, empty if none
     """
     wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    # Identify the wh-word and the possible subsequent SQ
     for i in range(0, len(tree) - 1):
-        # Identify the wh-word and the possible subsequent SQ
         phrase = tree[i]
         next_phrase = tree[i + 1]
         if phrase.label() in wh_words and next_phrase.label() == 'SQ':
             return [{ 'vp': next_phrase, 'np': phrase}]
     return []
+
+def verb_subject_for_subject_inversion(tree):
+    """
+    Takes tree for a SINV clause: clause with subject-auxillary inversion
+    Example: "Never had I seen such a place"
+    Returns list of subject, verb pairs, empty if none
+    """
+    verb_labels = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+
+    # Find the subject, looking forwards
+    for i in range(0, len(tree)):
+        if tree[i].label() == 'NP':
+            # Find the verb, looking backwards
+            for j in reversed(range(0, i)):
+                if tree[j].label() == 'VP':
+                    return [{ 'np': tree[i], 'vp': tree[j] }]
+                if tree[j].label() in verb_labels:
+                    vp = Tree('VP', [tree[j]])
+                    return [{ 'np': tree[i], 'vp': vp}]
+    return []
+
 
 
 # MARK: Helper functions for extracting pairs
