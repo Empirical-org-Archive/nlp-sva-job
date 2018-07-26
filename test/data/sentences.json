@@ -1,6 +1,6 @@
 {
   "sentences": [
-    {
+      {
       "text":"John is a boy",
       "subjects_with_verbs":[
         {
@@ -429,6 +429,334 @@
         "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
         "INDICATIVE-SAW>WE",
         "INDICATIVE-AM>I"
+      ]
+    },
+    {
+      "text":"Donald, standing high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Participle phrase that has no clear associated subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"Donald, stood high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Participle phrase that has no clear associated subject. (out-of-scope grammar error)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"Donald stood high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Multipart fragment with no in-scope errors.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "stood", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"\"Swinging from vines is fun,\" said Jane.",
+      "covers":"Quote and gerund as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Swinging","label":"VBG"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        },
+        {
+          "np": [{"word":"Jane","label":"NNP"}],
+          "vp": [{"word": "said", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>VBG",
+        "INDICATIVE-SAID>SG"
+      ]
+    },
+    {
+      "text":"\"To dance to Phil Collins is to truly be free,\" Tarzan commented.",
+      "covers":"Quote and infinitive as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"To","label":"TO"}, {"word":"dance", "label":"VB"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        },
+        {
+          "np": [{"word":"Tarzan","label":"NNP"}],
+          "vp": [{"word": "commented", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>INF",
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"A melancholy hung over James like a drenched parka.",
+      "covers":"Adjective as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"melancholy","label":"JJ"}],
+          "vp": [{"word": "hung", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
+      ]
+    },
+    {
+      "text":"Embarrassing didn't begin to describe it.",
+      "covers":"Adjective as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Embarrassing","label":"JJ"}],
+          "vp": [{"word": "did", "label": "VBD"}, {"word":"begin", "label":"VB"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
+      ]
+    },
+    {
+      "text":"How hot is the Sun?",
+      "covers":"Wh-adjective Phrase with singular subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Sun","label":"NNP"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"How bright are they?",
+      "covers":"Wh-adjective Phrase with plural subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"they","label":"PRP"}],
+          "vp": [{"word": "are", "label": "VBP"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-ARE>THEY"
+      ]
+    },
+    {
+      "text":"How fast is it moving?",
+      "covers":"Wh-adverb Phrase with singular subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"it","label":"PRP"}],
+          "vp": [{"word": "is", "label": "VBZ"}, {"word":"moving", "label":"VBG"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-IS>IT"
+      ]
+    },
+    {
+      "text":"She had five daughters, none of which were as pretty as Cleopatra.",
+      "covers":"Wh-noun Phrase plural.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"none","label":"NN"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-WERE>SG",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had five daughters, each of whom was as pretty as the Queen herself.",
+      "covers":"Wh-noun Phrase singular.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"each","label":"DT"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-WAS>EACH",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had five daughters, each was as pretty as the Queen herself.",
+      "covers":"Entire noun phrase is a determiner acting as a singular noun.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"each","label":"DT"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-WAS>EACH",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had two chocolate labs, both were ruggedly handsome and had done kibbles commercials albeit when their jowls hung higher.",
+      "covers":"Entire noun phrase is a determiner acting as a plural noun.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"both","label":"DT"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"both","label":"DT"}],
+          "vp": [{"word": "had", "label": "VBD"}, {"word":"done", "label":"VBN"}]
+        },
+        {
+          "np": [{"word":"jowls","label":"NNS"}],
+          "vp": [{"word": "hung", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-WERE>BOTH",
+        "INTEROGATIVE-HAD:DONE>BOTH",
+        "INTEROGATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"By whose power was the constitution written?",
+      "covers":"Wh-prepositional phrase at start of sentence.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"constitution","label":"NN"}],
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"written", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
+      ]
+    },
+    {
+      "text":"Have you eaten breakfast yet?",
+      "covers": "Simple subject verb inversion in routine question",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"you","label":"PRP"}],
+          "vp": [{"word": "eaten", "label": "VBN"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGAVTIVE-HAVE:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>YOU"
+      ]
+    },
+    {
+      "text":"Here is the book.",
+      "covers": "Simple subject verb inversion in routine expletive construction.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"book","label":"NN"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>BOOK"
+      ]
+    },
+    {
+      "text":"I believe her and so does Jim.",
+      "covers": "Simple subject verb inversion in routine after-so expression.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "believe", "label": "VBP"}]
+        },
+        {
+          "np": [{"word":"Jim","label":"NNP"}],
+          "vp": [{"word": "does", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "INDICATIVE-DOES>SG"
+      ]
+    },
+    {
+      "text":"Seldom has so much been owed by so many to so few.",
+      "covers": "Sentence beginning with an adverbial clause.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"so","label":"RB"}, {"word":"much", "label":"RB"}],
+          "vp": [{"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}, {"word":"owed", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
+      ]
+    },
+    {
+      "text":"Even more important is the chapter dealing with ordnance.",
+      "covers": "Predicate shifted to give prominence to a word (subject verb inversion).",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"chapter","label":"NN"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"'Help me!' cried Farmer Brown.",
+      "covers": "Subject verb inversion for speech attribution, nested imperative.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Farmer","label":"NNP"}, {"word":"Brown", "label":"NNP"}],
+          "vp": [{"word": "cried", "label": "VBD"}]
+        },
+        {
+          "np": [],
+          "vp": [{"word": "Help", "label": "VB"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
       ]
     }
   ]
