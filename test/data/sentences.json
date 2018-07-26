@@ -192,7 +192,7 @@
       "covers":"Conditional mood.",
       "subjects_with_verbs":[
         {
-          "np": [{"word":"She","label":"PRP"}],
+          "np": [{"word":"she","label":"PRP"}],
           "vp": [{"word": "were", "label": "VBD"}]
         }
       ],
