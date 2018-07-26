@@ -237,7 +237,7 @@
       "text":"\"To dance to Phil Collins is to truly be free,\" Tarzan commented.",
       "covers":"Quote and infinitive as subject.",
       "reductions":[
-        "INDICATIVE-IS>TO:VB",
+        "INDICATIVE-IS>INF",
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
@@ -315,6 +315,13 @@
         "INTEROGATIVE-HAD:DONE>BOTH",
         "INTEROGATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
         "INTEROGATIVE-HAD>SHE"
+      ]
+    }
+    {
+      "text":"By whose power was the constitution written?",
+      "covers":"Wh-prepositional phrase at start of sentence.",
+      "reductions":[
+        "INTEROGATIVE-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
       ]
     }
   ]
