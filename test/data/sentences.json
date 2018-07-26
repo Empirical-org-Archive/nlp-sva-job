@@ -267,14 +267,39 @@
     {
       "text":"If he was skating any faster than he was yesterday, I was unable to detect it.",
       "covers":"Tricky indicative with tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"skating", "label":"VBG"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}]
+        }
+      ],
       "reductions":[
-        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "INDICATIVE-WAS>I"
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "INDICATIVE-WAS>I",
+        "INDICATIVE-WAS>HE"
       ]
     },
     {
       "text":"If he was walking down the road, he used to whistle.",
       "covers":"If means when, indicative.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "used", "label": "VBD"}, {"word":"to", "label":"TO"}, {"word":"whistle", "label":"VB"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"walking", "label":"VBG"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
         "INDICATIVE-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
@@ -283,6 +308,16 @@
     {
       "text":"If he were to walk down the road, he might whistle.",
       "covers":"Correct usage of the past subjunctive.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "might", "label": "MD"}, {"word":"whistle", "label":"VB"}]
+        }
+      ],
       "reductions":[
         "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
         "CONDITIONAL-WERE>HE"
@@ -291,6 +326,16 @@
     {
       "text":"If he were to walked down the road, he might whistle.",
       "covers":"Incorrect verb form in infinitive, no error should be detected (out of scope).",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "might", "label": "MD"}, {"word":"whistle", "label":"VB"}]
+        }
+      ],
       "reductions":[
         "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
         "CONDITIONAL-WERE>HE"
@@ -299,6 +344,16 @@
     {
       "text":"Were she a fish, she would have faired better.",
       "covers":"Inverted order for past subjunctive.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"she","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"she","label":"PRP"}],
+          "vp": [{"word": "would", "label": "MD"}, {"word":"have", "label":"VB"}, {"word":"faired", "label":"VBN"}]
+        }
+      ],
       "reductions":[
         "CONDITIONAL-WOULD:HAVE:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SHE",
         "CONDITIONAL-WERE>SHE"
@@ -307,6 +362,12 @@
     {
       "text":"4. He had never even been to Mars.",
       "covers":"Sentence with list marker.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"He","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}, {"word":"been", "label":"VBN"} ]
+        }
+      ],
       "reductions":[
         "INDICATIVE-HAD:BEEN>HE"
       ]
@@ -314,6 +375,16 @@
     {
       "text":"While we were swimming at the lake, we saw a fish.",
       "covers":"Subordinate clause, independent clause. (grammatical)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "saw", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
         "INDICATIVE-SAW>WE"
@@ -322,6 +393,16 @@
     {
       "text":"While we were swimming at the lake, we seen some fish.",
       "covers":"Subordinate clause, independent clause. (non-grammatical)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "seen", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
         "INDICATIVE-SEEN>WE"
@@ -330,6 +411,20 @@
     {
       "text":"While we were swimming at the lake, unless I am mistaken, we saw an African Brown Whale.",
       "covers":"Three reductions.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "saw", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "am", "label": "VBP"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
         "INDICATIVE-SAW>WE",
@@ -501,6 +596,5 @@
         "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
       ]
     }
-
   ]
 }
