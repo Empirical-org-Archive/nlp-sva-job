@@ -33,34 +33,44 @@ def get_verb_subject_phrases(tree):
     { 'subjects_with_verbs': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
     """
     pairs = []
-    for s in tree.subtrees(lambda t: t.label() == 'S'):
-        # This is an S subtree, so we extract VP, maybe NP here
-        np, vp = None, None
-        for i in range(0, len(s)):
-            child = s[i]
-            np = child if child.label() == "NP" else np
-            vp = child if child.label() == "VP" else vp
-        if np is not None and vp is not None:
-            # TODO: Under what circumstances should we return one of these having a None value?
-            pairs.append({ 'vp': vp, 'np': np })
 
-    for s in tree.subtrees(lambda t: t.label() == 'SBARQ'):
-        # "Direct question introduced by a wh-word or a wh-phrase"
-        np, vp = None, None
-        wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
-        for i in range(0, len(s) - 1):
-            # Identify the wh-word and the possible subsequent SQ
-            phrase = s[i]
-            next_phrase = s[i + 1]
-            if phrase.label() in wh_words and next_phrase.label() == 'SQ':
-                pairs.append({ 'vp': next_phrase, 'np': phrase})
+    # Declarative clause:
+    for s in tree.subtrees(lambda t: t.label() == 'S'):
+        pairs += verb_subject_for_declarative_clause(s)
+
+    # "Direct question introduced by a wh-word or a wh-phrase"
+    for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
+        pairs += verb_subject_for_sbarq(sbarq)
 
     return { 'subjects_with_verbs': pairs }
 
-def verb_subject_declarative_clause(tree):
+
+def verb_subject_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
         Returns list of subject, verb pairs, empty if none """
-    #TODO: Maybe fill this in
+    np, vp = None, None
+    for i in range(0, len(tree)):
+        child = tree[i]
+        np = child if child.label() == "NP" else np
+        vp = child if child.label() == "VP" else vp
+    if np is not None and vp is not None:
+        # TODO: Under what circumstances should we return one of these having a None value?
+        return [{ 'vp': vp, 'np': np }]
+    return []
+
+
+def verb_subject_for_sbarq(tree):
+    """
+    Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
+    Returns list of subject, verb pairs, empty if none
+    """
+    wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    for i in range(0, len(tree) - 1):
+        # Identify the wh-word and the possible subsequent SQ
+        phrase = tree[i]
+        next_phrase = tree[i + 1]
+        if phrase.label() in wh_words and next_phrase.label() == 'SQ':
+            return [{ 'vp': next_phrase, 'np': phrase}]
     return []
 
 
