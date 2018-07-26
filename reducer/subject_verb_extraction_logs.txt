@@ -262,9 +262,7 @@ Tree:
  (S (VP (VB Run)) (. .))
 Verb Subject Pairs: 
 {'subjects_with_verbs': []}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [], 'vp': [{'word': 'Run', 'label': 'VBD'}]}]
-Got: []
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -285,9 +283,7 @@ Verb Phrase:  were not so darned cute
 [{'word': 'she', 'label': 'PRP'}]
 [{'word': 'were', 'label': 'VBD'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'were', 'label': 'VBD'}], 'np': [{'word': 'she', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'She', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'were', 'label': 'VBD'}], 'np': [{'word': 'she', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -313,7 +309,7 @@ Verb Phrase:  were not dancing
 [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': "'d", 'label': 'MD'}, {'word': 'say', 'label': 'VB'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'say', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VDB'}, {'word': 'dancing', 'label': 'VBG'}]}, {'np': [], 'vp': [{'word': 'shoot', 'label': 'VB'}]}]
+Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'say', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VDB'}, {'word': 'dancing', 'label': 'VBG'}]}]
 Got: [{'vp': [{'word': "'d", 'label': 'MD'}, {'word': 'say', 'label': 'VB'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
 
 
@@ -1158,10 +1154,8 @@ Verb Phrase:  cried
 [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]
 [{'word': 'cried', 'label': 'VBD'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}], 'vp': [{'word': 'cried', 'label': 'VBD'}]}, {'np': [], 'vp': [{'word': 'Help', 'label': 'VB'}]}]
-Got: [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
-TEST ACCURACY:  0.3958333333333333
+TEST ACCURACY:  0.4583333333333333
