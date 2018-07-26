@@ -2,6 +2,9 @@
   "sentences": [
     {
       "text":"John is a boy",
+      "subjects_with_objects":[
+        {"np":"John", "vp":"is"}
+      ],
       "covers":"base case",
       "reductions":[
         "INDICATIVE-IS>SG"
@@ -9,6 +12,8 @@
     },
     {
       "text":"Who is John?",
+      "subjects_with_objects":[
+        {"np":
       "covers":"WH-pronoun subjects in questions.",
       "reductions":[
         "INTEROGATIVE-IS>WHO"
@@ -316,13 +321,58 @@
         "INTEROGATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
         "INTEROGATIVE-HAD>SHE"
       ]
-    }
+    },
     {
       "text":"By whose power was the constitution written?",
       "covers":"Wh-prepositional phrase at start of sentence.",
       "reductions":[
         "INTEROGATIVE-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
       ]
+    },
+    {
+      "text":"Have you eaten breakfast yet?",
+      "covers": "Simple subject verb inversion in routine question",
+      "reductions":[
+        "INTEROGAVTIVE-HAVE:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>YOU"
+      ]
+    },
+    {
+      "text":"Here is the book.",
+      "covers": "Simple subject verb inversion in routine expletive construction.",
+      "reductions":[
+        "INDICATIVE-IS>BOOK"
+      ]
+    },
+    {
+      "text":"I believe her and so does Jim.",
+      "covers": "Simple subject verb inversion in routine after-so expression.",
+      "reductions":[
+        "INDICATIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "INDICATIVE-DOES>SG"
+      ]
+    },
+    {
+      "text":"Seldom has so much been owed by so many to so few.",
+      "covers": "Sentence beginning with an adverbial clause.",
+      "reductions":[
+        "INDICATIVE-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
+      ]
+    },
+    {
+      "text":"Even more important is the chapter dealing with ordnance.",
+      "covers": "Predicate shifted to give prominence to a word (subject verb inversion).",
+      "reductions":[
+        "INDICATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"'Help me!' cried Farmer Brown.",
+      "covers": "Subject verb inversion for speech attribution, nested imperative.",
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
+      ]
     }
+
   ]
 }
