@@ -16,8 +16,14 @@ def get_verb_subject_pairs(tree):
     { ‘sentence’: [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
                     ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
     """
-    #TODO: Complete this function.
-    return None
+    pairs = get_verb_subject_phrases(tree)
+    words = {'sentence': []}
+    for pair in pairs['sentence']:
+        np = pair['np']
+        vp = pair['vp']
+        words['sentence'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
+    return words
+
 
 def get_verb_subject_phrases(tree):
     """    Currently returns list of tuples with (VP, NP) as each tuple
@@ -88,46 +94,23 @@ def subject_words_from_phrase(subject):
             words.append(last_tag)
     return words
 
-
-
-def subject_reduction_from_words(words):
-    """
-    Given subject as noun_phrase tree, extracts relevant noun_string code
-    Four cases - blank, pronoun, other (plural/singular), combination
-    Currently doesn't handle combinations, but returns list of noun classifications
-    # DEPRECATED: Will be replaced by new tagging scheme
-    """
-    noun_strings = []
-    if subject is None or len(subject) == 0: # No subject
-        noun_strings.append("")
-    elif len(subject) == 1 and subject[0].label() in pronoun_tags: # Pronoun
-        noun_strings.append(subject[0][0].upper())
-    else:
-        # Otherwise, identify the last noun tag and submit that (brittle heuristic)
-        last_tag = ""
-        for i in range(0, len(subject)):
-            child = subject[i]
-            if child.label() == "NP": # Recursively identify sub-phrases
-                return noun_string_from_subject(child)
-            last_tag = "SG" if child.label() in singular_tags else last_tag
-            last_tag = "PL" if child.label() in plural_tags else last_tag
-        noun_strings.append(last_tag)
-    return noun_strings
-
-
 # MARK: Verbs
 
-def verb_reductions_from_verb_phrase(vp):
+def verb_words_from_phrase(vp):
     "Given a verb phrase, returns a list of the verb reductions"
     verb_tags = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
-    verb_reductions = []
+
+    if vp is None:
+        return []
+
+    words = []
     for i in range(0, len(vp)):
         child = vp[i]
         if child.label() in verb_tags:
-            verb_reductions.append(verb_reduction(child[0], child.label()))
+            words.append( { 'word': child[0], 'label': child.label() })
         if child.label() == "VP":
-            verb_reductions += verb_reductions_from_verb_phrase(child)
-    return verb_reductions
+            words += verb_words_from_phrase(child)
+    return words
 
 
 def verb_reduction(verb, tag):
@@ -209,7 +192,10 @@ def test_pipeline(sent, predictor):
     for pair in pairs['sentence']:
         subject = pair['np']
         print(subject_words_from_phrase(subject))
+        vp = pair['vp']
+        print(verb_words_from_phrase(vp))
 
+    print(get_verb_subject_pairs(tree))
     # mood = determine_sentence_mood(sent)
     # reductions = generate_reductions(pairs, mood)
     # print(reductions)
