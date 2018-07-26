@@ -9,10 +9,22 @@ def load_predictor():
     """Load model from AllenNLP, which we've downloaded"""
     return Predictor.from_path("elmo-constituency-parser-2018.03.14.tar.gz")
 
-
 def get_verb_subject_pairs(tree):
-    """    Returns list of tuples with (VP, NP) as each tuple
+    """ Returns the individual words associated with each verb and noun phraseself.
+
+    Will soon return pairs in the format:
+    { ‘sentence’: [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
+                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
+    """
+    #TODO: Complete this function.
+    return None
+
+def get_verb_subject_phrases(tree):
+    """    Currently returns list of tuples with (VP, NP) as each tuple
     Note that, consistent with reduction format, the verb comes first, then subject
+
+    Will soon return pairs in the format:
+    { 'sentence': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
     """
     pairs = []
     for s in tree.subtrees(lambda t: t.label() == 'S'):
@@ -22,16 +34,16 @@ def get_verb_subject_pairs(tree):
             child = s[i]
             np = child if child.label() == "NP" else np
             vp = child if child.label() == "VP" else vp
-        pairs.append((vp, np))
-    return pairs
+        pairs.append({ 'vp': vp, 'np': np })
+    return { 'sentence': pairs }
 
 
-def print_verb_subject_pairs(pairs):
+def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
     print("Verb Subject Pairs: ")
-    for pair in pairs:
-        print("Noun Phrase: ", pair[1].leaves() if type(pair[1]) is Tree else "None")
-        print("Verb Phrase: ", pair[0].leaves() if type(pair[0]) is Tree else "None")
+    for pair in pairs['sentence']:
+        print("Noun Phrase: ", ' '.join(pair['np'].leaves()) if type(pair['np']) is Tree else "None")
+        print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
 
 # MARK: Moods
 
@@ -49,17 +61,42 @@ def determine_sentence_mood(sentence_str):
 
 # MARK: Subjects
 
+def subject_words_from_phrase(subject):
+    """
+    Given subject phrase as a tree, returns list of relevant nouns with labels
+    """
 
-def noun_string_from_subject(subject):
-    """
-    Given subject as noun_phrase tree, extracts relevant noun_string code
-    Four cases - blank, pronoun, other (plural/singular), combination
-    Currently doesn't handle combinations, but returns list of noun classifications
-    """
     pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
 
+    words = []
+    if subject is None or len(subject) == 0: # No subject
+        return words
+    elif len(subject) == 1 and subject[0].label() in pronoun_tags: # Pronoun
+        words.append({ 'word': subject[0][0], 'label': subject[0].label() })
+    else:
+        # Otherwise, identify the last noun tag and submit that (brittle heuristic)
+        last_tag = None
+        for i in range(0, len(subject)):
+            child = subject[i]
+            if child.label() == "NP": # Recursively identify sub-phrases
+                return subject_words_from_phrase(child)
+            last_tag = {'word': child[0], 'label': child.label()} if child.label() in singular_tags else last_tag
+            last_tag = {'word': child[0], 'label': child.label()} if child.label() in plural_tags else last_tag
+        if last_tag is not None:
+            words.append(last_tag)
+    return words
+
+
+
+def subject_reduction_from_words(words):
+    """
+    Given subject as noun_phrase tree, extracts relevant noun_string code
+    Four cases - blank, pronoun, other (plural/singular), combination
+    Currently doesn't handle combinations, but returns list of noun classifications
+    # DEPRECATED: Will be replaced by new tagging scheme
+    """
     noun_strings = []
     if subject is None or len(subject) == 0: # No subject
         noun_strings.append("")
@@ -77,8 +114,8 @@ def noun_string_from_subject(subject):
         noun_strings.append(last_tag)
     return noun_strings
 
-# MARK: Verbs
 
+# MARK: Verbs
 
 def verb_reductions_from_verb_phrase(vp):
     "Given a verb phrase, returns a list of the verb reductions"
@@ -161,16 +198,21 @@ def test_pipeline(sent, predictor):
     verb phrase extraction, noun phrase extraction, mood
     """
     print("Original Sentence: ", sent)
-    # sent = preprocess_sent(sent)
+    sent = preprocess_sent(sent)
     print("Processed Sentence: ", sent)
     parse = predictor.predict_json({"sentence": sent})
     tree = Tree.fromstring(parse["trees"])
     print("Tree: \n", tree)
-    pairs = get_verb_subject_pairs(tree)
-    print_verb_subject_pairs(pairs)
-    mood = determine_sentence_mood(sent)
-    reductions = generate_reductions(pairs, mood)
-    print(reductions)
+    pairs = get_verb_subject_phrases(tree)
+    print_verb_subject_phrases(pairs)
+
+    for pair in pairs['sentence']:
+        subject = pair['np']
+        print(subject_words_from_phrase(subject))
+
+    # mood = determine_sentence_mood(sent)
+    # reductions = generate_reductions(pairs, mood)
+    # print(reductions)
     print("\n\n")
 
 # MARK: Test Script
