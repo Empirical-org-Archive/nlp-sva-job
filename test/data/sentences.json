@@ -434,6 +434,12 @@
     {
       "text":"Donald, standing high on a precipice, laughed haughtily at his subordinates.",
       "covers":"Participle phrase that has no clear associated subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
@@ -441,6 +447,12 @@
     {
       "text":"Donald, stood high on a precipice, laughed haughtily at his subordinates.",
       "covers":"Participle phrase that has no clear associated subject. (out-of-scope grammar error)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
@@ -448,6 +460,16 @@
     {
       "text":"Donald stood high on a precipice, laughed haughtily at his subordinates.",
       "covers":"Multipart fragment with no in-scope errors.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "stood", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"Donald","label":"NNP"}],
+          "vp": [{"word": "laughed", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
@@ -456,6 +478,16 @@
     {
       "text":"\"Swinging from vines is fun,\" said Jane.",
       "covers":"Quote and gerund as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Swinging","label":"VBG"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        },
+        {
+          "np": [{"word":"Jane","label":"NNP"}],
+          "vp": [{"word": "said", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-IS>VBG",
         "INDICATIVE-SAID>SG"
@@ -464,28 +496,43 @@
     {
       "text":"\"To dance to Phil Collins is to truly be free,\" Tarzan commented.",
       "covers":"Quote and infinitive as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"To","label":"TO"}, {"word":"dance", "label":"VB"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        },
+        {
+          "np": [{"word":"Tarzan","label":"NNP"}],
+          "vp": [{"word": "commented", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-IS>INF",
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
     {
-      "text":"Today, and other days too, though not nearly so dramatically as on this particular gloomy day on which both his dear Nana, old and feeble, and his hare-lipped cocker spaniel, who was young and spry but also foolish, had slowly and sweetly like the end of a long summer, and quickly like a strike of lightning to punctuate it,  died, a melancholy hung over James like a wet rain jacket.",
-      "covers":"Long sentence.",
-      "reductions":[
-        "TODO"
-      ]
-    },
-    {
       "text":"A melancholy hung over James like a drenched parka.",
       "covers":"Adjective as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"melancholy","label":"JJ"}],
+          "vp": [{"word": "hung", "label": "VBD"}]
+        }
+      ],
       "reductions":[
-        "INDICATIVE-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>DT:JJ"
+        "INDICATIVE-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
       ]
     },
     {
       "text":"Embarrassing didn't begin to describe it.",
       "covers":"Adjective as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Embarrassing","label":"JJ"}],
+          "vp": [{"word": "did", "label": "VBD"}, {"word":"begin", "label":"VB"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
       ]
@@ -493,6 +540,12 @@
     {
       "text":"How hot is the Sun?",
       "covers":"Wh-adjective Phrase with singular subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Sun","label":"NNP"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-IS>SG"
       ]
@@ -500,6 +553,12 @@
     {
       "text":"How bright are they?",
       "covers":"Wh-adjective Phrase with plural subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"they","label":"PRP"}],
+          "vp": [{"word": "are", "label": "VBP"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-ARE>THEY"
       ]
@@ -507,6 +566,12 @@
     {
       "text":"How fast is it moving?",
       "covers":"Wh-adverb Phrase with singular subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"it","label":"PRP"}],
+          "vp": [{"word": "is", "label": "VBZ"}, {"word":"moving", "label":"VBG"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-IS>IT"
       ]
