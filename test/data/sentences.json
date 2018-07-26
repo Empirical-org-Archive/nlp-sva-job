@@ -10,7 +10,7 @@
       ],
       "covers":"base case",
       "reductions":[
-        "INDICATIVE-IS>SG"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {
@@ -23,7 +23,7 @@
       ],
       "covers":"WH-pronoun subjects in questions.",
       "reductions":[
-        "INTEROGATIVE-IS>WHO"
+        "NONCONDITIONAL-IS>WHO"
       ]
     },
     {
@@ -36,7 +36,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-IS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WHO"
+        "NONCONDITIONAL-IS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WHO"
       ]
     },
     {
@@ -49,7 +49,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WERE>THEYLIKE"
+        "NONCONDITIONAL-WERE>THEYLIKE"
       ]
     },
     {
@@ -62,7 +62,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>THEYLIKE"
+        "NONCONDITIONAL-IS>THEYLIKE"
       ]
     },
     {
@@ -75,7 +75,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-HAVE:BEEN>SG"
+        "NONCONDITIONAL-HAVE:BEEN>SG"
       ]
     },
     {
@@ -88,7 +88,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-HAS:BEEN>SG"
+        "NONCONDITIONAL-HAS:BEEN>SG"
       ]
     },
     {
@@ -101,7 +101,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-HAS:BEEN>WHO"
+        "NONCONDITIONAL-HAS:BEEN>WHO"
       ]
     },
     {
@@ -114,7 +114,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-HAVE:BEEN>PL"
+        "NONCONDITIONAL-HAVE:BEEN>PL"
       ]
     },
     {
@@ -131,8 +131,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS>I",
-        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
+        "NONCONDITIONAL-WAS>I",
+        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
       ]
     },
     {
@@ -149,8 +149,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS>I",
-        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
+        "NONCONDITIONAL-WAS>I",
+        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
       ]
     },
     {
@@ -167,8 +167,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS>I",
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>I"
+        "NONCONDITIONAL-WAS>I",
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>I"
       ]
     },
     {
@@ -183,13 +183,8 @@
       "text":"Run.",
       "covers":"Implied subject.",
       "subjects_with_verbs":[
-        {
-          "np": [],
-          "vp": [ {"word": "Run", "label": "VBD"}]
-        }
       ],
       "reductions":[
-        "IMPERATIVE-VB_e0a6daccd289f9a8e37b9e3831cd7bea11b1e4fc9baabc6ca7a92935b26dd740"
       ]
     },
     {
@@ -216,16 +211,11 @@
         {
           "np": [{"word":"he","label":"PRP"}],
           "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
-        },
-        {
-          "np": [],
-          "vp": [{"word": "shoot", "label": "VB"}]
         }
       ],
       "reductions":[
         "CONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "CONDITIONAL-WOULD:SAY>I",
-        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
+        "CONDITIONAL-WOULD:SAY>I"
       ]
     },
     {
@@ -242,8 +232,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "INDICATIVE-WAS>I"
+        "NONCONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "NONCONDITIONAL-WAS>I"
       ]
     },
     {
@@ -260,8 +250,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "INDICATIVE-WAS>I"
+        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "NONCONDITIONAL-WAS>I"
       ]
     },
     {
@@ -282,9 +272,9 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "INDICATIVE-WAS>I",
-        "INDICATIVE-WAS>HE"
+        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "NONCONDITIONAL-WAS>I",
+        "NONCONDITIONAL-WAS>HE"
       ]
     },
     {
@@ -301,8 +291,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "INDICATIVE-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
+        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "NONCONDITIONAL-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
       ]
     },
     {
@@ -369,7 +359,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-HAD:BEEN>HE"
+        "NONCONDITIONAL-HAD:BEEN>HE"
       ]
     },
     {
@@ -386,8 +376,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
-        "INDICATIVE-SAW>WE"
+        "NONCONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "NONCONDITIONAL-SAW>WE"
       ]
     },
     {
@@ -404,8 +394,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
-        "INDICATIVE-SEEN>WE"
+        "NONCONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "NONCONDITIONAL-SEEN>WE"
       ]
     },
     {
@@ -426,9 +416,9 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
-        "INDICATIVE-SAW>WE",
-        "INDICATIVE-AM>I"
+        "NONCONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "NONCONDITIONAL-SAW>WE",
+        "NONCONDITIONAL-AM>I"
       ]
     },
     {
@@ -441,7 +431,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
     {
@@ -454,7 +444,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
     {
@@ -471,8 +461,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
     {
@@ -489,8 +479,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>VBG",
-        "INDICATIVE-SAID>SG"
+        "NONCONDITIONAL-IS>VBG",
+        "NONCONDITIONAL-SAID>SG"
       ]
     },
     {
@@ -507,8 +497,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>INF",
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+        "NONCONDITIONAL-IS>INF",
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
     {
@@ -521,7 +511,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
+        "NONCONDITIONAL-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
       ]
     },
     {
@@ -534,7 +524,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
+        "NONCONDITIONAL-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
       ]
     },
     {
@@ -547,7 +537,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-IS>SG"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {
@@ -560,7 +550,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-ARE>THEY"
+        "NONCONDITIONAL-ARE>THEY"
       ]
     },
     {
@@ -573,7 +563,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-IS>IT"
+        "NONCONDITIONAL-IS>IT"
       ]
     },
     {
@@ -590,8 +580,8 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-WERE>SG",
-        "INTEROGATIVE-HAD>SHE"
+        "NONCONDITIONAL-WERE>SG",
+        "NONCONDITIONAL-HAD>SHE"
       ]
     },
     {
@@ -608,8 +598,8 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-WAS>EACH",
-        "INTEROGATIVE-HAD>SHE"
+        "NONCONDITIONAL-WAS>EACH",
+        "NONCONDITIONAL-HAD>SHE"
       ]
     },
     {
@@ -626,8 +616,8 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-WAS>EACH",
-        "INTEROGATIVE-HAD>SHE"
+        "NONCONDITIONAL-WAS>EACH",
+        "NONCONDITIONAL-HAD>SHE"
       ]
     },
     {
@@ -652,10 +642,10 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-WERE>BOTH",
-        "INTEROGATIVE-HAD:DONE>BOTH",
-        "INTEROGATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
-        "INTEROGATIVE-HAD>SHE"
+        "NONCONDITIONAL-WERE>BOTH",
+        "NONCONDITIONAL-HAD:DONE>BOTH",
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
+        "NONCONDITIONAL-HAD>SHE"
       ]
     },
     {
@@ -668,7 +658,7 @@
         }
       ],
       "reductions":[
-        "INTEROGATIVE-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
+        "NONCONDITIONAL-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
       ]
     },
     {
@@ -681,7 +671,7 @@
         }
       ],
       "reductions":[
-        "INTEROGAVTIVE-HAVE:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>YOU"
+        "NONCONDITIONAL-HAVE:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>YOU"
       ]
     },
     {
@@ -694,7 +684,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>BOOK"
+        "NONCONDITIONAL-IS>BOOK"
       ]
     },
     {
@@ -711,8 +701,8 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
-        "INDICATIVE-DOES>SG"
+        "NONCONDITIONAL-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "NONCONDITIONAL-DOES>SG"
       ]
     },
     {
@@ -725,7 +715,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
+        "NONCONDITIONAL-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
       ]
     },
     {
@@ -738,7 +728,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>SG"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {
@@ -748,15 +738,10 @@
         {
           "np": [{"word":"Farmer","label":"NNP"}, {"word":"Brown", "label":"NNP"}],
           "vp": [{"word": "cried", "label": "VBD"}]
-        },
-        {
-          "np": [],
-          "vp": [{"word": "Help", "label": "VB"}]
         }
       ],
       "reductions":[
-        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
-        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     }
   ]
