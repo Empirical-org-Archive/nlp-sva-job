@@ -5,6 +5,8 @@ from pattern.en import mood, tenses, lemma
 from hashlib import sha256
 import top100
 
+import json
+
 def load_predictor():
     """Load model from AllenNLP, which we've downloaded"""
     return Predictor.from_path("elmo-constituency-parser-2018.03.14.tar.gz")
@@ -26,10 +28,8 @@ def get_verb_subject_pairs(tree):
 
 
 def get_verb_subject_phrases(tree):
-    """    Currently returns list of tuples with (VP, NP) as each tuple
-    Note that, consistent with reduction format, the verb comes first, then subject
-
-    Will soon return pairs in the format:
+    """
+    Returns pairs in the format:
     { 'sentence': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
     """
     pairs = []
@@ -41,6 +41,18 @@ def get_verb_subject_phrases(tree):
             np = child if child.label() == "NP" else np
             vp = child if child.label() == "VP" else vp
         pairs.append({ 'vp': vp, 'np': np })
+
+    for s in tree.subtrees(lambda t: t.label() == 'SBARQ'):
+        # "Direct question introduced by a wh-word or a wh-phrase"
+        np, vp = None, None
+        wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+        for i in range(0, len(s) - 1):
+            # Identify the wh-word and the possible subsequent SQ
+            phrase = s[i]
+            next_phrase = s[i + 1]
+            if phrase.label() in wh_words and next_phrase.label() == 'SQ':
+                pairs.append({ 'vp': next_phrase, 'np': phrase})
+
     return { 'sentence': pairs }
 
 
@@ -75,23 +87,20 @@ def subject_words_from_phrase(subject):
     pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
+    wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
 
     words = []
     if subject is None or len(subject) == 0: # No subject
         return words
-    elif len(subject) == 1 and subject[0].label() in pronoun_tags: # Pronoun
-        words.append({ 'word': subject[0][0], 'label': subject[0].label() })
     else:
         # Otherwise, identify the last noun tag and submit that (brittle heuristic)
-        last_tag = None
-        for i in range(0, len(subject)):
+        for i in reversed(range(0, len(subject))):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
                 return subject_words_from_phrase(child)
-            last_tag = {'word': child[0], 'label': child.label()} if child.label() in singular_tags else last_tag
-            last_tag = {'word': child[0], 'label': child.label()} if child.label() in plural_tags else last_tag
-        if last_tag is not None:
-            words.append(last_tag)
+            if child.label() in noun_tags:
+                return [{'word': child[0], 'label': child.label()}]
     return words
 
 # MARK: Verbs
@@ -178,14 +187,33 @@ def test_pipeline(sent, predictor):
         vp = pair['vp']
         print(verb_words_from_phrase(vp))
 
-    print(get_verb_subject_pairs(tree))
-    # mood = determine_sentence_mood(sent)
-    # reductions = generate_reductions(pairs, mood)
-    # print(reductions)
-    print("\n\n")
+    pairs = get_verb_subject_pairs(tree)
+    print(pairs)
+    return pairs
+
+def evaluate_subjects_with_verbs(actual, expected):
+    actual, expected = sorted(actual, key=lambda k: k["np"][0]["word"]), sorted(expected)
+    if actual == expected:
+        print("PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
+        return 1
+    else:
+        print("MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
+        print("Expected:", expected)
+        print("Got:", actual)
+        return 0
 
 # MARK: Test Script
 
+with open('../test/data/sentences.json') as test_file:
+    tests = json.load(test_file)
+
+test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
 predictor = load_predictor()
-for sent in test_sents:
-    print(sentence_to_pairs(sent, predictor))
+
+num_correct = 0
+for (text, expected) in test_sents:
+    pairs = test_pipeline(text, predictor)
+    num_correct += evaluate_subjects_with_verbs(pairs, expected)
+    print("\n\n")
+
+print("TEST ACCURACY: ", num_correct/len(test_sents))
