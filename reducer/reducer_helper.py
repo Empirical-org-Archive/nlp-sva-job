@@ -44,18 +44,25 @@ def get_verb_subject_phrases(tree):
 
     return { 'subjects_with_verbs': pairs }
 
+# MARK: Extracting pairs from various clauses:
 
 def verb_subject_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
-        Returns list of subject, verb pairs, empty if none """
-    np, vp = None, None
+        Returns list of subject, verb pairs, empty if none
+    """
+    np = None
+    vps = []
     for i in range(0, len(tree)):
         child = tree[i]
         np = child if child.label() == "NP" else np
-        vp = child if child.label() == "VP" else vp
-    if np is not None and vp is not None:
+        vps += [child] if child.label() == "VP" else []
+
+    print("vps before unpacking", vps)
+    vps = sum([unpack_verb_phrases(vp) for vp in vps], [])
+    print("vps after unpacking", vps)
+    if np is not None:
         # TODO: Under what circumstances should we return one of these having a None value?
-        return [{ 'vp': vp, 'np': np }]
+        return [{ 'vp': vp, 'np': np } for vp in vps]
     return []
 
 
@@ -74,6 +81,18 @@ def verb_subject_for_sbarq(tree):
     return []
 
 
+# MARK: Helper functions for extracting pairs
+
+def unpack_verb_phrases(vp):
+    """
+    If there are MULTIPLE verb phrases nested within the verb phrase, returns these
+    Otherwise, returns a list with the original verb phrase
+    """
+    child_phrases = [child for child in vp if child.label() == 'VP']
+    return child_phrases if len(child_phrases) > 1 else [vp]
+
+
+
 def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
     print("Verb Subject Pairs: ")
@@ -82,7 +101,8 @@ def print_verb_subject_phrases(pairs):
         print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
 
 
-# MARK: Subjects
+
+# MARK: SUBJECTS
 
 
 def subject_words_from_phrase(subject):
