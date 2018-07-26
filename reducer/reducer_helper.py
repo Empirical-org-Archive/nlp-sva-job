@@ -188,4 +188,4 @@ def test_pipeline(sent, predictor):
 
 predictor = load_predictor()
 for sent in test_sents:
-    test_pipeline(sent, predictor)
+    print(sentence_to_pairs(sent, predictor))
