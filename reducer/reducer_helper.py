@@ -19,18 +19,18 @@ def get_verb_subject_pairs(tree):
                     ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
     """
     pairs = get_verb_subject_phrases(tree)
-    words = {'sentence': []}
-    for pair in pairs['sentence']:
+    words = {'subjects_with_verbs': []}
+    for pair in pairs['subjects_with_verbs']:
         np = pair['np']
         vp = pair['vp']
-        words['sentence'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
+        words['subjects_with_verbs'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
     return words
 
 
 def get_verb_subject_phrases(tree):
     """
     Returns pairs in the format:
-    { 'sentence': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
+    { 'subjects_with_verbs': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
     """
     pairs = []
     for s in tree.subtrees(lambda t: t.label() == 'S'):
@@ -53,13 +53,13 @@ def get_verb_subject_phrases(tree):
             if phrase.label() in wh_words and next_phrase.label() == 'SQ':
                 pairs.append({ 'vp': next_phrase, 'np': phrase})
 
-    return { 'sentence': pairs }
+    return { 'subjects_with_verbs': pairs }
 
 
 def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
     print("Verb Subject Pairs: ")
-    for pair in pairs['sentence']:
+    for pair in pairs['subjects_with_verbs']:
         print("Noun Phrase: ", ' '.join(pair['np'].leaves()) if type(pair['np']) is Tree else "None")
         print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
 
@@ -141,7 +141,7 @@ def sentence_to_pairs(sent, predictor):
     tree = Tree.fromstring(parse["trees"])
     return {
         'subjects_with_verbs': get_verb_subject_pairs(tree),
-        'sentence': sent
+        'text': sent
     }
 
 def get_reduction(data, allennlp_predictor):
@@ -181,7 +181,7 @@ def test_pipeline(sent, predictor):
     pairs = get_verb_subject_phrases(tree)
     print_verb_subject_phrases(pairs)
 
-    for pair in pairs['sentence']:
+    for pair in pairs['subjects_with_verbs']:
         subject = pair['np']
         print(subject_words_from_phrase(subject))
         vp = pair['vp']
@@ -192,8 +192,17 @@ def test_pipeline(sent, predictor):
     return pairs
 
 def evaluate_subjects_with_verbs(actual, expected):
-    actual, expected = sorted(actual, key=lambda k: k["np"][0]["word"]), sorted(expected)
-    if actual == expected:
+    # We do some really tedious checking here because sorting this list of
+    # dictionaries is otherwise sorta annoying
+    equal = True
+    for pair in actual:
+        if pair not in expected:
+            equal = False
+    for pair in expected:
+        if pair not in actual:
+            equal = False
+
+    if equal:
         print("PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
         return 1
     else:
@@ -212,7 +221,7 @@ predictor = load_predictor()
 
 num_correct = 0
 for (text, expected) in test_sents:
-    pairs = test_pipeline(text, predictor)
+    pairs = test_pipeline(text, predictor)['subjects_with_verbs']
     num_correct += evaluate_subjects_with_verbs(pairs, expected)
     print("\n\n")
 
