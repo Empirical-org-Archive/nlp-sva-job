@@ -1,0 +1,600 @@
+{
+  "sentences": [
+    {
+      "text":"John is a boy",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "John", "label": "NNP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "covers":"base case",
+      "reductions":[
+        "INDICATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"Who is John?",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Who", "label": "WP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "covers":"WH-pronoun subjects in questions.",
+      "reductions":[
+        "INTEROGATIVE-IS>WHO"
+      ]
+    },
+    {
+      "text":"Who is dancing?",
+      "covers":"WH-pronoun subjects in questions.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Who", "label": "WP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-IS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WHO"
+      ]
+    },
+    {
+      "text":"Lying in the backseat of the car, the old man, George, and Jane were sound asleep.",
+      "covers":"Compound subject after prepositional phrase.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "man", "label": "NN" },{"word":"George", "label":"NNP"}, {"word":"Jane", "label":"NNP"}],
+          "vp": [ {"word": "were", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WERE>THEYLIKE"
+      ]
+    },
+    {
+      "text":"Jack and Jill is ill.",
+      "covers":"Compound subject with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Jack", "label": "NNP" }, {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>THEYLIKE"
+      ]
+    },
+    {
+      "text":"Jill have been a bad girlfriend.",
+      "covers":"Past perfect continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-HAVE:BEEN>SG"
+      ]
+    },
+    {
+      "text":"Jill has been a bad girlfriend.",
+      "covers":"Past perfect continuous",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-HAS:BEEN>SG"
+      ]
+    },
+    {
+      "text":"Who has been a bad girlfriend?",
+      "covers":"Past continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Who", "label":"WP"}],
+          "vp": [ {"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-HAS:BEEN>WHO"
+      ]
+    },
+    {
+      "text":"Which dogs have been good boys?",
+      "covers":"Present perfect continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"dogs", "label":"NNS"}],
+          "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "INTEROGATIVE-HAVE:BEEN>PL"
+      ]
+    },
+    {
+      "text":"At once I was in heaven and burning in hellish pain.",
+      "covers":"Split reduction (ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}, {"word": "burning", "label": "VBG"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS>I",
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
+      ]
+    },
+    {
+      "text":"At once I was in heaven and was burning in hellish pain.",
+      "covers":"Split reduction (non-ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}, {"word": "burning", "label": "VBG"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS>I",
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
+      ]
+    },
+    {
+      "text":"At once I was in heaven and danced freely on the sand.",
+      "covers":"Split reduction (non-ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "danced", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS>I",
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>I"
+      ]
+    },
+    {
+      "text":"Running.",
+      "subjects_with_verbs":[
+      ],
+      "covers":"No apparent subject.",
+      "reductions":[
+      ]
+    },
+    {
+      "text":"Run.",
+      "covers":"Implied subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [],
+          "vp": [ {"word": "Run", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "IMPERATIVE-VB_e0a6daccd289f9a8e37b9e3831cd7bea11b1e4fc9baabc6ca7a92935b26dd740"
+      ]
+    },
+    {
+      "text":"If she weren't so darned cute.",
+      "covers":"Conditional mood.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "CONDITIONAL-WERE>SHE"
+      ]
+    },
+    {
+      "text":"If he weren't dancing, I'd say shoot him.",
+      "covers":"Conditional mood, nested imperative.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "would", "label": "MD"}, {"word":"say", "label":"VB"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        },
+        {
+          "np": [],
+          "vp": [{"word": "shoot", "label": "VB"}]
+        }
+      ],
+      "reductions":[
+        "CONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "CONDITIONAL-WOULD:SAY>I",
+        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
+      ]
+    },
+    {
+      "text":"If he were dancing any slower, I was too dumb to tell.",
+      "covers":"Tricky indicative with tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "INDICATIVE-WAS>I"
+      ]
+    },
+    {
+      "text":"If he was dancing any slower, I was too dumb to tell.",
+      "covers":"Tricky indicative without tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "INDICATIVE-WAS>I"
+      ]
+    },
+    {
+      "text":"If he was skating any faster than he was yesterday, I was unable to detect it.",
+      "covers":"Tricky indicative with tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"skating", "label":"VBG"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "INDICATIVE-WAS>I",
+        "INDICATIVE-WAS>HE"
+      ]
+    },
+    {
+      "text":"If he was walking down the road, he used to whistle.",
+      "covers":"If means when, indicative.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "used", "label": "VBD"}, {"word":"to", "label":"TO"}, {"word":"whistle", "label":"VB"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"walking", "label":"VBG"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "INDICATIVE-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
+      ]
+    },
+    {
+      "text":"If he were to walk down the road, he might whistle.",
+      "covers":"Correct usage of the past subjunctive.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "might", "label": "MD"}, {"word":"whistle", "label":"VB"}]
+        }
+      ],
+      "reductions":[
+        "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
+        "CONDITIONAL-WERE>HE"
+      ]
+    },
+    {
+      "text":"If he were to walked down the road, he might whistle.",
+      "covers":"Incorrect verb form in infinitive, no error should be detected (out of scope).",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "might", "label": "MD"}, {"word":"whistle", "label":"VB"}]
+        }
+      ],
+      "reductions":[
+        "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
+        "CONDITIONAL-WERE>HE"
+      ]
+    },
+    {
+      "text":"Were she a fish, she would have faired better.",
+      "covers":"Inverted order for past subjunctive.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"she","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"she","label":"PRP"}],
+          "vp": [{"word": "would", "label": "MD"}, {"word":"have", "label":"VB"}, {"word":"faired", "label":"VBN"}]
+        }
+      ],
+      "reductions":[
+        "CONDITIONAL-WOULD:HAVE:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SHE",
+        "CONDITIONAL-WERE>SHE"
+      ]
+    },
+    {
+      "text":"4. He had never even been to Mars.",
+      "covers":"Sentence with list marker.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"He","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}, {"word":"been", "label":"VBN"} ]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-HAD:BEEN>HE"
+      ]
+    },
+    {
+      "text":"While we were swimming at the lake, we saw a fish.",
+      "covers":"Subordinate clause, independent clause. (grammatical)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "saw", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "INDICATIVE-SAW>WE"
+      ]
+    },
+    {
+      "text":"While we were swimming at the lake, we seen some fish.",
+      "covers":"Subordinate clause, independent clause. (non-grammatical)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "seen", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "INDICATIVE-SEEN>WE"
+      ]
+    },
+    {
+      "text":"While we were swimming at the lake, unless I am mistaken, we saw an African Brown Whale.",
+      "covers":"Three reductions.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"swimming", "label":"VBG"} ]
+        },
+        {
+          "np": [{"word":"we","label":"PRP"}],
+          "vp": [{"word": "saw", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "am", "label": "VBP"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WE",
+        "INDICATIVE-SAW>WE",
+        "INDICATIVE-AM>I"
+      ]
+    },
+    {
+      "text":"Donald, standing high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Participle phrase that has no clear associated subject.",
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"Donald, stood high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Participle phrase that has no clear associated subject. (out-of-scope grammar error)",
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"Donald stood high on a precipice, laughed haughtily at his subordinates.",
+      "covers":"Multipart fragment with no in-scope errors.",
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"\"Swinging from vines is fun,\" said Jane.",
+      "covers":"Quote and gerund as subject.",
+      "reductions":[
+        "INDICATIVE-IS>VBG",
+        "INDICATIVE-SAID>SG"
+      ]
+    },
+    {
+      "text":"\"To dance to Phil Collins is to truly be free,\" Tarzan commented.",
+      "covers":"Quote and infinitive as subject.",
+      "reductions":[
+        "INDICATIVE-IS>INF",
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":"Today, and other days too, though not nearly so dramatically as on this particular gloomy day on which both his dear Nana, old and feeble, and his hare-lipped cocker spaniel, who was young and spry but also foolish, had slowly and sweetly like the end of a long summer, and quickly like a strike of lightning to punctuate it,  died, a melancholy hung over James like a wet rain jacket.",
+      "covers":"Long sentence.",
+      "reductions":[
+        "TODO"
+      ]
+    },
+    {
+      "text":"A melancholy hung over James like a drenched parka.",
+      "covers":"Adjective as subject.",
+      "reductions":[
+        "INDICATIVE-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>DT:JJ"
+      ]
+    },
+    {
+      "text":"Embarrassing didn't begin to describe it.",
+      "covers":"Adjective as subject.",
+      "reductions":[
+        "INDICATIVE-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
+      ]
+    },
+    {
+      "text":"How hot is the Sun?",
+      "covers":"Wh-adjective Phrase with singular subject.",
+      "reductions":[
+        "INTEROGATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"How bright are they?",
+      "covers":"Wh-adjective Phrase with plural subject.",
+      "reductions":[
+        "INTEROGATIVE-ARE>THEY"
+      ]
+    },
+    {
+      "text":"How fast is it moving?",
+      "covers":"Wh-adverb Phrase with singular subject.",
+      "reductions":[
+        "INTEROGATIVE-IS>IT"
+      ]
+    },
+    {
+      "text":"She had five daughters, none of which were as pretty as Cleopatra.",
+      "covers":"Wh-noun Phrase plural.",
+      "reductions":[
+        "INTEROGATIVE-WERE>SG",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had five daughters, each of whom was as pretty as the Queen herself.",
+      "covers":"Wh-noun Phrase singular.",
+      "reductions":[
+        "INTEROGATIVE-WAS>EACH",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had five daughters, each was as pretty as the Queen herself.",
+      "covers":"Entire noun phrase is a determiner acting as a singular noun.",
+      "reductions":[
+        "INTEROGATIVE-WAS>EACH",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"She had two chocolate labs, both were ruggedly handsome and had done kibbles commercials albeit when their jowls hung higher.",
+      "covers":"Entire noun phrase is a determiner acting as a plural noun.",
+      "reductions":[
+        "INTEROGATIVE-WERE>BOTH",
+        "INTEROGATIVE-HAD:DONE>BOTH",
+        "INTEROGATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>PL",
+        "INTEROGATIVE-HAD>SHE"
+      ]
+    },
+    {
+      "text":"By whose power was the constitution written?",
+      "covers":"Wh-prepositional phrase at start of sentence.",
+      "reductions":[
+        "INTEROGATIVE-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
+      ]
+    },
+    {
+      "text":"Have you eaten breakfast yet?",
+      "covers": "Simple subject verb inversion in routine question",
+      "reductions":[
+        "INTEROGAVTIVE-HAVE:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>YOU"
+      ]
+    },
+    {
+      "text":"Here is the book.",
+      "covers": "Simple subject verb inversion in routine expletive construction.",
+      "reductions":[
+        "INDICATIVE-IS>BOOK"
+      ]
+    },
+    {
+      "text":"I believe her and so does Jim.",
+      "covers": "Simple subject verb inversion in routine after-so expression.",
+      "reductions":[
+        "INDICATIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "INDICATIVE-DOES>SG"
+      ]
+    },
+    {
+      "text":"Seldom has so much been owed by so many to so few.",
+      "covers": "Sentence beginning with an adverbial clause.",
+      "reductions":[
+        "INDICATIVE-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
+      ]
+    },
+    {
+      "text":"Even more important is the chapter dealing with ordnance.",
+      "covers": "Predicate shifted to give prominence to a word (subject verb inversion).",
+      "reductions":[
+        "INDICATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"'Help me!' cried Farmer Brown.",
+      "covers": "Subject verb inversion for speech attribution, nested imperative.",
+      "reductions":[
+        "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
+      ]
+    }
+  ]
+}
