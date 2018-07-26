@@ -308,9 +308,7 @@ Verb Phrase:  were not dancing
 [{'word': 'he', 'label': 'PRP'}]
 [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': "'d", 'label': 'MD'}, {'word': 'say', 'label': 'VB'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'would', 'label': 'MD'}, {'word': 'say', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VDB'}, {'word': 'dancing', 'label': 'VBG'}]}]
-Got: [{'vp': [{'word': "'d", 'label': 'MD'}, {'word': 'say', 'label': 'VB'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -339,9 +337,7 @@ Verb Phrase:  were dancing any slower
 [{'word': 'he', 'label': 'PRP'}]
 [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'were', 'label': 'VDB'}, {'word': 'dancing', 'label': 'VBG'}]}]
-Got: [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -370,9 +366,7 @@ Verb Phrase:  was dancing any slower
 [{'word': 'he', 'label': 'PRP'}]
 [{'word': 'was', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VDB'}, {'word': 'dancing', 'label': 'VBG'}]}]
-Got: [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -415,9 +409,7 @@ Verb Phrase:  was yesterday
 [{'word': 'he', 'label': 'PRP'}]
 [{'word': 'was', 'label': 'VBD'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'skating', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'I', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VDB'}, {'word': 'skating', 'label': 'VBG'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VDB'}]}]
-Got: [{'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'skating', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -447,7 +439,7 @@ Verb Phrase:  was walking down the road
 [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'used', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'used', 'label': 'VBD'}, {'word': 'to', 'label': 'TO'}, {'word': 'whistle', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VDB'}, {'word': 'walking', 'label': 'VBG'}]}]
+Expected: [{'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'used', 'label': 'VBD'}, {'word': 'to', 'label': 'TO'}, {'word': 'whistle', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}]}]
 Got: [{'vp': [{'word': 'used', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
 
 
@@ -1158,4 +1150,4 @@ PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 
 
-TEST ACCURACY:  0.4583333333333333
+TEST ACCURACY:  0.5416666666666666

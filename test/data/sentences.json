@@ -206,11 +206,11 @@
       "subjects_with_verbs":[
         {
           "np": [{"word":"I","label":"PRP"}],
-          "vp": [{"word": "would", "label": "MD"}, {"word":"say", "label":"VB"}]
+          "vp": [{"word": "'d", "label": "MD"}, {"word":"say", "label":"VB"}]
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -228,7 +228,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -246,7 +246,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -264,11 +264,11 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"skating", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"skating", "label":"VBG"}]
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}]
+          "vp": [{"word": "was", "label": "VBD"}]
         }
       ],
       "reductions":[
@@ -287,7 +287,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"walking", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"walking", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -511,7 +511,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
       ]
     },
     {
