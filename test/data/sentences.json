@@ -579,6 +579,16 @@
     {
       "text":"She had five daughters, none of which were as pretty as Cleopatra.",
       "covers":"Wh-noun Phrase plural.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"none","label":"NN"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-WERE>SG",
         "INTEROGATIVE-HAD>SHE"
@@ -587,6 +597,16 @@
     {
       "text":"She had five daughters, each of whom was as pretty as the Queen herself.",
       "covers":"Wh-noun Phrase singular.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"each","label":"DT"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-WAS>EACH",
         "INTEROGATIVE-HAD>SHE"
@@ -595,6 +615,16 @@
     {
       "text":"She had five daughters, each was as pretty as the Queen herself.",
       "covers":"Entire noun phrase is a determiner acting as a singular noun.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"each","label":"DT"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-WAS>EACH",
         "INTEROGATIVE-HAD>SHE"
@@ -603,6 +633,24 @@
     {
       "text":"She had two chocolate labs, both were ruggedly handsome and had done kibbles commercials albeit when their jowls hung higher.",
       "covers":"Entire noun phrase is a determiner acting as a plural noun.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "had", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"both","label":"DT"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"both","label":"DT"}],
+          "vp": [{"word": "had", "label": "VBD"}, {"word":"done", "label":"VBN"}]
+        },
+        {
+          "np": [{"word":"jowls","label":"NNS"}],
+          "vp": [{"word": "hung", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-WERE>BOTH",
         "INTEROGATIVE-HAD:DONE>BOTH",
