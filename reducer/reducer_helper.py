@@ -123,34 +123,17 @@ def verb_reduction(verb, tag):
         result = tag + '_' + h
         return result
 
-# MARK: Generating Reductions
 
-def generate_reductions(verb_subject_pairs, mood):
-    """Given a list of verb_subject pairs and a mood, generates list of reductions
-    [ (verb_phrase, subject_phrase), ...] =>
-    => [INDICATIVE-VBDtenses(began):VBGtenses(crying)>SG,  ...]
-    """
-    reductions = []
-    for vp, np in verb_subject_pairs:
-        m = mood.upper() + '-'
-        vs = ':'.join(verb_reductions_from_verb_phrase(vp))
-        ns = '>' + ':'.join(noun_string_from_subject(np))
-        tag = m + vs + ns
-        reductions.append(tag)
-    reductions = list(set(reductions)) #dedup reductions
-    return reductions
-
-
-def sentence_to_keys(sent, predictor):
+def sentence_to_pairs(sent, predictor):
     """ Takes a sentence and AllenNLP predictor, returns the list of Reductions
     """
-    sent = preprocess_sent(sent)
-    parse = predictor.predict_json({"sentence": sent})
+    processed = preprocess_sent(sent)
+    parse = predictor.predict_json({"sentence": processed})
     tree = Tree.fromstring(parse["trees"])
-    pairs = get_verb_subject_pairs(tree)
-    mood = determine_sentence_mood(sent)
-    reductions = generate_reductions(pairs, mood)
-    return reductions
+    return {
+        'subjects_with_verbs': get_verb_subject_pairs(tree),
+        'sentence': sent
+    }
 
 def get_reduction(data, allennlp_predictor):
     sent = json.loads(data)['data']
