@@ -40,7 +40,9 @@ def get_verb_subject_phrases(tree):
             child = s[i]
             np = child if child.label() == "NP" else np
             vp = child if child.label() == "VP" else vp
-        pairs.append({ 'vp': vp, 'np': np })
+        if np is not None and vp is not None:
+            # TODO: Under what circumstances should we return one of these having a None value?
+            pairs.append({ 'vp': vp, 'np': np })
 
     for s in tree.subtrees(lambda t: t.label() == 'SBARQ'):
         # "Direct question introduced by a wh-word or a wh-phrase"
@@ -55,6 +57,12 @@ def get_verb_subject_phrases(tree):
 
     return { 'subjects_with_verbs': pairs }
 
+def verb_subject_declarative_clause(tree):
+    """ Takes in the tree for a vanilla declarative clause (S tag)
+        Returns list of subject, verb pairs, empty if none """
+    #TODO: Maybe fill this in
+    return []
+
 
 def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
@@ -63,21 +71,9 @@ def print_verb_subject_phrases(pairs):
         print("Noun Phrase: ", ' '.join(pair['np'].leaves()) if type(pair['np']) is Tree else "None")
         print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
 
-# MARK: Moods
-
-def determine_sentence_mood(sentence_str):
-    """Returns mood of sentence string"""
-    conditional_words = ["assuming", "if", "in case", "no matter how",
-            "supposing", "unless"]
-    result = mood(sentence_str)
-    if result == 'imperative':
-        return result # takes care of imperative
-    for cw in conditional_words:
-        if cw in sentence_str.lower():
-            return 'possible_conditional'
-    return 'indicative' # indicative
 
 # MARK: Subjects
+
 
 def subject_words_from_phrase(subject):
     """
@@ -91,19 +87,21 @@ def subject_words_from_phrase(subject):
     noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
 
     words = []
-    if subject is None or len(subject) == 0: # No subject
+    if subject is None: # No subject
         return words
     else:
-        # Otherwise, identify the last noun tag and submit that (brittle heuristic)
-        for i in reversed(range(0, len(subject))):
+        # Otherwise, return a list of the nouns
+        for i in range(0, len(subject)):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
-                return subject_words_from_phrase(child)
+                words += subject_words_from_phrase(child)
             if child.label() in noun_tags:
-                return [{'word': child[0], 'label': child.label()}]
+                words.append({'word': child[0], 'label': child.label()})
     return words
 
+
 # MARK: Verbs
+
 
 def verb_words_from_phrase(vp):
     "Given a verb phrase, returns a list of the verb reductions"
@@ -122,19 +120,8 @@ def verb_words_from_phrase(vp):
     return words
 
 
-def verb_reduction(verb, tag):
-    """Given string of existing verb, returns its corresponding reduction
-    That's the verb itself if its lemma is in the top100, else its hash"""
-    if lemma(verb.lower()) in top100.verbs:
-        return verb.upper()
-    else:
-        h = sha256(str(tenses(verb)).encode('utf_8')).hexdigest()
-        result = tag + '_' + h
-        return result
-
-
 def sentence_to_pairs(sent, predictor):
-    """ Takes a sentence and AllenNLP predictor, returns the list of Reductions
+    """ Takes a sentence and AllenNLP predictor, returns the subject_verb pairs
     """
     processed = preprocess_sent(sent)
     parse = predictor.predict_json({"sentence": processed})
@@ -144,26 +131,7 @@ def sentence_to_pairs(sent, predictor):
         'text': sent
     }
 
-def get_reduction(data, allennlp_predictor):
-    sent = json.loads(data)['data']
-    return sentence_to_keys(sent, allennlp_predictor)
-
 # MARK: Test Sentences and Pipeline
-
-test_sents = [
-    "Project Gutenberg eBooks are often created from several printed editions, all of which are confirmed as Public Domain in the U.S. unless a copyright notice is included.",
-    "Sometimes, I’ve believed as many as six impossible things before breakfast.",
-    "It has been a terrible, horrible, no good, very bad day.",
-    "The man, the boy, or the girls are frauds.",
-    "Mr. and Mrs. Dursley of number four, Privet Drive, were proud to say that they were perfectly normal, thank you very much.",
-    "The book, which is 1000 pages long, is an excellent read.",
-    "The hippo lazily floated down the river.",
-    "John Somerville occupied a suite of apartments in a handsome lodging-house on Walnut Street.",
-    "People are tall.",
-    "Don't go there."
-]
-test_tree_str = "(S (NP (NP (NNP Mr.) (CC and) (NNP Mrs.) (NNP Dursley)) (PP (PP (IN of) (NP (NN number) (CD four))) (, ,) (NP (NNP Privet) (NNP Drive)) (, ,))) (VP (VBD were) (ADJP (JJ proud) (S (VP (TO to) (VP (VB say) (SBAR (IN that) (S (NP (PRP they)) (VP (VP (VBD were) (ADJP (RB perfectly) (JJ normal))) (, ,) (S (VP (VBP thank) (NP (PRP you)) (ADVP (RB very) (RB much)))))))))))) (. .))"
-test_tree = Tree.fromstring(test_tree_str)
 
 def test_pipeline(sent, predictor):
     """
@@ -192,6 +160,7 @@ def test_pipeline(sent, predictor):
     return pairs
 
 def evaluate_subjects_with_verbs(actual, expected):
+    """ Evaluates two given subjects_with_verbs object to check their equality, prints """
     # We do some really tedious checking here because sorting this list of
     # dictionaries is otherwise sorta annoying
     equal = True
