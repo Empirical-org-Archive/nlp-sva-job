@@ -42,6 +42,10 @@ def get_verb_subject_phrases(tree):
     for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
         pairs += verb_subject_for_sbarq(sbarq)
 
+    # Fragments (parsed same as declarative clause):
+    for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
+        pairs += verb_subject_for_declarative_clause(s)
+
     return { 'subjects_with_verbs': pairs }
 
 # MARK: Extracting pairs from various clauses:
@@ -57,9 +61,7 @@ def verb_subject_for_declarative_clause(tree):
         np = child if child.label() == "NP" else np
         vps += [child] if child.label() == "VP" else []
 
-    print("vps before unpacking", vps)
     vps = sum([unpack_verb_phrases(vp) for vp in vps], [])
-    print("vps after unpacking", vps)
     if np is not None:
         # TODO: Under what circumstances should we return one of these having a None value?
         return [{ 'vp': vp, 'np': np } for vp in vps]
