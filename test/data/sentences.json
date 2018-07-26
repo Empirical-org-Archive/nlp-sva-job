@@ -2,8 +2,11 @@
   "sentences": [
     {
       "text":"John is a boy",
-      "subjects_with_objects":[
-        {"np":"John", "vp":"is"}
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "John", "label": "NNP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
       ],
       "covers":"base case",
       "reductions":[
@@ -12,8 +15,12 @@
     },
     {
       "text":"Who is John?",
-      "subjects_with_objects":[
-        {"np":
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Who", "label": "WP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
       "covers":"WH-pronoun subjects in questions.",
       "reductions":[
         "INTEROGATIVE-IS>WHO"
@@ -22,6 +29,12 @@
     {
       "text":"Who is dancing?",
       "covers":"WH-pronoun subjects in questions.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Who", "label": "WP" }],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-IS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WHO"
       ]
@@ -29,6 +42,12 @@
     {
       "text":"Lying in the backseat of the car, the old man, George, and Jane were sound asleep.",
       "covers":"Compound subject after prepositional phrase.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "man", "label": "NN" },{"word":"George", "label":"NNP"}, {"word":"Jane", "label":"NNP"}],
+          "vp": [ {"word": "were", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WERE>THEYLIKE"
       ]
@@ -36,6 +55,12 @@
     {
       "text":"Jack and Jill is ill.",
       "covers":"Compound subject with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ { "word": "Jack", "label": "NNP" }, {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "is", "label": "VBZ"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-IS>THEYLIKE"
       ]
@@ -43,6 +68,12 @@
     {
       "text":"Jill have been a bad girlfriend.",
       "covers":"Past perfect continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-HAVE:BEEN>SG"
       ]
@@ -50,6 +81,12 @@
     {
       "text":"Jill has been a bad girlfriend.",
       "covers":"Past perfect continuous",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Jill", "label":"NNP"}],
+          "vp": [ {"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-HAS:BEEN>SG"
       ]
@@ -57,6 +94,12 @@
     {
       "text":"Who has been a bad girlfriend?",
       "covers":"Past continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"Who", "label":"WP"}],
+          "vp": [ {"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-HAS:BEEN>WHO"
       ]
@@ -64,6 +107,12 @@
     {
       "text":"Which dogs have been good boys?",
       "covers":"Present perfect continuous with verb error.",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"dogs", "label":"NNS"}],
+          "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
+        }
+      ],
       "reductions":[
         "INTEROGATIVE-HAVE:BEEN>PL"
       ]
@@ -71,6 +120,16 @@
     {
       "text":"At once I was in heaven and burning in hellish pain.",
       "covers":"Split reduction (ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}, {"word": "burning", "label": "VBG"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WAS>I",
         "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
@@ -79,6 +138,16 @@
     {
       "text":"At once I was in heaven and was burning in hellish pain.",
       "covers":"Split reduction (non-ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}, {"word": "burning", "label": "VBG"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WAS>I",
         "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>I"
@@ -87,6 +156,16 @@
     {
       "text":"At once I was in heaven and danced freely on the sand.",
       "covers":"Split reduction (non-ambiguous).",
+      "subjects_with_verbs":[
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [ {"word":"I", "label":"PRP"}],
+          "vp": [ {"word": "danced", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WAS>I",
         "INDICATIVE-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>I"
@@ -94,6 +173,8 @@
     },
     {
       "text":"Running.",
+      "subjects_with_verbs":[
+      ],
       "covers":"No apparent subject.",
       "reductions":[
       ]
@@ -101,6 +182,12 @@
     {
       "text":"Run.",
       "covers":"Implied subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [],
+          "vp": [ {"word": "Run", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "IMPERATIVE-VB_e0a6daccd289f9a8e37b9e3831cd7bea11b1e4fc9baabc6ca7a92935b26dd740"
       ]
@@ -108,21 +195,52 @@
     {
       "text":"If she weren't so darned cute.",
       "covers":"Conditional mood.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VBD"}]
+        }
+      ],
       "reductions":[
         "CONDITIONAL-WERE>SHE"
       ]
     },
     {
       "text":"If he weren't dancing, I'd say shoot him.",
-      "covers":"Conditional mood.",
+      "covers":"Conditional mood, nested imperative.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "would", "label": "MD"}, {"word":"say", "label":"VB"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        },
+        {
+          "np": [],
+          "vp": [{"word": "shoot", "label": "VB"}]
+        }
+      ],
       "reductions":[
         "CONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "CONDITIONAL-WOULD:SAY>I"
+        "CONDITIONAL-WOULD:SAY>I",
+        "IMPERATIVE-VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>"
       ]
     },
     {
       "text":"If he were dancing any slower, I was too dumb to tell.",
       "covers":"Tricky indicative with tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
         "INDICATIVE-WAS>I"
@@ -131,6 +249,16 @@
     {
       "text":"If he was dancing any slower, I was too dumb to tell.",
       "covers":"Tricky indicative without tense error.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        },
+        {
+          "np": [{"word":"he","label":"PRP"}],
+          "vp": [{"word": "was", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+        }
+      ],
       "reductions":[
         "INDICATIVE-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
         "INDICATIVE-WAS>I"
