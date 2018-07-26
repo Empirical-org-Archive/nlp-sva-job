@@ -5,14 +5,32 @@ from pattern.en import mood, tenses, lemma
 from hashlib import sha256
 import top100
 
+import json
+
 def load_predictor():
     """Load model from AllenNLP, which we've downloaded"""
     return Predictor.from_path("elmo-constituency-parser-2018.03.14.tar.gz")
 
-
 def get_verb_subject_pairs(tree):
-    """    Returns list of tuples with (VP, NP) as each tuple
-    Note that, consistent with reduction format, the verb comes first, then subject
+    """ Returns the individual words associated with each verb and noun phraseself.
+
+    Will soon return pairs in the format:
+    { ‘sentence’: [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
+                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
+    """
+    pairs = get_verb_subject_phrases(tree)
+    words = {'sentence': []}
+    for pair in pairs['sentence']:
+        np = pair['np']
+        vp = pair['vp']
+        words['sentence'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
+    return words
+
+
+def get_verb_subject_phrases(tree):
+    """
+    Returns pairs in the format:
+    { 'sentence': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
     """
     pairs = []
     for s in tree.subtrees(lambda t: t.label() == 'S'):
@@ -22,16 +40,28 @@ def get_verb_subject_pairs(tree):
             child = s[i]
             np = child if child.label() == "NP" else np
             vp = child if child.label() == "VP" else vp
-        pairs.append((vp, np))
-    return pairs
+        pairs.append({ 'vp': vp, 'np': np })
+
+    for s in tree.subtrees(lambda t: t.label() == 'SBARQ'):
+        # "Direct question introduced by a wh-word or a wh-phrase"
+        np, vp = None, None
+        wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+        for i in range(0, len(s) - 1):
+            # Identify the wh-word and the possible subsequent SQ
+            phrase = s[i]
+            next_phrase = s[i + 1]
+            if phrase.label() in wh_words and next_phrase.label() == 'SQ':
+                pairs.append({ 'vp': next_phrase, 'np': phrase})
+
+    return { 'sentence': pairs }
 
 
-def print_verb_subject_pairs(pairs):
+def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
     print("Verb Subject Pairs: ")
-    for pair in pairs:
-        print("Noun Phrase: ", pair[1].leaves() if type(pair[1]) is Tree else "None")
-        print("Verb Phrase: ", pair[0].leaves() if type(pair[0]) is Tree else "None")
+    for pair in pairs['sentence']:
+        print("Noun Phrase: ", ' '.join(pair['np'].leaves()) if type(pair['np']) is Tree else "None")
+        print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
 
 # MARK: Moods
 
@@ -49,48 +79,47 @@ def determine_sentence_mood(sentence_str):
 
 # MARK: Subjects
 
+def subject_words_from_phrase(subject):
+    """
+    Given subject phrase as a tree, returns list of relevant nouns with labels
+    """
 
-def noun_string_from_subject(subject):
-    """
-    Given subject as noun_phrase tree, extracts relevant noun_string code
-    Four cases - blank, pronoun, other (plural/singular), combination
-    Currently doesn't handle combinations, but returns list of noun classifications
-    """
     pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
+    wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
 
-    noun_strings = []
+    words = []
     if subject is None or len(subject) == 0: # No subject
-        noun_strings.append("")
-    elif len(subject) == 1 and subject[0].label() in pronoun_tags: # Pronoun
-        noun_strings.append(subject[0][0].upper())
+        return words
     else:
         # Otherwise, identify the last noun tag and submit that (brittle heuristic)
-        last_tag = ""
-        for i in range(0, len(subject)):
+        for i in reversed(range(0, len(subject))):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
-                return noun_string_from_subject(child)
-            last_tag = "SG" if child.label() in singular_tags else last_tag
-            last_tag = "PL" if child.label() in plural_tags else last_tag
-        noun_strings.append(last_tag)
-    return noun_strings
+                return subject_words_from_phrase(child)
+            if child.label() in noun_tags:
+                return [{'word': child[0], 'label': child.label()}]
+    return words
 
 # MARK: Verbs
 
-
-def verb_reductions_from_verb_phrase(vp):
+def verb_words_from_phrase(vp):
     "Given a verb phrase, returns a list of the verb reductions"
     verb_tags = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
-    verb_reductions = []
+
+    if vp is None:
+        return []
+
+    words = []
     for i in range(0, len(vp)):
         child = vp[i]
         if child.label() in verb_tags:
-            verb_reductions.append(verb_reduction(child[0], child.label()))
+            words.append( { 'word': child[0], 'label': child.label() })
         if child.label() == "VP":
-            verb_reductions += verb_reductions_from_verb_phrase(child)
-    return verb_reductions
+            words += verb_words_from_phrase(child)
+    return words
 
 
 def verb_reduction(verb, tag):
@@ -103,34 +132,17 @@ def verb_reduction(verb, tag):
         result = tag + '_' + h
         return result
 
-# MARK: Generating Reductions
 
-def generate_reductions(verb_subject_pairs, mood):
-    """Given a list of verb_subject pairs and a mood, generates list of reductions
-    [ (verb_phrase, subject_phrase), ...] =>
-    => [INDICATIVE-VBDtenses(began):VBGtenses(crying)>SG,  ...]
-    """
-    reductions = []
-    for vp, np in verb_subject_pairs:
-        m = mood.upper() + '-'
-        vs = ':'.join(verb_reductions_from_verb_phrase(vp))
-        ns = '>' + ':'.join(noun_string_from_subject(np))
-        tag = m + vs + ns
-        reductions.append(tag)
-    reductions = list(set(reductions)) #dedup reductions
-    return reductions
-
-
-def sentence_to_keys(sent, predictor):
+def sentence_to_pairs(sent, predictor):
     """ Takes a sentence and AllenNLP predictor, returns the list of Reductions
     """
-    sent = preprocess_sent(sent)
-    parse = predictor.predict_json({"sentence": sent})
+    processed = preprocess_sent(sent)
+    parse = predictor.predict_json({"sentence": processed})
     tree = Tree.fromstring(parse["trees"])
-    pairs = get_verb_subject_pairs(tree)
-    mood = determine_sentence_mood(sent)
-    reductions = generate_reductions(pairs, mood)
-    return reductions
+    return {
+        'subjects_with_verbs': get_verb_subject_pairs(tree),
+        'sentence': sent
+    }
 
 def get_reduction(data, allennlp_predictor):
     sent = json.loads(data)['data']
@@ -161,20 +173,47 @@ def test_pipeline(sent, predictor):
     verb phrase extraction, noun phrase extraction, mood
     """
     print("Original Sentence: ", sent)
-    # sent = preprocess_sent(sent)
+    sent = preprocess_sent(sent)
     print("Processed Sentence: ", sent)
     parse = predictor.predict_json({"sentence": sent})
     tree = Tree.fromstring(parse["trees"])
     print("Tree: \n", tree)
+    pairs = get_verb_subject_phrases(tree)
+    print_verb_subject_phrases(pairs)
+
+    for pair in pairs['sentence']:
+        subject = pair['np']
+        print(subject_words_from_phrase(subject))
+        vp = pair['vp']
+        print(verb_words_from_phrase(vp))
+
     pairs = get_verb_subject_pairs(tree)
-    print_verb_subject_pairs(pairs)
-    mood = determine_sentence_mood(sent)
-    reductions = generate_reductions(pairs, mood)
-    print(reductions)
-    print("\n\n")
+    print(pairs)
+    return pairs
+
+def evaluate_subjects_with_verbs(actual, expected):
+    actual, expected = sorted(actual, key=lambda k: k["np"][0]["word"]), sorted(expected)
+    if actual == expected:
+        print("PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
+        return 1
+    else:
+        print("MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
+        print("Expected:", expected)
+        print("Got:", actual)
+        return 0
 
 # MARK: Test Script
 
+with open('../test/data/sentences.json') as test_file:
+    tests = json.load(test_file)
+
+test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
 predictor = load_predictor()
-for sent in test_sents:
-    test_pipeline(sent, predictor)
+
+num_correct = 0
+for (text, expected) in test_sents:
+    pairs = test_pipeline(text, predictor)
+    num_correct += evaluate_subjects_with_verbs(pairs, expected)
+    print("\n\n")
+
+print("TEST ACCURACY: ", num_correct/len(test_sents))
