@@ -134,7 +134,7 @@ Tree:
 Verb Subject Pairs: 
 {'subjects_with_verbs': []}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Who', 'label': 'WP'}], 'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}]}]
+Expected: [{'np': [{'word': 'girlfriend', 'label': 'NN'}], 'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}]}]
 Got: []
 
 
@@ -149,7 +149,7 @@ Tree:
 Verb Subject Pairs: 
 {'subjects_with_verbs': []}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'dogs', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}]
+Expected: [{'np': [{'word': 'boys', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}, {'np': [{'word': 'dogs', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}]
 Got: []
 
 
@@ -1292,4 +1292,95 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': '
 
 
 
-TEST ACCURACY:  0.6851851851851852
+Original Sentence:  She and I are poets.
+Processed Sentence:  She and I are poets.
+Tree: 
+ (S
+  (NP (NP (PRP She)) (CC and) (NP (PRP I)))
+  (VP (VBP are) (NP (NNS poets)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  She and I
+Verb Phrase:  are poets
+[{'word': 'She', 'label': 'PRP'}, {'word': 'I', 'label': 'PRP'}]
+[{'word': 'are', 'label': 'VBP'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'She', 'label': 'PRP'}, {'word': 'I', 'label': 'PRP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+Original Sentence:  To be dancing is a delightful thing.
+Processed Sentence:  To be dancing is a delightful thing.
+Tree: 
+ (S
+  (S (VP (TO To) (VP (VB be) (NP (VBG dancing)))))
+  (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  To be dancing
+Verb Phrase:  is a delightful thing
+[{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}]}]}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}]}]
+
+
+
+Original Sentence:  To be dancing, singing and laughing is a delightful thing.
+Processed Sentence:  To be dancing, singing and laughing is a delightful thing.
+Tree: 
+ (S
+  (S
+    (VP
+      (TO To)
+      (VP
+        (VB be)
+        (VP (VBG dancing))
+        (, ,)
+        (S (VP (NN singing) (CC and) (NN laughing))))))
+  (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  To be dancing , singing and laughing
+Verb Phrase:  is a delightful thing
+[{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}]}]}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'singing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}]}]
+
+
+
+Original Sentence:  To be dancing, singing, and laughing is a delightful thing.
+Processed Sentence:  To be dancing, singing, and laughing is a delightful thing.
+Tree: 
+ (S
+  (S
+    (VP
+      (TO To)
+      (VP
+        (VB be)
+        (VBG dancing)
+        (, ,)
+        (NP (NN singing))
+        (, ,)
+        (CC and)
+        (VP (VBG laughing)))))
+  (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  To be dancing , singing , and laughing
+Verb Phrase:  is a delightful thing
+[{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}]}]}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'singing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}]}]
+
+
+
+TEST ACCURACY:  0.6551724137931034
