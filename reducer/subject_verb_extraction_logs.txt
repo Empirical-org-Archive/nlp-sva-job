@@ -22,7 +22,9 @@ Verb Phrase:  is John
 [{'word': 'Who', 'label': 'WP'}]
 [{'word': 'is', 'label': 'VBZ'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]}
-PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'John', 'label': 'NNP'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]
 
 
 
@@ -37,7 +39,7 @@ Verb Phrase:  is dancing
 [{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Who', 'label': 'WP'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Expected: []
 Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]
 
 
@@ -1166,4 +1168,144 @@ Got: [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'lab
 
 
 
-TEST ACCURACY:  0.5833333333333334
+Original Sentence:   I recommend that everyone be computer literate.
+Processed Sentence:  I recommend that everyone be computer literate.
+Tree: 
+ (S
+  (NP (PRP I))
+  (VP
+    (VBP recommend)
+    (SBAR
+      (IN that)
+      (S
+        (NP (NN everyone))
+        (VP (VB be) (ADJP (NN computer) (JJ literate))))))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  I
+Verb Phrase:  recommend that everyone be computer literate
+Noun Phrase:  everyone
+Verb Phrase:  be computer literate
+[{'word': 'I', 'label': 'PRP'}]
+[{'word': 'recommend', 'label': 'VBP'}]
+[{'word': 'everyone', 'label': 'NN'}]
+[{'word': 'be', 'label': 'VB'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'recommend', 'label': 'VBP'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'be', 'label': 'VB'}], 'np': [{'word': 'everyone', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+Original Sentence:   I recommend that everyone is computer literate.
+Processed Sentence:  I recommend that everyone is computer literate.
+Tree: 
+ (S
+  (NP (PRP I))
+  (VP
+    (VBP recommend)
+    (SBAR
+      (IN that)
+      (S
+        (NP (NN everyone))
+        (VP (VBZ is) (ADJP (NN computer) (NN literate))))))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  I
+Verb Phrase:  recommend that everyone is computer literate
+Noun Phrase:  everyone
+Verb Phrase:  is computer literate
+[{'word': 'I', 'label': 'PRP'}]
+[{'word': 'recommend', 'label': 'VBP'}]
+[{'word': 'everyone', 'label': 'NN'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'recommend', 'label': 'VBP'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'everyone', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+Original Sentence:   I wish that everyone was computer literate.
+Processed Sentence:  I wish that everyone was computer literate.
+Tree: 
+ (S
+  (NP (PRP I))
+  (VP
+    (VBP wish)
+    (SBAR
+      (IN that)
+      (S
+        (NP (NN everyone))
+        (VP (VBD was) (ADJP (NN computer) (NN literate))))))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  I
+Verb Phrase:  wish that everyone was computer literate
+Noun Phrase:  everyone
+Verb Phrase:  was computer literate
+[{'word': 'I', 'label': 'PRP'}]
+[{'word': 'wish', 'label': 'VBP'}]
+[{'word': 'everyone', 'label': 'NN'}]
+[{'word': 'was', 'label': 'VBD'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'wish', 'label': 'VBP'}], 'np': [{'word': 'I', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'everyone', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+Original Sentence:   Yellow and green is an awful combination.
+Processed Sentence:  Yellow and green is an awful combination.
+Tree: 
+ (S
+  (NP (JJ Yellow) (CC and) (JJ green))
+  (VP (VBZ is) (NP (DT an) (JJ awful) (NN combination)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  Yellow and green
+Verb Phrase:  is an awful combination
+[]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'Yellow', 'label': 'JJ'}, {'word': 'green', 'label': 'JJ'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]
+
+
+
+Original Sentence:   Green man and yellow man are great.
+Processed Sentence:  Green man and yellow man are great.
+Tree: 
+ (S
+  (NP (NP (JJ Green) (NN man)) (CC and) (NP (JJ yellow) (NN man)))
+  (VP (VBP are) (ADJP (JJ great)))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  Green man and yellow man
+Verb Phrase:  are great
+[{'word': 'man', 'label': 'NN'}, {'word': 'man', 'label': 'NN'}]
+[{'word': 'are', 'label': 'VBP'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'man', 'label': 'NN'}, {'word': 'man', 'label': 'NN'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+
+
+
+Original Sentence:   Man boy is the most powerful member of the lightning squad.
+Processed Sentence:  Man boy is the most powerful member of the lightning squad.
+Tree: 
+ (S
+  (NP (NN Man) (NN boy))
+  (VP
+    (VBZ is)
+    (NP
+      (NP (DT the) (ADJP (RBS most) (JJ powerful)) (NN member))
+      (PP (IN of) (NP (DT the) (NN lightning) (NN squad)))))
+  (. .))
+Verb Subject Pairs: 
+Noun Phrase:  Man boy
+Verb Phrase:  is the most powerful member of the lightning squad
+[{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]}]}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'Man boy', 'label': 'NN'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
+Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]}]
+
+
+
+TEST ACCURACY:  0.5740740740740741
