@@ -56,18 +56,27 @@ def get_verb_subject_phrases(tree):
 def verb_subject_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
         Returns list of subject, verb pairs, empty if none
+
+        Broadly, covers cases:
+        (1) Standard noun-phrase and verb-phrase as siblings: "Joyce is amazing"
+        (2) Multiple verb phrases: "At once I was in heaven and danced freely on the sand"
+        (3) Declarative clause verb-phrase as subject: "Swinging from vines is fun"
+
     """
-    np = None
+    np, s_child = None, None # Possible subjects
     vps = []
     for i in range(0, len(tree)):
         child = tree[i]
         np = child if child.label() == "NP" else np
+        s_child = child if child.label() == "S" else s_child
         vps += [child] if child.label() == "VP" else []
 
     vps = sum([unpack_verb_phrases(vp) for vp in vps], [])
-    if np is not None:
-        # TODO: Under what circumstances should we return one of these having a None value?
+    if np is not None: # Noun phrase as subject
         return [{ 'vp': vp, 'np': np } for vp in vps]
+    elif s_child is not None: # Declarative clause as subject
+        return [{ 'vp': vp, 'np': s_child } for vp in vps]
+    # TODO: Under what circumstances should we return a pair with None np?
     return []
 
 
@@ -145,8 +154,11 @@ def subject_words_from_phrase(subject):
     words = []
     if subject is None: # No subject
         return words
+    elif subject.label() == "S":
+        # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
+        return verb_words_from_phrase(subject)
     else:
-        # Otherwise, return a list of the nouns
+        # Otherwise, return a list of the nouns in clause
         for i in range(0, len(subject)):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
@@ -160,8 +172,15 @@ def subject_words_from_phrase(subject):
 
 
 def verb_words_from_phrase(vp):
-    "Given a verb phrase, returns a list of the verb reductions"
+    """
+    Given a verb phrase, returns a list of the verb words in the phrase
+
+    Broadly, handles cases:
+    (1) Typical verbs
+    (2) "to" before verbs without nesting. Usually in subjects: "To dance is to be free."
+    """
     verb_tags = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+    to_labels = ["TO"]
 
     if vp is None:
         return []
@@ -169,7 +188,7 @@ def verb_words_from_phrase(vp):
     words = []
     for i in range(0, len(vp)):
         child = vp[i]
-        if child.label() in verb_tags:
+        if child.label() in verb_tags + to_labels:
             words.append( { 'word': child[0], 'label': child.label() })
         if child.label() == "VP":
             words += verb_words_from_phrase(child)

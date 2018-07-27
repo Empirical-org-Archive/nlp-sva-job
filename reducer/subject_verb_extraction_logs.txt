@@ -753,14 +753,16 @@ Tree:
   (NP (NNP Jane))
   (. .))
 Verb Subject Pairs: 
+Noun Phrase:  Swinging from vines
+Verb Phrase:  is fun
 Noun Phrase:  Jane
 Verb Phrase:  said
+[{'word': 'Swinging', 'label': 'VBG'}]
+[{'word': 'is', 'label': 'VBZ'}]
 [{'word': 'Jane', 'label': 'NNP'}]
 [{'word': 'said', 'label': 'VBD'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Swinging', 'label': 'VBG'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}, {'np': [{'word': 'Jane', 'label': 'NNP'}], 'vp': [{'word': 'said', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Swinging', 'label': 'VBG'}]}, {'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -786,12 +788,14 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  Tarzan
 Verb Phrase:  commented
+Noun Phrase:  To dance to Phil Collins
+Verb Phrase:  is to truly be free
 [{'word': 'Tarzan', 'label': 'NNP'}]
 [{'word': 'commented', 'label': 'VBD'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'commented', 'label': 'VBD'}], 'np': [{'word': 'Tarzan', 'label': 'NNP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'To', 'label': 'TO'}, {'word': 'dance', 'label': 'VB'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}, {'np': [{'word': 'Tarzan', 'label': 'NNP'}], 'vp': [{'word': 'commented', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'commented', 'label': 'VBD'}], 'np': [{'word': 'Tarzan', 'label': 'NNP'}]}]
+[{'word': 'To', 'label': 'TO'}, {'word': 'dance', 'label': 'VB'}]
+[{'word': 'is', 'label': 'VBZ'}]
+{'subjects_with_verbs': [{'vp': [{'word': 'commented', 'label': 'VBD'}], 'np': [{'word': 'Tarzan', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'TO'}, {'word': 'dance', 'label': 'VB'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1308,4 +1312,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': '
 
 
 
-TEST ACCURACY:  0.5740740740740741
+TEST ACCURACY:  0.6111111111111112
