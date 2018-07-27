@@ -2,41 +2,36 @@
   "sentences": [
       {
       "text":"John is a boy",
+      "covers":"base case",
       "subjects_with_verbs":[
         {
           "np": [ { "word": "John", "label": "NNP" }],
           "vp": [ {"word": "is", "label": "VBZ"}]
         }
       ],
-      "covers":"base case",
       "reductions":[
         "NONCONDITIONAL-IS>SG"
       ]
     },
     {
       "text":"Who is John?",
+      "covers":"WH-pronoun subjects in questions (we use the object not the subject in our reduction in this case).",
       "subjects_with_verbs":[
         {
-          "np": [ { "word": "Who", "label": "WP" }],
+          "np": [ { "word": "John", "label": "NNP" }],
           "vp": [ {"word": "is", "label": "VBZ"}]
         }
       ],
-      "covers":"WH-pronoun subjects in questions.",
       "reductions":[
-        "NONCONDITIONAL-IS>WHO"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {
       "text":"Who is dancing?",
-      "covers":"WH-pronoun subjects in questions.",
+      "covers":"WH-pronoun subjects in questions without objects (number is always ambiguous here).",
       "subjects_with_verbs":[
-        {
-          "np": [ { "word": "Who", "label": "WP" }],
-          "vp": [ {"word": "is", "label": "VBZ"}]
-        }
       ],
       "reductions":[
-        "NONCONDITIONAL-IS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>WHO"
       ]
     },
     {
@@ -206,11 +201,11 @@
       "subjects_with_verbs":[
         {
           "np": [{"word":"I","label":"PRP"}],
-          "vp": [{"word": "would", "label": "MD"}, {"word":"say", "label":"VB"}]
+          "vp": [{"word": "'d", "label": "MD"}, {"word":"say", "label":"VB"}]
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -228,7 +223,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "were", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "were", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -246,7 +241,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"dancing", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"dancing", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -264,11 +259,11 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"skating", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"skating", "label":"VBG"}]
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}]
+          "vp": [{"word": "was", "label": "VBD"}]
         }
       ],
       "reductions":[
@@ -287,7 +282,7 @@
         },
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "was", "label": "VDB"}, {"word":"walking", "label":"VBG"}]
+          "vp": [{"word": "was", "label": "VBD"}, {"word":"walking", "label":"VBG"}]
         }
       ],
       "reductions":[
@@ -511,7 +506,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-VDB_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
       ]
     },
     {
@@ -736,12 +731,105 @@
       "covers": "Subject verb inversion for speech attribution, nested imperative.",
       "subjects_with_verbs":[
         {
-          "np": [{"word":"Farmer","label":"NNP"}, {"word":"Brown", "label":"NNP"}],
+          "np": [{"word":"Farmer Brown","label":"NNP"}],
           "vp": [{"word": "cried", "label": "VBD"}]
         }
       ],
       "reductions":[
         "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
+      ]
+    },
+    {
+      "text":" I recommend that everyone be computer literate.",
+      "covers": "subjunctive mood, be used in unchanged form (grammatically correct)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "recommend", "label": "VBP"}]
+        },
+        {
+          "np": [{"word":"everyone","label":"NN"}],
+          "vp": [{"word": "be", "label": "VB"}]
+        }
+      ],
+      "reductions":[
+        "SUBJUNCTIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "SUBJUNCTIVE-BE>SG"
+      ]
+    },
+    {
+      "text":" I recommend that everyone is computer literate.",
+      "covers": "subjunctive mood, be used in unchanged form (grammatically incorrect)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "recommend", "label": "VBP"}]
+        },
+        {
+          "np": [{"word":"everyone","label":"NN"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "SUBJUNCTIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "SUBJUNCTIVE-IS>SG"
+      ]
+    },
+    {
+      "text":" I wish that everyone was computer literate.",
+      "covers": "subjunctive mood, be used in unchanged form (grammatically incorrect)",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"I","label":"PRP"}],
+          "vp": [{"word": "wish", "label": "VBP"}]
+        },
+        {
+          "np": [{"word":"everyone","label":"NN"}],
+          "vp": [{"word": "was", "label": "VBD"}]
+        }
+      ],
+      "reductions":[
+        "SUBJUNCTIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "SUBJUNCTIVE-WAS>SG"
+      ]
+    },
+    {
+      "text":" Yellow and green is an awful combination.",
+      "covers": "Adjective chain acting as singular noun subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Yellow","label":"JJ"}, {"word":"green", "label":"JJ"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "SUBJUNCTIVE-IS>JJS"
+      ]
+    },
+    {
+      "text":" Green man and yellow man are great.",
+      "covers": "Adjectives playing a supporting role in a noun phrase.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"man","label":"NN"}, {"word":"man", "label":"NN"}],
+          "vp": [{"word": "are", "label": "VBP"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-ARE>THEYLIKE"
+      ]
+    },
+    {
+      "text":" Man boy is the most powerful member of the lightning squad.",
+      "covers": "Two singular nouns unseparated by punctuation or conjunction are treated as one.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"Man boy","label":"NN"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "INDICATIVE-IS>SG"
       ]
     }
   ]
