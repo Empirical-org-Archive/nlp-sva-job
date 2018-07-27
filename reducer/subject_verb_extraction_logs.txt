@@ -1160,8 +1160,10 @@ Verb Phrase:  cried
 [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]
 [{'word': 'cried', 'label': 'VBD'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]}
-PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'Farmer Brown', 'label': 'NNP'}], 'vp': [{'word': 'cried', 'label': 'VBD'}]}]
+Got: [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]
 
 
 
-TEST ACCURACY:  0.6041666666666666
+TEST ACCURACY:  0.5833333333333334

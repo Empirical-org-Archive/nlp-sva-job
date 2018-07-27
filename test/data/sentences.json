@@ -736,7 +736,7 @@
       "covers": "Subject verb inversion for speech attribution, nested imperative.",
       "subjects_with_verbs":[
         {
-          "np": [{"word":"Farmer","label":"NNP"}, {"word":"Brown", "label":"NNP"}],
+          "np": [{"word":"Farmer Brown","label":"NNP"}],
           "vp": [{"word": "cried", "label": "VBD"}]
         }
       ],
