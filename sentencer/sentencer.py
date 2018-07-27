@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+PRE_SENTENCES_BASE#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from sentence_helper import get_sentences
 import logging
@@ -25,12 +25,12 @@ logger = logging.getLogger('sentencer')
 
 try:
     JOB_NAME = os.environ['JOB_NAME']
-    PRE_REDUCTIONS_BASE = os.environ['PRE_REDUCTIONS_QUEUE_BASE']
-    PRE_REDUCTIONS_QUEUE = PRE_REDUCTIONS_BASE + '_' + JOB_NAME
+    PRE_SENTENCES_BASE = os.environ['PRE_SENTENCES_QUEUE_BASE']
+    PRE_SENTENCES_QUEUE = PRE_SENTENCES_BASE + '_' + JOB_NAME
     RABBIT = os.environ.get('RABBITMQ_LOCATION', 'localhost')
-    REDUCER_PREFETCH_COUNT = int(os.environ.get('REDUCER_PREFETCH_COUNT', 10))
-    REDUCTIONS_BASE = os.environ['REDUCTIONS_QUEUE_BASE']
-    REDUCTIONS_QUEUE = REDUCTIONS_BASE + '_' + JOB_NAME
+    SENTENCER_PREFETCH_COUNT = int(os.environ.get('SENTENCER_PREFETCH_COUNT', 10))
+    SENTENCES_BASE = os.environ['SENTENCES_QUEUE_BASE']
+    SENTENCES_QUEUE = SENTENCES_BASE + '_' + JOB_NAME
 except KeyError as e:
     logger.critical("important environment variables were not set.")
     raise Exception('important environment variables were not set')
@@ -38,10 +38,10 @@ except KeyError as e:
 def handle_message(ch, method, properties, body):
     try:
         body = body.decode('utf-8')
-        for reduction in get_sentences(body):
-            channel.basic_publish(exchange='', routing_key=REDUCTIONS_QUEUE,
-                    body=reduction)
-        logger.info("queued reductions")
+        for sentence in get_sentences(body):
+            channel.basic_publish(exchange='', routing_key=SENTENCES_QUEUE,
+                    body=sentence)
+        logger.info("queued sentences")
     except Exception as e:
         logger.error("problem handling message - {}".format(e))
     ch.basic_ack(delivery_tag=method.delivery_tag)
@@ -50,11 +50,11 @@ def handle_message(ch, method, properties, body):
 if __name__ == '__main__':
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
     channel = connection.channel()
-    channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE) # create queue if doesn't exist
-    channel.queue_declare(queue=REDUCTIONS_QUEUE)
+    channel.queue_declare(queue=PRE_SENTENCES_QUEUE) # create queue if doesn't exist
+    channel.queue_declare(queue=SENTENCES_QUEUE)
 
     # NOTE: if the prefetch count is too high, some workers could starve. If it
     # is too low, we make an unneccessary amount of requests to rabbitmq server
-    channel.basic_qos(prefetch_count=REDUCER_PREFETCH_COUNT) # limit num of unackd msgs on channel
-    channel.basic_consume(handle_message, queue=PRE_REDUCTIONS_QUEUE, no_ack=False)
+    channel.basic_qos(prefetch_count=SENTENCER_PREFETCH_COUNT) # limit num of unackd msgs on channel
+    channel.basic_consume(handle_message, queue=PRE_SENTENCES_QUEUE, no_ack=False)
     channel.start_consuming()
