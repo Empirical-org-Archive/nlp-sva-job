@@ -18,7 +18,7 @@ log_filename='writer_{}.log'.format(os.getpid())
 log_format = '%(levelname)s %(asctime)s {pid} {filename} %(lineno)d %(message)s'.format(
         pid=PID, filename=FNAME)
 logging.basicConfig(format=log_format,
-    filename='/var/log/reducerlogs/{}'.format(log_filename),
+    filename='/var/log/sentencerlogs/{}'.format(log_filename),
     datefmt='%Y-%m-%dT%H:%M:%S%z',
     level=logging.INFO)
 logger = logging.getLogger('writer')
@@ -31,8 +31,8 @@ try:
     JOB_ID = os.environ['JOB_ID']
     JOB_NAME = os.environ['JOB_NAME']
     RABBIT = os.environ.get('RABBITMQ_LOCATION', 'localhost')
-    REDUCTIONS_BASE = os.environ['REDUCTIONS_QUEUE_BASE']
-    REDUCTIONS_QUEUE = REDUCTIONS_BASE + '_' + JOB_NAME
+    SENTENCES_BASE = os.environ['SENTENCES_QUEUE_BASE']
+    SENTENCES_QUEUE = SENTENCES_BASE + '_' + JOB_NAME
     WRITER_PREFETCH_COUNT = int(os.environ.get('WRITER_PREFETCH_COUNT', 100))
 except KeyError as e:
     logger.critical('important environment variables were not set')
@@ -58,35 +58,35 @@ def add_logger_info(msg):
         log_mgr.messages = []
 
 
-class ReductionCopyManager():
+class SentenceCopyManager():
     def __init__(self):
         self.f = io.StringIO()
         self.max_len = 1000
         self.length = 0
-    
-    def insert(self, reduction, job_id):
-        self.f.write(reduction + '\t' + job_id + '\n')
+
+    def insert(self, sentence, job_id):
+        self.f.write(sentence + '\t' + job_id + '\n')
         self.length += 1
         if self.length >= self.max_len:
             self.f.seek(0) # be kind, rewind
-            cur.copy_from(self.f, 'reductions', columns=('reduction', 'job_id'))
+            cur.copy_from(self.f, 'sentences', columns=('sentence', 'job_id'))
             conn.commit()
             self.f.close()
             self.f = io.StringIO()
             self.length = 0
 
-reduction_copy_manager = ReductionCopyManager()
+sentence_copy_manager = SentenceCopyManager()
 
 # #Steps:
-# 1. Read reduced strings from Reduction Queue
-# 2. Write reduced strings to database 
+# 1. Read sentenced strings from Sentence Queue
+# 2. Write sentenced strings to database
 
 def handle_message(ch, method, properties, body):
     try:
         body = body.decode('utf-8')
-        reduction_copy_manager.insert(body, JOB_ID)
+        sentence_copy_manager.insert(body, JOB_ID)
         conn.commit()
-        add_logger_info('inserted reduction')
+        add_logger_info('inserted sentence')
     except psycopg2.Error as e:
         logger.error('problem handling message, psycopg2 error, {}'.format(
             e.diag.message_primary))
@@ -94,7 +94,7 @@ def handle_message(ch, method, properties, body):
     except UnicodeError as e:
         logger.error("problem handling message, unicode error - {}".format(
             e))
-        
+
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
@@ -102,29 +102,29 @@ if __name__ == '__main__':
 
     # Check if a writer is already running for this job, if so, exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{reduction_writer}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'reduction_writer')
+    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{sentence_writer}', %s), updated=DEFAULT
+                    WHERE NOT(meta ? 'sentence_writer')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
     cur.execute("""SELECT COUNT(*) FROM jobs
-                    WHERE meta->'reduction_writer'=%s
+                    WHERE meta->'sentence_writer'=%s
                     AND id=%s
                 """,
             (json.dumps(DROPLET_NAME),JOB_ID))
     continue_running = cur.fetchone()[0] == 1
     if not continue_running:
-        logger.info('job has dedicated reduction writer. exiting')
-        raise Exception('This job already has a dedicated reduction writer. Exiting')
+        logger.info('job has dedicated sentence writer. exiting')
+        raise Exception('This job already has a dedicated sentence writer. Exiting')
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
     channel = connection.channel()
-    channel.queue_declare(queue=REDUCTIONS_QUEUE) # create queue if doesn't exist
+    channel.queue_declare(queue=SENTENCES_QUEUE) # create queue if doesn't exist
 
     # NOTE: a high prefetch count is not risky here because there will only ever
     # be one writer (so this guy can't starve anyone out)
     channel.basic_qos(prefetch_count=WRITER_PREFETCH_COUNT) # limit num of unackd msgs on channel
-    channel.basic_consume(handle_message, queue=REDUCTIONS_QUEUE, no_ack=False)
+    channel.basic_consume(handle_message, queue=SENTENCES_QUEUE, no_ack=False)
     channel.start_consuming()
 
     cur.close()
