@@ -91,12 +91,12 @@
       "covers":"Past continuous with verb error.",
       "subjects_with_verbs":[
         {
-          "np": [ {"word":"Who", "label":"WP"}],
+          "np": [ {"word":"girlfriend", "label":"NN"}],
           "vp": [ {"word": "has", "label": "VBZ"}, {"word":"been", "label":"VBN"}]
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-HAS:BEEN>WHO"
+        "NONCONDITIONAL-HAS:BEEN>SG"
       ]
     },
     {
@@ -104,11 +104,16 @@
       "covers":"Present perfect continuous with verb error.",
       "subjects_with_verbs":[
         {
+          "np": [ {"word":"boys", "label":"NNS"}],
+          "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
+        },
+        {
           "np": [ {"word":"dogs", "label":"NNS"}],
           "vp": [ {"word": "have", "label": "VBP"}, {"word":"been", "label":"VBN"}]
         }
       ],
       "reductions":[
+        "NONCONDITIONAL-HAVE:BEEN>PL",
         "NONCONDITIONAL-HAVE:BEEN>PL"
       ]
     },
@@ -210,7 +215,7 @@
       ],
       "reductions":[
         "CONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
-        "CONDITIONAL-WOULD:SAY>I"
+        "CONDITIONAL-'D:SAY>I"
       ]
     },
     {
@@ -286,7 +291,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-WAS:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE",
+        "NONCONDITIONAL-WAS:WALKING>HE",
         "NONCONDITIONAL-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
       ]
     },
@@ -304,7 +309,7 @@
         }
       ],
       "reductions":[
-        "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
+        "CONDITIONAL-MIGHT:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
         "CONDITIONAL-WERE>HE"
       ]
     },
@@ -506,7 +511,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>JJ"
+        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>MOD"
       ]
     },
     {
@@ -519,7 +524,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>JJ"
+        "NONCONDITIONAL-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>MOD"
       ]
     },
     {
@@ -679,7 +684,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-IS>BOOK"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {
@@ -710,7 +715,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>RB:RB"
+        "NONCONDITIONAL-HAS:BEEN:VBN_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>MODS"
       ]
     },
     {
@@ -803,7 +808,7 @@
         }
       ],
       "reductions":[
-        "SUBJUNCTIVE-IS>JJS"
+        "SUBJUNCTIVE-IS>MODS"
       ]
     },
     {
@@ -830,6 +835,62 @@
       ],
       "reductions":[
         "INDICATIVE-IS>SG"
+      ]
+    },
+    {
+      "text":"She and I are poets.",
+      "covers":"Subject is comprised of two pronouns.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"She", "label":"PRP"}, {"word":"I", "label":"PRP"}],
+          "vp": [{"word": "are", "label": "VBP"}]
+        }
+      ],
+      "reductions":[
+        "NONCONDITIONAL-ARE>THEYLIKE"
+      ]
+    },
+    {
+      "text":"To be dancing is a delightful thing.",
+      "covers":"Quote and infinitive as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"To","label":"TO"}, {"word":"be", "label":"VB"}, {"word":"dancing", "label":"VBG"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "NONCONDITIONAL-IS>INF"
+      ]
+    },
+    {
+      "text":"To be dancing, singing and laughing is a delightful thing.",
+      "covers":"Quote and infinitive as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"To","label":"TO"}, {"word":"be", "label":"VB"},
+            {"word":"dancing", "label":"VBG"}, {"word":"singing",
+              "label":"VBG"}, {"word":"laughing", "label":"VBG"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "NONCONDITIONAL-IS>INF"
+      ]
+    },
+    {
+      "text":"To be dancing, singing, and laughing is a delightful thing.",
+      "covers":"Quote and infinitive as subject.",
+      "subjects_with_verbs":[
+        {
+          "np": [{"word":"To","label":"TO"}, {"word":"be", "label":"VB"},
+            {"word":"dancing", "label":"VBG"}, {"word":"singing",
+              "label":"VBG"}, {"word":"laughing", "label":"VBG"}],
+          "vp": [{"word": "is", "label": "VBZ"}]
+        }
+      ],
+      "reductions":[
+        "NONCONDITIONAL-IS>INF"
       ]
     }
   ]

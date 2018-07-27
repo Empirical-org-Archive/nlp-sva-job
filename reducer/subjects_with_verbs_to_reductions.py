@@ -40,23 +40,46 @@ def get_verb_phrase_reduction(verb_phrase_word_list):
     return ':'.join(rl)
 
 def get_noun_phrase_reduction(noun_phrase_word_list):
-    # SG, list length is 1 singular noun
-    if (len(noun_phrase_word_list) == 1 and noun_phrase_word_list[0]['label'] in
+    npwl = noun_phrase_word_list
+    # SG, list len is 1, a singular noun
+    if (len(npwl) == 1 and npwl[0]['label'] in
             ['NN', 'NNP']):
-    
-        
-    # take care of single words
-    NNS -> PL, NN -> SG, NNP -> SG, NNPS -> PL 
-    # noun phrase can be
-    # an array of 
+        return 'SG'
+    # PL, list len is 1, a plural noun
+    elif len(npwl) == 1 and npwl[0]['label'] in ['NNS','NNPS']:
+        return 'PL'
+    # THEYLIKE, list len > 1 and is filled with nouns and pronouns 
+    elif len(npwl) > 1 and all(npw['label'] in ['PRP','NN','NNP','NNS','NNPS'] for npw in npwl):
+        return 'THEYLIKE'
+    # <determiner literal>, list len is 1, a single determiner
+    elif len(npwl) == 1 and npwl[0]['label'] == 'DT':
+        return npwl[0]['word'].upper()
+    # <pronoun literal>, list len is 1, a single pronoun
+    elif len(npwl) == 1 and npwl[0]['label'] == 'PRP':
+        return npwl[0]['word'].upper()
+    # MOD, list len is 1, a single adjective or adverb
+    elif len(npwl) == 1 and npwl[0]['label'] in ['JJ', 'RB']:
+        return 'MOD'
+    # MODS, list len > 1 and is filled with adverbs and adjectives
+    elif len(npwl) > 1 and all(npw['label'] in ['JJ', 'RB'] for npw in npwl):
+        return 'MODS'
+    # VBG, list len is 1, a single gerund
+    elif len(npwl) == 1 and npwl[0]['label'] == 'VBG':
+        return 'VBG'
+    # INF, list len is >= 2, a single infinitive
+    elif (len(npwl) >= 2 and npwl[0]['label'] == 'TO' and
+            npwl[1]['label'] == 'VB' and
+            all(npw['label'] == 'VBG' for npw in npwl[2:])):
+        return 'INF'
 
 
 def get_reduction(subject_with_verb, sentence):
     result = "{m}-{vp}>{np}"
     m = get_mood(sentence).upper()
-    vp = get_verb_phrase_reduction(subjects_with_verb['vp'])
+    vp = get_verb_phrase_reduction(subject_with_verb['vp'])
     np = get_noun_phrase_reduction(subject_with_verb['np'])
-    return 'FAKE_RED'
+    return result.format(m=m, vp=vp, np=np)
+
 
 #########################
 
@@ -93,13 +116,13 @@ def test_get_mood():
 def test():
     with open(TEST_DATA) as f:
         test_dict = json.load(f)
+    incorrect_sentences = 0
     for sentence_obj in test_dict['sentences']:
         expected_reductions = Counter(sentence_obj['reductions']) # order doesn't matter
         subjects_with_verbs = sentence_obj['subjects_with_verbs']
-        print (sentence_obj['text'])
         ex, unex = [],[] 
         for swv in subjects_with_verbs:
-            r = get_reduction(swv, sentence)
+            r = get_reduction(swv, sentence_obj['text'])
             if r in expected_reductions and expected_reductions[r] > 0:
                 ex.append(r)
                 expected_reductions[r] -= 1
@@ -107,17 +130,28 @@ def test():
                 unex.append(r)
         unmatched = [unm for unm in expected_reductions if
                 expected_reductions[unm] > 0]
-        print('Found {} expected and {} unexpected reductions'.format(len(ex),
-            len(unex)))
-        print('unexpected:')
-        for u in unex:
-            print(u)
-        print('unmatched:')
-        for unm in unmatched:
-            print(unm)
+
+        if unex or unmatched:
+            incorrect_sentences +=1
+            print('---------------------------------------------')
+            print('sentence:')
+            print (sentence_obj['text'])
+            print('Found {} unexpected and {} unmatched reductions'.format(
+                len(unex),
+                len(unmatched)))
+        if unex:
+            print('unexpected:')
+            for u in unex:
+                print(u)
+
+        if unmatched:
+            print('unmatched:')
+            for unm in unmatched:
+                print(unm)
+    print('There were {} incorrect sentences.'.format(incorrect_sentences))
     return None
 
-#test()
+test()
 #test_get_mood()
-test_get_verb_phrase_reduction()
+#test_get_verb_phrase_reduction()
 
