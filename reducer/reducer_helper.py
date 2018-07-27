@@ -46,6 +46,9 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
         pairs += verb_subject_for_declarative_clause(s)
 
+    for s in tree.subtrees(lambda t: t.label() == 'SINV'):
+        pairs += verb_subject_for_subject_inversion(s)
+
     return { 'subjects_with_verbs': pairs }
 
 # MARK: Extracting pairs from various clauses:
@@ -53,18 +56,27 @@ def get_verb_subject_phrases(tree):
 def verb_subject_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
         Returns list of subject, verb pairs, empty if none
+
+        Broadly, covers cases:
+        (1) Standard noun-phrase and verb-phrase as siblings: "Joyce is amazing"
+        (2) Multiple verb phrases: "At once I was in heaven and danced freely on the sand"
+        (3) Declarative clause verb-phrase as subject: "Swinging from vines is fun"
+
     """
-    np = None
+    np, s_child = None, None # Possible subjects
     vps = []
     for i in range(0, len(tree)):
         child = tree[i]
         np = child if child.label() == "NP" else np
+        s_child = child if child.label() == "S" else s_child
         vps += [child] if child.label() == "VP" else []
 
     vps = sum([unpack_verb_phrases(vp) for vp in vps], [])
-    if np is not None:
-        # TODO: Under what circumstances should we return one of these having a None value?
+    if np is not None: # Noun phrase as subject
         return [{ 'vp': vp, 'np': np } for vp in vps]
+    elif s_child is not None: # Declarative clause as subject
+        return [{ 'vp': vp, 'np': s_child } for vp in vps]
+    # TODO: Under what circumstances should we return a pair with None np?
     return []
 
 
@@ -72,15 +84,41 @@ def verb_subject_for_sbarq(tree):
     """
     Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
     Returns list of subject, verb pairs, empty if none
+
+    Subject is typically implied by the SQ after the question word.
+    The subject of "Who is John" is "John", which is contained in the SQ
     """
     wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    # Identify the SQ (main clause of wh-question) which contains verb and subject
+    # Restrict to those SQs which immediately follow wh words
     for i in range(0, len(tree) - 1):
-        # Identify the wh-word and the possible subsequent SQ
-        phrase = tree[i]
-        next_phrase = tree[i + 1]
-        if phrase.label() in wh_words and next_phrase.label() == 'SQ':
-            return [{ 'vp': next_phrase, 'np': phrase}]
+        wh = tree[i]
+        sq = tree[i + 1]
+        if wh.label() in wh_words and sq.label() == 'SQ':
+            nps = [child for child in sq if child.label() == 'NP']
+            return [{ 'vp': sq, 'np': np} for np in nps]
     return []
+
+def verb_subject_for_subject_inversion(tree):
+    """
+    Takes tree for a SINV clause: clause with subject-auxillary inversion
+    Example: "Never had I seen such a place"
+    Returns list of subject, verb pairs, empty if none
+    """
+    verb_labels = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+
+    # Find the subject, looking forwards
+    for i in range(0, len(tree)):
+        if tree[i].label() == 'NP':
+            # Find the verb, looking backwards
+            for j in reversed(range(0, i)):
+                if tree[j].label() == 'VP':
+                    return [{ 'np': tree[i], 'vp': tree[j] }]
+                if tree[j].label() in verb_labels:
+                    vp = Tree('VP', [tree[j]])
+                    return [{ 'np': tree[i], 'vp': vp}]
+    return []
+
 
 
 # MARK: Helper functions for extracting pairs
@@ -116,28 +154,43 @@ def subject_words_from_phrase(subject):
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
     wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    adj_tags = ["JJ", "JJR", "JJS"]
     noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
 
-    words = []
+    noun_words = []
     if subject is None: # No subject
-        return words
+        return noun_words
+    elif subject.label() == "S":
+        # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
+        return verb_words_from_phrase(subject)
     else:
-        # Otherwise, return a list of the nouns
+        # Standard noun phrase. Gather noun words from the phrase.
+        # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
+        adj_words = []
         for i in range(0, len(subject)):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
-                words += subject_words_from_phrase(child)
-            if child.label() in noun_tags:
-                words.append({'word': child[0], 'label': child.label()})
-    return words
-
+                noun_words += subject_words_from_phrase(child)
+            elif child.label() in noun_tags:
+                noun_words.append({'word': child[0], 'label': child.label()})
+            elif child.label() in adj_tags:
+                adj_words.append({'word': child[0], 'label': child.label()})
+        return noun_words if noun_words else adj_words
+    return []
 
 # MARK: Verbs
 
 
 def verb_words_from_phrase(vp):
-    "Given a verb phrase, returns a list of the verb reductions"
+    """
+    Given a verb phrase, returns a list of the verb words in the phrase
+
+    Broadly, handles cases:
+    (1) Typical verbs
+    (2) "to" before verbs without nesting. Usually in subjects: "To dance is to be free."
+    """
     verb_tags = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+    to_labels = ["TO"]
 
     if vp is None:
         return []
@@ -145,7 +198,7 @@ def verb_words_from_phrase(vp):
     words = []
     for i in range(0, len(vp)):
         child = vp[i]
-        if child.label() in verb_tags:
+        if child.label() in verb_tags + to_labels:
             words.append( { 'word': child[0], 'label': child.label() })
         if child.label() == "VP":
             words += verb_words_from_phrase(child)

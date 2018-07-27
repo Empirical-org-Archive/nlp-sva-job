@@ -337,7 +337,7 @@
       "subjects_with_verbs":[
         {
           "np": [{"word":"she","label":"PRP"}],
-          "vp": [{"word": "were", "label": "VBD"}]
+          "vp": [{"word": "Were", "label": "VBD"}]
         },
         {
           "np": [{"word":"she","label":"PRP"}],
