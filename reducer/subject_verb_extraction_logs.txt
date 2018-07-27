@@ -17,14 +17,12 @@ Processed Sentence:  Who is John?
 Tree: 
  (SBARQ (WHNP (WP Who)) (SQ (VBZ is) (NP (NNP John))) (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  Who
+Noun Phrase:  John
 Verb Phrase:  is John
-[{'word': 'Who', 'label': 'WP'}]
+[{'word': 'John', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'John', 'label': 'NNP'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -33,14 +31,8 @@ Processed Sentence:  Who is dancing?
 Tree: 
  (SBARQ (WHNP (WP Who)) (SQ (VBZ is) (VP (VBG dancing))) (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  Who
-Verb Phrase:  is dancing
-[{'word': 'Who', 'label': 'WP'}]
-[{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: []
-Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'dancing', 'label': 'VBG'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]
+{'subjects_with_verbs': []}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -140,12 +132,10 @@ Tree:
       (VP (VBN been) (NP (DT a) (JJ bad) (NN girlfriend)))))
   (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  Who
-Verb Phrase:  has been a bad girlfriend
-[{'word': 'Who', 'label': 'WP'}]
-[{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}], 'np': [{'word': 'Who', 'label': 'WP'}]}]}
-PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+{'subjects_with_verbs': []}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'Who', 'label': 'WP'}], 'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}]}]
+Got: []
 
 
 
@@ -157,12 +147,10 @@ Tree:
   (SQ (VP (VBP have) (VP (VBN been) (NP (JJ good) (NNS boys)))))
   (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  Which dogs
-Verb Phrase:  have been good boys
-[{'word': 'dogs', 'label': 'NNS'}]
-[{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}], 'np': [{'word': 'dogs', 'label': 'NNS'}]}]}
-PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
+{'subjects_with_verbs': []}
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+Expected: [{'np': [{'word': 'dogs', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}]
+Got: []
 
 
 
@@ -812,12 +800,10 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  A melancholy
 Verb Phrase:  hung over James like a drenched parka
-[]
+[{'word': 'melancholy', 'label': 'JJ'}]
 [{'word': 'hung', 'label': 'VBD'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': []}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'melancholy', 'label': 'JJ'}], 'vp': [{'word': 'hung', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': []}]
+{'subjects_with_verbs': [{'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': [{'word': 'melancholy', 'label': 'JJ'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -847,14 +833,12 @@ Tree:
   (SQ (VBZ is) (NP (DT the) (NNP Sun)))
   (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  How hot
+Noun Phrase:  the Sun
 Verb Phrase:  is the Sun
-[]
+[{'word': 'Sun', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Sun', 'label': 'NNP'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -866,14 +850,12 @@ Tree:
   (SQ (VBP are) (NP (PRP they)))
   (. ?))
 Verb Subject Pairs: 
-Noun Phrase:  How bright
+Noun Phrase:  they
 Verb Phrase:  are they
-[]
+[{'word': 'they', 'label': 'PRP'}]
 [{'word': 'are', 'label': 'VBP'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': []}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'they', 'label': 'PRP'}], 'vp': [{'word': 'are', 'label': 'VBP'}]}]
-Got: [{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': []}]
+{'subjects_with_verbs': [{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1263,12 +1245,10 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  Yellow and green
 Verb Phrase:  is an awful combination
-[]
+[{'word': 'Yellow', 'label': 'JJ'}, {'word': 'green', 'label': 'JJ'}]
 [{'word': 'is', 'label': 'VBZ'}]
-{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]}
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Yellow', 'label': 'JJ'}, {'word': 'green', 'label': 'JJ'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': []}]
+{'subjects_with_verbs': [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Yellow', 'label': 'JJ'}, {'word': 'green', 'label': 'JJ'}]}]}
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1312,4 +1292,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': '
 
 
 
-TEST ACCURACY:  0.6111111111111112
+TEST ACCURACY:  0.6851851851851852

@@ -84,14 +84,19 @@ def verb_subject_for_sbarq(tree):
     """
     Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
     Returns list of subject, verb pairs, empty if none
+
+    Subject is typically implied by the SQ after the question word.
+    The subject of "Who is John" is "John", which is contained in the SQ
     """
     wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
-    # Identify the wh-word and the possible subsequent SQ
+    # Identify the SQ (main clause of wh-question) which contains verb and subject
+    # Restrict to those SQs which immediately follow wh words
     for i in range(0, len(tree) - 1):
-        phrase = tree[i]
-        next_phrase = tree[i + 1]
-        if phrase.label() in wh_words and next_phrase.label() == 'SQ':
-            return [{ 'vp': next_phrase, 'np': phrase}]
+        wh = tree[i]
+        sq = tree[i + 1]
+        if wh.label() in wh_words and sq.label() == 'SQ':
+            nps = [child for child in sq if child.label() == 'NP']
+            return [{ 'vp': sq, 'np': np} for np in nps]
     return []
 
 def verb_subject_for_subject_inversion(tree):
@@ -149,24 +154,29 @@ def subject_words_from_phrase(subject):
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
     wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    adj_tags = ["JJ", "JJR", "JJS"]
     noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
 
-    words = []
+    noun_words = []
     if subject is None: # No subject
-        return words
+        return noun_words
     elif subject.label() == "S":
         # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
         return verb_words_from_phrase(subject)
     else:
-        # Otherwise, return a list of the nouns in clause
+        # Standard noun phrase. Gather noun words from the phrase.
+        # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
+        adj_words = []
         for i in range(0, len(subject)):
             child = subject[i]
             if child.label() == "NP": # Recursively identify sub-phrases
-                words += subject_words_from_phrase(child)
-            if child.label() in noun_tags:
-                words.append({'word': child[0], 'label': child.label()})
-    return words
-
+                noun_words += subject_words_from_phrase(child)
+            elif child.label() in noun_tags:
+                noun_words.append({'word': child[0], 'label': child.label()})
+            elif child.label() in adj_tags:
+                adj_words.append({'word': child[0], 'label': child.label()})
+        return noun_words if noun_words else adj_words
+    return []
 
 # MARK: Verbs
 
