@@ -283,7 +283,7 @@
       "subjects_with_verbs":[
         {
           "np": [{"word":"he","label":"PRP"}],
-          "vp": [{"word": "used", "label": "VBD"}, {"word":"to", "label":"TO"}, {"word":"whistle", "label":"VB"}]
+          "vp": [{"word": "used", "label": "VBD"}, {"word":"whistle", "label":"VB"}]
         },
         {
           "np": [{"word":"he","label":"PRP"}],
@@ -292,7 +292,7 @@
       ],
       "reductions":[
         "NONCONDITIONAL-WAS:WALKING>HE",
-        "NONCONDITIONAL-USED:TO:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
+        "NONCONDITIONAL-USED:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE"
       ]
     },
     {
@@ -327,7 +327,7 @@
         }
       ],
       "reductions":[
-        "CONDITIONAL-MD:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
+        "CONDITIONAL-MIGHT:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>HE",
         "CONDITIONAL-WERE>HE"
       ]
     },
@@ -461,7 +461,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG",
+        "NONCONDITIONAL-STOOD>SG",
         "NONCONDITIONAL-VBD_f5474d0b3e2c43d59d34d268e422f397d68338cddf90709d1a16867f9e85b206>SG"
       ]
     },
@@ -524,7 +524,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-DID:VB_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>MOD"
+        "NONCONDITIONAL-DID:BEGIN>MOD"
       ]
     },
     {
@@ -563,7 +563,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-IS>IT"
+        "NONCONDITIONAL-IS:MOVING>IT"
       ]
     },
     {
@@ -658,7 +658,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-WAS:VBN_a5d38c5310e7658892ee61caa246ec426ce18807c586da9ab81c1171f312b523>SG"
+        "NONCONDITIONAL-WAS:WRITTEN>SG"
       ]
     },
     {
@@ -667,7 +667,7 @@
       "subjects_with_verbs":[
         {
           "np": [{"word":"you","label":"PRP"}],
-          "vp": [{"word": "eaten", "label": "VBN"}]
+          "vp": [{"word":"Have", "label":"VBP"},{"word": "eaten", "label": "VBN"}]
         }
       ],
       "reductions":[
@@ -701,7 +701,7 @@
         }
       ],
       "reductions":[
-        "NONCONDITIONAL-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I",
+        "NONCONDITIONAL-BELIEVE>I",
         "NONCONDITIONAL-DOES>SG"
       ]
     },
@@ -808,7 +808,7 @@
         }
       ],
       "reductions":[
-        "SUBJUNCTIVE-IS>MODS"
+        "NONCONDITIONAL-IS>MODS"
       ]
     },
     {
@@ -821,7 +821,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-ARE>THEYLIKE"
+        "NONCONDITIONAL-ARE>THEYLIKE"
       ]
     },
     {
@@ -834,7 +834,7 @@
         }
       ],
       "reductions":[
-        "INDICATIVE-IS>SG"
+        "NONCONDITIONAL-IS>SG"
       ]
     },
     {

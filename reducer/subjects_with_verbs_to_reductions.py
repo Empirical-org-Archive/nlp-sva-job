@@ -3,12 +3,15 @@ from collections import Counter
 from pattern.en import mood,lemma,tenses
 from hashlib import sha256
 import top100
+import literals
 
 TEST_DATA='../test/data/sentences.json'
 
 def get_verb_reduction(verb, tag):
     """Given string of existing verb, returns its corresponding reduction
     That's the verb itself if its lemma is in the top100, else its hash"""
+    if lemma(verb.lower()) in literals.verbs:
+        return verb.upper()
     if lemma(verb.lower()) in top100.verbs:
         return verb.upper()
     else:
@@ -117,7 +120,9 @@ def test():
     with open(TEST_DATA) as f:
         test_dict = json.load(f)
     incorrect_sentences = 0
+    total_sentences = 0
     for sentence_obj in test_dict['sentences']:
+        total_sentences +=1
         expected_reductions = Counter(sentence_obj['reductions']) # order doesn't matter
         subjects_with_verbs = sentence_obj['subjects_with_verbs']
         ex, unex = [],[] 
@@ -148,7 +153,10 @@ def test():
             print('unmatched:')
             for unm in unmatched:
                 print(unm)
+    print('Out of {} sentences,'.format(total_sentences))
     print('There were {} incorrect sentences.'.format(incorrect_sentences))
+    print('{} percent correct.'.format((total_sentences - incorrect_sentences) /
+        float(total_sentences) * 100))
     return None
 
 test()
