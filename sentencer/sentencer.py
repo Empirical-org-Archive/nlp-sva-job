@@ -1,4 +1,4 @@
-PRE_SENTENCES_BASE#!/usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from sentence_helper import get_sentences
 import logging
