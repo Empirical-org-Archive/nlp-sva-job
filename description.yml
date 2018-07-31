@@ -7,13 +7,15 @@ droplet:
   names: autogenerate
   region: nyc1
   # size c-8 is typical for production, 512mb is smallest
-  size: c-8 
+  size: c-8
   image: ubuntu-16-04-x64
   ssh_keys:
     # donald's ssh key fingerprint
     - 03:58:19:9e:c1:a0:c4:cb:e3:d2:7c:89:da:f4:d0:ac
     # max's ssh key fingerprint
     - 3d:14:8c:7b:cb:3f:ba:79:0d:71:c0:9a:d9:7f:c7:3f
+    # eric's ssh key fingerprint
+    - 0b:d4:6c:e6:0e:fa:df:3f:34:a5:d4:31:f6:dd:07:40
     # nlp-job-manager's ssh key fingerprint
     - a6:43:e5:2c:b7:b0:61:8b:49:62:9d:28:53:e8:60:a9
     # nlp-job-manager-root's ssh key fingerprint
@@ -21,7 +23,7 @@ droplet:
   backups: false
   ipv6: false
   # https://developers.digitalocean.com/documentation/v2/#create-multiple-droplets
-  user_data: null 
+  user_data: null
   private_networking: null
   volumes: null
   tags: [*job_name]
