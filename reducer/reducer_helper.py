@@ -40,9 +40,13 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'S'):
         pairs += verb_subject_for_declarative_clause(s)
 
-    # "Direct question introduced by a wh-word or a wh-phrase"
+    # SBARQ: "Direct question introduced by a wh-word or a wh-phrase"
     for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
         pairs += verb_subject_for_sbarq(sbarq)
+
+    # SBAR: Subordinating conjunction
+    for sbar in tree.subtrees(lambda t: t.label() == 'SBAR'):
+        pairs += verb_subject_for_sbar(sbar)
 
     # Fragments (parsed same as declarative clause):
     for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
@@ -99,9 +103,31 @@ def verb_subject_for_sbarq(tree):
         sq = tree[i + 1]
         if wh.label() in wh_words and sq.label() == 'SQ':
             nps = [child for child in sq if child.label() == 'NP']
-            # if wh.label() == "WHNP" and
+            if wh.label() == "WHNP" and subject_words_from_phrase(wh):
+                nps.append(wh)
             return [{ 'vp': sq, 'np': np} for np in nps]
     return []
+
+def verb_subject_for_sbar(tree):
+    """
+    Takes tree for a SBAR clause: subordinating conjunction
+    Returns list of subject, verb pairs, empty if none
+
+    Typically no subject, but sometimes subject is contained in wh-noun phrase
+    Verb is typically contained in subsequent S clause
+    """
+
+    # Identify the wh-noun-phrase which contains subject
+    # Identify subsequent S-clause which contains verb
+    for i in range(0, len(tree) - 1):
+        whnp = tree[i]
+        s = tree[i + 1]
+        if whnp.label() == 'WHNP' and s.label() == 'S':
+            if subject_words_from_phrase(whnp):
+                return [{ 'vp': s, 'np': whnp}]
+    return []
+
+
 
 def verb_subject_for_subject_inversion(tree):
     """
@@ -154,7 +180,7 @@ def subject_words_from_phrase(subject):
     Given subject phrase as a tree, returns list of relevant nouns with labels
     """
 
-    pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
+    pronoun_tags = ["PRP", "PRP$"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
     adj_tags = ["JJ", "JJR", "JJS"]

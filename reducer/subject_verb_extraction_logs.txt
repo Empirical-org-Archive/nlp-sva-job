@@ -147,10 +147,14 @@ Tree:
   (SQ (VP (VBP have) (VP (VBN been) (NP (JJ good) (NNS boys)))))
   (. ?))
 Verb Subject Pairs: 
-[]
+Noun Phrase:  Which dogs
+Verb Phrase:  have been good boys
+[{'word': 'dogs', 'label': 'NNS'}]
+[{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]
+[{'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}], 'np': [{'word': 'dogs', 'label': 'NNS'}]}]
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'boys', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}, {'np': [{'word': 'dogs', 'label': 'NNS'}], 'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}]}]
-Got: []
+Got: [{'vp': [{'word': 'have', 'label': 'VBP'}, {'word': 'been', 'label': 'VBN'}], 'np': [{'word': 'dogs', 'label': 'NNS'}]}]
 
 
 
@@ -898,12 +902,14 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had five daughters , none of which were as pretty as Cleopatra
+Noun Phrase:  none of which
+Verb Phrase:  were as pretty as Cleopatra
 [{'word': 'She', 'label': 'PRP'}]
 [{'word': 'had', 'label': 'VBD'}]
-[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'She', 'label': 'PRP'}], 'vp': [{'word': 'had', 'label': 'VBD'}]}, {'np': [{'word': 'none', 'label': 'NN'}], 'vp': [{'word': 'were', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}]
+[{'word': 'none', 'label': 'NN'}]
+[{'word': 'were', 'label': 'VBD'}]
+[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}], 'np': [{'word': 'none', 'label': 'NN'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1385,4 +1391,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.6724137931034483
+TEST ACCURACY:  0.6896551724137931
