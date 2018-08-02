@@ -40,6 +40,10 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'S'):
         pairs += verb_subject_for_declarative_clause(s)
 
+    # SQ: yes-no question or following a wh-phrase:
+    for sq in tree.subtrees(lambda t: t.label() == 'SQ'):
+        pairs += verb_subject_for_sq(sq)
+
     # SBARQ: "Direct question introduced by a wh-word or a wh-phrase"
     for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
         pairs += verb_subject_for_sbarq(sbarq)
@@ -86,26 +90,22 @@ def verb_subject_for_declarative_clause(tree):
     # TODO: Under what circumstances should we return a pair with None np?
     return []
 
-
-def verb_subject_for_sbarq(tree):
+def verb_subject_for_sq(tree):
     """
-    Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
+    Takes tree for an SQ clause: follows a wh-word or a wh-phrase, or inverted yes-no question
     Returns list of subject, verb pairs, empty if none
 
-    Subject is typically implied by the SQ after the question word.
-    The subject of "Who is John" is "John", which is contained in the SQ
+    The verb is typically contained as usual inside the SQ as a series of verbs
+    So we simply manually pass the noun
+    Misses subjects in SBARQs, which are caught in SBARQ method
     """
-    wh_words = ["WHADJP", "WHADVP", "WHNP", "WHPP"]
-    # Identify the SQ (main clause of wh-question) which contains verb and subject
-    # Restrict to those SQs which immediately follow wh words
-    for i in range(0, len(tree) - 1):
-        wh = tree[i]
-        sq = tree[i + 1]
-        if wh.label() in wh_words and sq.label() == 'SQ':
-            nps = [child for child in sq if child.label() == 'NP']
-            if wh.label() == "WHNP" and subject_words_from_phrase(wh):
-                nps.append(wh)
-            return [{ 'vp': sq, 'np': np} for np in nps]
+    verb_labels = ["VP", "MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+
+    np = None
+    for child in tree:
+        np = child if child.label() == "NP" else np
+    if np is not None:
+        return [{ 'vp': tree, 'np': np }]
     return []
 
 def verb_subject_for_sbar(tree):
@@ -127,7 +127,26 @@ def verb_subject_for_sbar(tree):
                 return [{ 'vp': s, 'np': whnp}]
     return []
 
+def verb_subject_for_sbarq(tree):
+    """
+    Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
+    Returns list of subject, verb pairs, empty if none
 
+    Subject is typically implied by the SQ after the question word.
+    The subject of "Who is John" is "John", which is contained in the SQ
+    """
+    wh_words = ["WHADJP", "WHADVP", "WHNP", "WHPP"]
+    # Identify the SQ (main clause of wh-question) which contains verb and subject
+    # Restrict to those SQs which immediately follow wh words
+    for i in range(0, len(tree) - 1):
+        wh = tree[i]
+        sq = tree[i + 1]
+        if wh.label() in wh_words and sq.label() == 'SQ':
+            nps = [child for child in sq if child.label() == 'NP']
+            if wh.label() == "WHNP" and subject_words_from_phrase(wh):
+                nps.append(wh)
+            return [{ 'vp': sq, 'np': np} for np in nps]
+    return []
 
 def verb_subject_for_subject_inversion(tree):
     """
@@ -180,7 +199,7 @@ def subject_words_from_phrase(subject):
     Given subject phrase as a tree, returns list of relevant nouns with labels
     """
 
-    pronoun_tags = ["PRP", "PRP$"]
+    pronoun_tags = ["PRP"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
     adj_tags = ["JJ", "JJR", "JJS"]

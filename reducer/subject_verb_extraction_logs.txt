@@ -19,9 +19,13 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  John
 Verb Phrase:  is John
+Noun Phrase:  John
+Verb Phrase:  is John
 [{'word': 'John', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}]
+[{'word': 'John', 'label': 'NNP'}]
+[{'word': 'is', 'label': 'VBZ'}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -839,9 +843,13 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  the Sun
 Verb Phrase:  is the Sun
+Noun Phrase:  the Sun
+Verb Phrase:  is the Sun
 [{'word': 'Sun', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}]
+[{'word': 'Sun', 'label': 'NNP'}]
+[{'word': 'is', 'label': 'VBZ'}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -856,9 +864,13 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  they
 Verb Phrase:  are they
+Noun Phrase:  they
+Verb Phrase:  are they
 [{'word': 'they', 'label': 'PRP'}]
 [{'word': 'are', 'label': 'VBP'}]
-[{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}]
+[{'word': 'they', 'label': 'PRP'}]
+[{'word': 'are', 'label': 'VBP'}]
+[{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}, {'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -873,9 +885,13 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  it
 Verb Phrase:  is it moving
+Noun Phrase:  it
+Verb Phrase:  is it moving
 [{'word': 'it', 'label': 'PRP'}]
 [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}]
+[{'word': 'it', 'label': 'PRP'}]
+[{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -1014,12 +1030,12 @@ Verb Phrase:  hung higher
 [{'word': 'had', 'label': 'VBD'}]
 [{'word': 'She', 'label': 'PRP'}]
 [{'word': 'were', 'label': 'VBD'}, {'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}]
-[{'word': 'their', 'label': 'PRP$'}, {'word': 'jowls', 'label': 'NNS'}]
+[{'word': 'jowls', 'label': 'NNS'}]
 [{'word': 'hung', 'label': 'VBD'}]
-[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': [{'word': 'their', 'label': 'PRP$'}, {'word': 'jowls', 'label': 'NNS'}]}]
+[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': [{'word': 'jowls', 'label': 'NNS'}]}]
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'She', 'label': 'PRP'}], 'vp': [{'word': 'had', 'label': 'VBD'}]}, {'np': [{'word': 'both', 'label': 'DT'}], 'vp': [{'word': 'were', 'label': 'VBD'}]}, {'np': [{'word': 'both', 'label': 'DT'}], 'vp': [{'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}]}, {'np': [{'word': 'jowls', 'label': 'NNS'}], 'vp': [{'word': 'hung', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': [{'word': 'their', 'label': 'PRP$'}, {'word': 'jowls', 'label': 'NNS'}]}]
+Got: [{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'were', 'label': 'VBD'}, {'word': 'had', 'label': 'VBD'}, {'word': 'done', 'label': 'VBN'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'hung', 'label': 'VBD'}], 'np': [{'word': 'jowls', 'label': 'NNS'}]}]
 
 
 
@@ -1049,10 +1065,12 @@ Tree:
   (VP (VBN eaten) (NP (NN breakfast)) (ADVP (RB yet)))
   (. ?))
 Verb Subject Pairs: 
-[]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'you', 'label': 'PRP'}], 'vp': [{'word': 'Have', 'label': 'VBP'}, {'word': 'eaten', 'label': 'VBN'}]}]
-Got: []
+Noun Phrase:  you
+Verb Phrase:  Have you eaten breakfast yet ?
+[{'word': 'you', 'label': 'PRP'}]
+[{'word': 'Have', 'label': 'VBP'}, {'word': 'eaten', 'label': 'VBN'}]
+[{'vp': [{'word': 'Have', 'label': 'VBP'}, {'word': 'eaten', 'label': 'VBN'}], 'np': [{'word': 'you', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1391,4 +1409,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.7241379310344828
+TEST ACCURACY:  0.7413793103448276
