@@ -937,12 +937,14 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had five daughters , each of whom was as pretty as the Queen herself
+Noun Phrase:  each of whom
+Verb Phrase:  was as pretty as the Queen herself
 [{'word': 'She', 'label': 'PRP'}]
 [{'word': 'had', 'label': 'VBD'}]
-[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'She', 'label': 'PRP'}], 'vp': [{'word': 'had', 'label': 'VBD'}]}, {'np': [{'word': 'each', 'label': 'DT'}], 'vp': [{'word': 'was', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}]
+[{'word': 'each', 'label': 'DT'}]
+[{'word': 'was', 'label': 'VBD'}]
+[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'each', 'label': 'DT'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -971,12 +973,10 @@ Noun Phrase:  each
 Verb Phrase:  was as pretty as the Queen herself
 [{'word': 'She', 'label': 'PRP'}]
 [{'word': 'had', 'label': 'VBD'}]
-[]
+[{'word': 'each', 'label': 'DT'}]
 [{'word': 'was', 'label': 'VBD'}]
-[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': []}]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'She', 'label': 'PRP'}], 'vp': [{'word': 'had', 'label': 'VBD'}]}, {'np': [{'word': 'each', 'label': 'DT'}], 'vp': [{'word': 'was', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': []}]
+[{'vp': [{'word': 'had', 'label': 'VBD'}], 'np': [{'word': 'She', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}], 'np': [{'word': 'each', 'label': 'DT'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1391,4 +1391,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.6896551724137931
+TEST ACCURACY:  0.7241379310344828

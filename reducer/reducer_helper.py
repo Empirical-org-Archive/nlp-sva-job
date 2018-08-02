@@ -184,6 +184,7 @@ def subject_words_from_phrase(subject):
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
     adj_tags = ["JJ", "JJR", "JJS"]
+    determiners = ["DT"]
     noun_tags = pronoun_tags + singular_tags + plural_tags
 
     noun_words = []
@@ -193,11 +194,14 @@ def subject_words_from_phrase(subject):
         # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
         return verb_words_from_phrase(subject)
     else:
+        # If noun phrase is only one determiner, return that:
+        if len(subject) == 1 and subject[0].label() in determiners:
+            return [{'word': subject[0][0], 'label': subject[0].label()}]
+
         # Standard noun phrase. Gather noun words from the phrase.
         # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
         adj_words = []
-        for i in range(0, len(subject)):
-            child = subject[i]
+        for child in subject:
             if child.label() == "NP": # Recursively identify sub-phrases
                 noun_words += subject_words_from_phrase(child)
             elif child.label() in noun_tags:
