@@ -429,7 +429,7 @@ Verb Phrase:  was walking down the road
 [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}]
 {'subjects_with_verbs': [{'vp': [{'word': 'used', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'used', 'label': 'VBD'}, {'word': 'to', 'label': 'TO'}, {'word': 'whistle', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}]}]
+Expected: [{'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'used', 'label': 'VBD'}, {'word': 'whistle', 'label': 'VB'}]}, {'np': [{'word': 'he', 'label': 'PRP'}], 'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}]}]
 Got: [{'vp': [{'word': 'used', 'label': 'VBD'}], 'np': [{'word': 'he', 'label': 'PRP'}]}, {'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'walking', 'label': 'VBG'}], 'np': [{'word': 'he', 'label': 'PRP'}]}]
 
 
@@ -1043,7 +1043,7 @@ Tree:
 Verb Subject Pairs: 
 {'subjects_with_verbs': []}
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'you', 'label': 'PRP'}], 'vp': [{'word': 'eaten', 'label': 'VBN'}]}]
+Expected: [{'np': [{'word': 'you', 'label': 'PRP'}], 'vp': [{'word': 'Have', 'label': 'VBP'}, {'word': 'eaten', 'label': 'VBN'}]}]
 Got: []
 
 

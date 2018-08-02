@@ -4,8 +4,10 @@ from preprocess import preprocess_sent
 from pattern.en import mood, tenses, lemma
 from hashlib import sha256
 import top100
-
 import json
+
+import subjects_with_verbs_to_reductions
+
 
 def load_predictor():
     """Load model from AllenNLP, which we've downloaded"""
@@ -216,6 +218,10 @@ def sentence_to_pairs(sent, predictor):
         'text': sent
     }
 
+def get_reduction(sent, predictor):
+    svpair_info = sentence_to_pairs(sent, predictor)
+    return subjects_with_verbs_to_reductions.get_reduction(svpair_info['subjects_with_verbs'], svpair_info['text'])
+
 # MARK: Test Sentences and Pipeline
 
 def test_pipeline(sent, predictor):
@@ -267,16 +273,23 @@ def evaluate_subjects_with_verbs(actual, expected):
 
 # MARK: Test Script
 
-with open('../test/data/sentences.json') as test_file:
-    tests = json.load(test_file)
+if __name__ == '__main__':
+    # Test our subject-verb accuracy
+    with open('../test/data/sentences.json') as test_file:
+        tests = json.load(test_file)
 
-test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
-predictor = load_predictor()
+    test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
+    predictor = load_predictor()
 
-num_correct = 0
-for (text, expected) in test_sents:
-    pairs = test_pipeline(text, predictor)['subjects_with_verbs']
-    num_correct += evaluate_subjects_with_verbs(pairs, expected)
-    print("\n\n")
+    for (text, expected) in test_sents:
+        print("Reduction: ", get_reduction(text, predictor))
+        print("Actual: ", expected)
+        print("\n\n")
 
-print("TEST ACCURACY: ", num_correct/len(test_sents))
+    # num_correct = 0
+    # for (text, expected) in test_sents:
+    #     pairs = test_pipeline(text, predictor)['subjects_with_verbs']
+    #     num_correct += evaluate_subjects_with_verbs(pairs, expected)
+    #     print("\n\n")
+    #
+    # print("TEST ACCURACY: ", num_correct/len(test_sents))
