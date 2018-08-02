@@ -99,6 +99,7 @@ def verb_subject_for_sbarq(tree):
         sq = tree[i + 1]
         if wh.label() in wh_words and sq.label() == 'SQ':
             nps = [child for child in sq if child.label() == 'NP']
+            # if wh.label() == "WHNP" and
             return [{ 'vp': sq, 'np': np} for np in nps]
     return []
 
@@ -156,9 +157,8 @@ def subject_words_from_phrase(subject):
     pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
-    wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
     adj_tags = ["JJ", "JJR", "JJS"]
-    noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
+    noun_tags = pronoun_tags + singular_tags + plural_tags
 
     noun_words = []
     if subject is None: # No subject
