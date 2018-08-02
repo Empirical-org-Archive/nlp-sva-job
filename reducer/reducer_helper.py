@@ -36,7 +36,7 @@ def get_verb_subject_phrases(tree):
     """
     pairs = []
 
-    # Declarative clause:
+    # Declarative clause (most sentences):
     for s in tree.subtrees(lambda t: t.label() == 'S'):
         pairs += verb_subject_for_declarative_clause(s)
 
@@ -48,6 +48,7 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
         pairs += verb_subject_for_declarative_clause(s)
 
+    # Clauses with subject-auxillary inversion
     for s in tree.subtrees(lambda t: t.label() == 'SINV'):
         pairs += verb_subject_for_subject_inversion(s)
 
@@ -90,7 +91,7 @@ def verb_subject_for_sbarq(tree):
     Subject is typically implied by the SQ after the question word.
     The subject of "Who is John" is "John", which is contained in the SQ
     """
-    wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    wh_words = ["WHADJP", "WHADVP", "WHNP", "WHPP"]
     # Identify the SQ (main clause of wh-question) which contains verb and subject
     # Restrict to those SQs which immediately follow wh words
     for i in range(0, len(tree) - 1):

@@ -867,10 +867,12 @@ Tree:
   (SQ (VBZ is) (NP (PRP it)) (VP (VBG moving)))
   (. ?))
 Verb Subject Pairs: 
-[]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'it', 'label': 'PRP'}], 'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]}]
-Got: []
+Noun Phrase:  it
+Verb Phrase:  is it moving
+[{'word': 'it', 'label': 'PRP'}]
+[{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1383,4 +1385,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.6551724137931034
+TEST ACCURACY:  0.6724137931034483
