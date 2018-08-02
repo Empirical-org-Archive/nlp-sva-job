@@ -17,15 +17,15 @@ def get_verb_subject_pairs(tree):
     """ Returns the individual words associated with each verb and noun phraseself.
 
     Will soon return pairs in the format:
-    { ‘sentence’: [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
-                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
+    [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
+                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ]
     """
     pairs = get_verb_subject_phrases(tree)
-    words = {'subjects_with_verbs': []}
+    words = []
     for pair in pairs['subjects_with_verbs']:
         np = pair['np']
         vp = pair['vp']
-        words['subjects_with_verbs'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
+        words.append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
     return words
 
 
@@ -219,8 +219,11 @@ def sentence_to_pairs(sent, predictor):
     }
 
 def get_reduction(sent, predictor):
+    print("Inside get_reduction")
     svpair_info = sentence_to_pairs(sent, predictor)
-    return subjects_with_verbs_to_reductions.get_reduction(svpair_info['subjects_with_verbs'], svpair_info['text'])
+    print("svpairinfo is: ", svpair_info)
+    text, pairs = svpair_info['text'], svpair_info['subjects_with_verbs']
+    return [subjects_with_verbs_to_reductions.get_reduction(pair, text) for pair in pairs]
 
 # MARK: Test Sentences and Pipeline
 
@@ -288,7 +291,7 @@ if __name__ == '__main__':
 
     # num_correct = 0
     # for (text, expected) in test_sents:
-    #     pairs = test_pipeline(text, predictor)['subjects_with_verbs']
+    #     pairs = test_pipeline(text, predictor)
     #     num_correct += evaluate_subjects_with_verbs(pairs, expected)
     #     print("\n\n")
     #
