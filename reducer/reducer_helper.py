@@ -142,10 +142,8 @@ def verb_subject_for_sbarq(tree):
         wh = tree[i]
         sq = tree[i + 1]
         if wh.label() in wh_words and sq.label() == 'SQ':
-            nps = [child for child in sq if child.label() == 'NP']
             if wh.label() == "WHNP" and subject_words_from_phrase(wh):
-                nps.append(wh)
-            return [{ 'vp': sq, 'np': np} for np in nps]
+                return [{ 'vp': sq, 'np': wh}]
     return []
 
 def verb_subject_for_subject_inversion(tree):

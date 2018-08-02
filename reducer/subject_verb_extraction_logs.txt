@@ -19,13 +19,9 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  John
 Verb Phrase:  is John
-Noun Phrase:  John
-Verb Phrase:  is John
 [{'word': 'John', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-[{'word': 'John', 'label': 'NNP'}]
-[{'word': 'is', 'label': 'VBZ'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'John', 'label': 'NNP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -843,13 +839,9 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  the Sun
 Verb Phrase:  is the Sun
-Noun Phrase:  the Sun
-Verb Phrase:  is the Sun
 [{'word': 'Sun', 'label': 'NNP'}]
 [{'word': 'is', 'label': 'VBZ'}]
-[{'word': 'Sun', 'label': 'NNP'}]
-[{'word': 'is', 'label': 'VBZ'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Sun', 'label': 'NNP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -864,13 +856,9 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  they
 Verb Phrase:  are they
-Noun Phrase:  they
-Verb Phrase:  are they
 [{'word': 'they', 'label': 'PRP'}]
 [{'word': 'are', 'label': 'VBP'}]
-[{'word': 'they', 'label': 'PRP'}]
-[{'word': 'are', 'label': 'VBP'}]
-[{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}, {'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}]
+[{'vp': [{'word': 'are', 'label': 'VBP'}], 'np': [{'word': 'they', 'label': 'PRP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -885,13 +873,9 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  it
 Verb Phrase:  is it moving
-Noun Phrase:  it
-Verb Phrase:  is it moving
 [{'word': 'it', 'label': 'PRP'}]
 [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]
-[{'word': 'it', 'label': 'PRP'}]
-[{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}, {'word': 'moving', 'label': 'VBG'}], 'np': [{'word': 'it', 'label': 'PRP'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
