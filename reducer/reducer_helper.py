@@ -284,15 +284,10 @@ if __name__ == '__main__':
     test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
     predictor = load_predictor()
 
+    num_correct = 0
     for (text, expected) in test_sents:
-        print("Reduction: ", get_reduction(text, predictor))
-        print("Actual: ", expected)
+        pairs = test_pipeline(text, predictor)
+        num_correct += evaluate_subjects_with_verbs(pairs, expected)
         print("\n\n")
 
-    # num_correct = 0
-    # for (text, expected) in test_sents:
-    #     pairs = test_pipeline(text, predictor)
-    #     num_correct += evaluate_subjects_with_verbs(pairs, expected)
-    #     print("\n\n")
-    #
-    # print("TEST ACCURACY: ", num_correct/len(test_sents))
+    print("TEST ACCURACY: ", num_correct/len(test_sents))
