@@ -1,2 +1,4 @@
 pika==0.12.0
 psycopg2==2.7.5
+requests==2.19.1
+spacy==2.0.12
