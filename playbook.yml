@@ -63,6 +63,9 @@
   - name: Install python-dev (psycopg2 requirement)
     apt:
        name: python-dev
+  - name: Install python3.6-dev (psutil req)
+    apt:
+       name: python3.6-dev
   - name: Install libpq-dev (psycopg2 requirement)
     apt:
       name: libpq-dev
