@@ -24,7 +24,7 @@ logging.basicConfig(format=log_format,
 logger = logging.getLogger('reducer')
 
 # set up AllenNLP Predictor
-allen_predictor = reducer_helper.load_predictor()
+allen_predictor = load_predictor()
 
 try:
     JOB_NAME = os.environ['JOB_NAME']

@@ -4,8 +4,10 @@ from preprocess import preprocess_sent
 from pattern.en import mood, tenses, lemma
 from hashlib import sha256
 import top100
-
 import json
+
+import subjects_with_verbs_to_reductions
+
 
 def load_predictor():
     """Load model from AllenNLP, which we've downloaded"""
@@ -15,15 +17,15 @@ def get_verb_subject_pairs(tree):
     """ Returns the individual words associated with each verb and noun phraseself.
 
     Will soon return pairs in the format:
-    { ‘sentence’: [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
-                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ] }
+    [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
+                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ]
     """
     pairs = get_verb_subject_phrases(tree)
-    words = {'subjects_with_verbs': []}
+    words = []
     for pair in pairs['subjects_with_verbs']:
         np = pair['np']
         vp = pair['vp']
-        words['subjects_with_verbs'].append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
+        words.append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
     return words
 
 
@@ -34,18 +36,27 @@ def get_verb_subject_phrases(tree):
     """
     pairs = []
 
-    # Declarative clause:
+    # Declarative clause (most sentences):
     for s in tree.subtrees(lambda t: t.label() == 'S'):
         pairs += verb_subject_for_declarative_clause(s)
 
-    # "Direct question introduced by a wh-word or a wh-phrase"
+    # SQ: yes-no question or following a wh-phrase:
+    for sq in tree.subtrees(lambda t: t.label() == 'SQ'):
+        pairs += verb_subject_for_sq(sq)
+
+    # SBARQ: "Direct question introduced by a wh-word or a wh-phrase"
     for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
         pairs += verb_subject_for_sbarq(sbarq)
+
+    # SBAR: Subordinating conjunction
+    for sbar in tree.subtrees(lambda t: t.label() == 'SBAR'):
+        pairs += verb_subject_for_sbar(sbar)
 
     # Fragments (parsed same as declarative clause):
     for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
         pairs += verb_subject_for_declarative_clause(s)
 
+    # Clauses with subject-auxillary inversion
     for s in tree.subtrees(lambda t: t.label() == 'SINV'):
         pairs += verb_subject_for_subject_inversion(s)
 
@@ -79,6 +90,42 @@ def verb_subject_for_declarative_clause(tree):
     # TODO: Under what circumstances should we return a pair with None np?
     return []
 
+def verb_subject_for_sq(tree):
+    """
+    Takes tree for an SQ clause: follows a wh-word or a wh-phrase, or inverted yes-no question
+    Returns list of subject, verb pairs, empty if none
+
+    The verb is typically contained as usual inside the SQ as a series of verbs
+    So we simply manually pass the noun
+    Misses subjects in SBARQs, which are caught in SBARQ method
+    """
+    verb_labels = ["VP", "MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
+
+    np = None
+    for child in tree:
+        np = child if child.label() == "NP" else np
+    if np is not None:
+        return [{ 'vp': tree, 'np': np }]
+    return []
+
+def verb_subject_for_sbar(tree):
+    """
+    Takes tree for a SBAR clause: subordinating conjunction
+    Returns list of subject, verb pairs, empty if none
+
+    Typically no subject, but sometimes subject is contained in wh-noun phrase
+    Verb is typically contained in subsequent S clause
+    """
+
+    # Identify the wh-noun-phrase which contains subject
+    # Identify subsequent S-clause which contains verb
+    for i in range(0, len(tree) - 1):
+        whnp = tree[i]
+        s = tree[i + 1]
+        if whnp.label() == 'WHNP' and s.label() == 'S':
+            if subject_words_from_phrase(whnp):
+                return [{ 'vp': s, 'np': whnp}]
+    return []
 
 def verb_subject_for_sbarq(tree):
     """
@@ -88,15 +135,15 @@ def verb_subject_for_sbarq(tree):
     Subject is typically implied by the SQ after the question word.
     The subject of "Who is John" is "John", which is contained in the SQ
     """
-    wh_words = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
+    wh_words = ["WHADJP", "WHADVP", "WHNP", "WHPP"]
     # Identify the SQ (main clause of wh-question) which contains verb and subject
     # Restrict to those SQs which immediately follow wh words
     for i in range(0, len(tree) - 1):
         wh = tree[i]
         sq = tree[i + 1]
         if wh.label() in wh_words and sq.label() == 'SQ':
-            nps = [child for child in sq if child.label() == 'NP']
-            return [{ 'vp': sq, 'np': np} for np in nps]
+            if wh.label() == "WHNP" and subject_words_from_phrase(wh):
+                return [{ 'vp': sq, 'np': wh}]
     return []
 
 def verb_subject_for_subject_inversion(tree):
@@ -150,12 +197,12 @@ def subject_words_from_phrase(subject):
     Given subject phrase as a tree, returns list of relevant nouns with labels
     """
 
-    pronoun_tags = ["PRP", "PRP$", "WP", "WP$"]
+    pronoun_tags = ["PRP"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
-    wh_tags = ["WHADJP", "WHAVP", "WHNP", "WHPP"]
     adj_tags = ["JJ", "JJR", "JJS"]
-    noun_tags = pronoun_tags + singular_tags + plural_tags + wh_tags
+    determiners = ["DT"]
+    noun_tags = pronoun_tags + singular_tags + plural_tags
 
     noun_words = []
     if subject is None: # No subject
@@ -164,11 +211,14 @@ def subject_words_from_phrase(subject):
         # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
         return verb_words_from_phrase(subject)
     else:
+        # If noun phrase is only one determiner, return that:
+        if len(subject) == 1 and subject[0].label() in determiners:
+            return [{'word': subject[0][0], 'label': subject[0].label()}]
+
         # Standard noun phrase. Gather noun words from the phrase.
         # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
         adj_words = []
-        for i in range(0, len(subject)):
-            child = subject[i]
+        for child in subject:
             if child.label() == "NP": # Recursively identify sub-phrases
                 noun_words += subject_words_from_phrase(child)
             elif child.label() in noun_tags:
@@ -215,6 +265,13 @@ def sentence_to_pairs(sent, predictor):
         'subjects_with_verbs': get_verb_subject_pairs(tree),
         'text': sent
     }
+
+def get_reduction(sent, predictor):
+    print("Inside get_reduction")
+    svpair_info = sentence_to_pairs(sent, predictor)
+    print("svpairinfo is: ", svpair_info)
+    text, pairs = svpair_info['text'], svpair_info['subjects_with_verbs']
+    return [subjects_with_verbs_to_reductions.get_reduction(pair, text) for pair in pairs]
 
 # MARK: Test Sentences and Pipeline
 
@@ -267,16 +324,18 @@ def evaluate_subjects_with_verbs(actual, expected):
 
 # MARK: Test Script
 
-with open('../test/data/sentences.json') as test_file:
-    tests = json.load(test_file)
+if __name__ == '__main__':
+    # Test our subject-verb accuracy
+    with open('../test/data/sentences.json') as test_file:
+        tests = json.load(test_file)
 
-test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
-predictor = load_predictor()
+    test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
+    predictor = load_predictor()
 
-num_correct = 0
-for (text, expected) in test_sents:
-    pairs = test_pipeline(text, predictor)['subjects_with_verbs']
-    num_correct += evaluate_subjects_with_verbs(pairs, expected)
-    print("\n\n")
+    num_correct = 0
+    for (text, expected) in test_sents:
+        pairs = test_pipeline(text, predictor)
+        num_correct += evaluate_subjects_with_verbs(pairs, expected)
+        print("\n\n")
 
-print("TEST ACCURACY: ", num_correct/len(test_sents))
+    print("TEST ACCURACY: ", num_correct/len(test_sents))

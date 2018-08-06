@@ -29,7 +29,7 @@ def get_mood(sentence):
             ]
     result = mood(sentence)
     if result == 'imperative':
-        return 'nonconditional' 
+        return 'nonconditional'
     if result in ['subjunctive', 'conditional']:
         for cw in conditional_words:
             if cw in sentence.lower():
@@ -51,7 +51,7 @@ def get_noun_phrase_reduction(noun_phrase_word_list):
     # PL, list len is 1, a plural noun
     elif len(npwl) == 1 and npwl[0]['label'] in ['NNS','NNPS']:
         return 'PL'
-    # THEYLIKE, list len > 1 and is filled with nouns and pronouns 
+    # THEYLIKE, list len > 1 and is filled with nouns and pronouns
     elif len(npwl) > 1 and all(npw['label'] in ['PRP','NN','NNP','NNS','NNPS'] for npw in npwl):
         return 'THEYLIKE'
     # <determiner literal>, list len is 1, a single determiner
@@ -93,7 +93,7 @@ def test_get_verb_phrase_reduction():
         expected_reductions = Counter(sentence_obj['reductions']) # order doesn't matter
         subjects_with_verbs = sentence_obj['subjects_with_verbs']
         print (sentence_obj['text'])
-        ex, unex = [],[] 
+        ex, unex = [],[]
         for swv in subjects_with_verbs:
             vpr = get_verb_phrase_reduction(swv['vp'])
             print(vpr)
@@ -125,7 +125,7 @@ def test():
         total_sentences +=1
         expected_reductions = Counter(sentence_obj['reductions']) # order doesn't matter
         subjects_with_verbs = sentence_obj['subjects_with_verbs']
-        ex, unex = [],[] 
+        ex, unex = [],[]
         for swv in subjects_with_verbs:
             r = get_reduction(swv, sentence_obj['text'])
             if r in expected_reductions and expected_reductions[r] > 0:
@@ -159,7 +159,7 @@ def test():
         float(total_sentences) * 100))
     return None
 
-test()
-#test_get_mood()
-#test_get_verb_phrase_reduction()
-
+if __name__ == '__main__':
+    test()
+    #test_get_mood()
+    #test_get_verb_phrase_reduction()
