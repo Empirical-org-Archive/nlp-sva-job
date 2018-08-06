@@ -141,8 +141,8 @@
   - name: Install the MySQL packages -- necessary for pattern.en dev branch to run
     apt: name={{ item }} state=installed update_cache=yes
     with_items:
-    - mysql-server-5.6
-    - mysql-client-5.6
+    - mysql-server
+    - mysql-client
     - python-mysqldb
     - libmysqlclient-dev
   # Prepare system monitor to run
