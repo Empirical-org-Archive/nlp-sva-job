@@ -138,6 +138,13 @@
       name: filebeat
   - name: Restart filebeat (2)
     shell: update-rc.d filebeat defaults 95 10
+  - name: Install the MySQL packages -- necessary for pattern.en dev branch to run
+    apt: name={{ item }} state=installed update_cache=yes
+      with_items:
+      - mysql-server-5.6
+      - mysql-client-5.6
+      - python-mysqldb
+      - libmysqlclient-dev
   # Prepare system monitor to run
   - name: Install system monitor requirements 
     pip:
