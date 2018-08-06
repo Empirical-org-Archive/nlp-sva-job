@@ -3,8 +3,7 @@
 import requests, zipfile, io
 import spacy
 
-def get_sentences(data):
-    link = data['link']
+def get_sentences(link):
     r = requests.get(link)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     for fname in z.namelist():
