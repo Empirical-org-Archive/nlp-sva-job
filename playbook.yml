@@ -38,14 +38,19 @@
     - VECTORS_QUEUE_BASE='vectors'
     - WRITER_PREFETCH_COUNT=100 
   # General system config
-  - name: Install python
+  # Install python 3.6
+  - name: Add Python3.6 repository
+    apt_repository:
+      repo: 'ppa:deadsnakes/ppa'
+  - name: Update cache and install python3.6 
     apt:
-      name: python3
+      name: python3.6
       update_cache: yes
   - name: Update cache and install pip3 
     apt:
       name: python3-pip
       update_cache: yes
+  # postgres
   - name: Install psql
     apt: name={{item}} state=present
     with_items:
@@ -135,23 +140,23 @@
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/venv
-      virtualenv_python: python3
+      virtualenv_python: python3.6
   # Prepare vectorizer and reducer and start job
   - name: Install reducer requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/reducer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/reducer/venv
-      virtualenv_python: python3
+      virtualenv_python: python3.6
   - name: Install vectorizer requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/vectorizer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/vectorizer/venv
-      virtualenv_python: python3
+      virtualenv_python: python3.6
   - name: Install train requirements (installs spell)
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/train/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/train/venv
-      virtualenv_python: python3
+      virtualenv_python: python3.6
   - name: Login to spell
     shell: /var/lib/jobs/{{ job_name }}/train/venv/bin/spell login --identity {{ lookup('env', 'SPELL_USERNAME') }} --password {{ lookup('env', 'SPELL_PASS') }}
   - name: Change the working directory, then execute start script
