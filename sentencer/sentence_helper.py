@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 import requests, zipfile, io
 import spacy
+import json
 nlp = spacy.load('en_core_web_sm')
 
 def get_sentences(link):
+    link = json.loads(link) # unquoute the quoted string
     r = requests.get('http://{}'.format(link))
     z = zipfile.ZipFile(io.BytesIO(r.content))
     for fname in z.namelist():
