@@ -152,6 +152,11 @@
       virtualenv: /var/lib/jobs/{{ job_name }}/venv
       virtualenv_python: /usr/bin/python3.6
   # Prepare vectorizer and reducer and start job
+  - name: Install sentencer requirements
+    pip:
+      requirements: /var/lib/jobs/{{ job_name }}/sentencer/requirements.txt
+      virtualenv: /var/lib/jobs/{{ job_name }}/sentencer/venv
+      virtualenv_python: /usr/bin/python3.6
   - name: Install reducer requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/reducer/requirements.txt
