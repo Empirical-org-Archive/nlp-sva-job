@@ -157,18 +157,6 @@
       requirements: /var/lib/jobs/{{ job_name }}/reducer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/reducer/venv
       virtualenv_python: /usr/bin/python3.6
-  - name: Install vectorizer requirements
-    pip:
-      requirements: /var/lib/jobs/{{ job_name }}/vectorizer/requirements.txt
-      virtualenv: /var/lib/jobs/{{ job_name }}/vectorizer/venv
-      virtualenv_python: /usr/bin/python3.6
-  - name: Install train requirements (installs spell)
-    pip:
-      requirements: /var/lib/jobs/{{ job_name }}/train/requirements.txt
-      virtualenv: /var/lib/jobs/{{ job_name }}/train/venv
-      virtualenv_python: /usr/bin/python3.6
-  - name: Login to spell
-    shell: /var/lib/jobs/{{ job_name }}/train/venv/bin/spell login --identity {{ lookup('env', 'SPELL_USERNAME') }} --password {{ lookup('env', 'SPELL_PASS') }}
   - name: Change the working directory, then execute start script
     shell: nohup ./start.sh > /var/log/jobrunnerlogs/{{ job_name }}.log 2>&1 </dev/null &
     args:
