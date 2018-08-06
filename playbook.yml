@@ -152,16 +152,20 @@
       virtualenv: /var/lib/jobs/{{ job_name }}/venv
       virtualenv_python: /usr/bin/python3.6
   # Prepare vectorizer and reducer and start job
-  - name: Install sentencer requirements
+  - name: Install sentencer requirements (includes spacy)
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/sentencer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/sentencer/venv
       virtualenv_python: /usr/bin/python3.6
+  - name: Install sentencer requirements part2 (spacy model) 
+    shell: /var/lib/jobs/{{ job_name }}/sentencer/venv/bin/python3 -m spacy download en_core_web_sm 
   - name: Install reducer requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/reducer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/reducer/venv
       virtualenv_python: /usr/bin/python3.6
+  - name: Install reducer requirements part2 (spacy model) 
+    shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m spacy download en_core_web_sm 
   - name: Change the working directory, then execute start script
     shell: nohup ./start.sh > /var/log/jobrunnerlogs/{{ job_name }}.log 2>&1 </dev/null &
     args:
