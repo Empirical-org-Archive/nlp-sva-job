@@ -159,6 +159,8 @@
       virtualenv_python: /usr/bin/python3.6
   - name: Install reducer requirements part2 (spacy model)
     shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m spacy download en_core_web_sm
+  - name: Download AllenNLP model for reducer to use
+    get_url: url=https://s3-us-west-2.amazonaws.com/allennlp/models/elmo-constituency-parser-2018.03.14.tar.gz dest: /var/lib/jobs/{{ job_name }}/reducer
   - name: Change the working directory, then execute start script
     shell: nohup ./start.sh > /var/log/jobrunnerlogs/{{ job_name }}.log 2>&1 </dev/null &
     args:
