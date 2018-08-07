@@ -21,7 +21,7 @@
     - JM_USER={{ lookup('env', 'JM_USER') }}
     - JM_PASS={{ lookup('env', 'JM_PASS') }}
     - JOB_ID={{ job_id }}
-    - JOB_MANAGER='http://206.81.5.140'
+    - JOB_MANAGER='http://206.81.5.140:10600'
     - JOB_NAME={{ job_name }}
     - MAX_QUEUE_LEN=5000
     - PRE_REDUCTIONS_QUEUE_BASE='pre-reductions'

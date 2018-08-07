@@ -42,7 +42,7 @@ link_publisher_process=$!
 # TODO: bad code, remove this - fix should be in reducers where job state is
 # updated
 # wait for all reducers in queue to finish
-sleep 10m
+sleep 5m
 
 # the droplet is no longer needed, droplet makes
 # a DELETE request on itself.
