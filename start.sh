@@ -25,49 +25,19 @@ nohup /var/lib/jobs/$JOB_NAME/venv/bin/python3 /var/lib/jobs/$JOB_NAME/system_mo
 nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/publisher.py &
 link_publisher_process=$!
 
-# start sentence writer
-nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
-sentence_writer_process=$!
-
-# start x sentence extractors
-cpu_count=$(grep -c ^processor /proc/cpuinfo)
-worker_count=$(( cpu_count / 1 ))
-extractor_processes=()
-for i in $(seq 1 $worker_count)
-do
-  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
-  extractor_processes+=($!)
-done
+## start sentence writer
+#nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
+#sentence_writer_process=$!
 #
-# # give a second for some sentences to pile up, but don't wait for sentencing to
-# # complete before starting to reduce
-# sleep 1m
-#
-# # start pre-reduction publisher
-# nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/publisher.py &
-# prereduction_publisher_process=$!
-#
-# # start reduction writer
-# nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/writer.py &
-# reduction_writer_process=$!
-#
-# # Start x reducers
-# cpu_count=$(grep -c ^processor /proc/cpuinfo)
-# worker_count=$(( cpu_count / 1 ))
-# reducer_processes=()
-# for i in $(seq 1 $worker_count)
-# do
-#   nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/reducer.py &
-#   reducer_processes+=($!)
-# done
-#
-# # wait until reduction is complete
-# while [ true ]
-# do
-#     sleep 1m
-#     export r=$(curl --user $JM_USER:$JM_PASS $JOB_MANAGER/jobs/$JOB_ID/state) && [ $r == \"reduced\" ] && break || continue
-# done
-
+## start x sentence extractors
+#cpu_count=$(grep -c ^processor /proc/cpuinfo)
+#worker_count=$(( cpu_count / 1 ))
+#extractor_processes=()
+#for i in $(seq 1 $worker_count)
+#do
+#  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
+#  extractor_processes+=($!)
+#done
 
 # TODO: bad code, remove this - fix should be in reducers where job state is
 # updated
