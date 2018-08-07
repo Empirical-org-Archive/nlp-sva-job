@@ -17,7 +17,7 @@
     - DB_NAME={{ lookup('env', 'DB_NAME') }}
     - DB_PASS={{ lookup('env', 'DB_PASS') }}
     - DB_PORT={{ lookup('env', 'DB_PORT') }}
-    - DB_USER={{ lookup('env', 'DB_USER') }} 
+    - DB_USER={{ lookup('env', 'DB_USER') }}
     - JM_USER={{ lookup('env', 'JM_USER') }}
     - JM_PASS={{ lookup('env', 'JM_PASS') }}
     - JOB_ID={{ job_id }}
@@ -26,7 +26,7 @@
     - MAX_QUEUE_LEN=5000
     - PRE_REDUCTIONS_QUEUE_BASE='pre-reductions'
     - PRE_SENTENCES_QUEUE_BASE='pre-sentences'
-    - PRE_VECTORS_QUEUE_BASE='pre-vectors' 
+    - PRE_VECTORS_QUEUE_BASE='pre-vectors'
     - RABBITMQ_LOCATION='localhost'
     - REDUCER_PREFETCH_COUNT=10
     - REDUCTIONS_QUEUE_BASE='reductions'
@@ -36,17 +36,17 @@
     - SPELL_USERNAME={{ lookup('env', 'SPELL_USERNAME') }}
     - VECTORIZER_PREFETCH_COUNT=10
     - VECTORS_QUEUE_BASE='vectors'
-    - WRITER_PREFETCH_COUNT=100 
+    - WRITER_PREFETCH_COUNT=100
   # General system config
   # Install python 3.6
   - name: Add Python3.6 repository
     apt_repository:
       repo: 'ppa:deadsnakes/ppa'
-  - name: Update cache and install python3.6 
+  - name: Update cache and install python3.6
     apt:
       name: python3.6
       update_cache: yes
-  - name: Update cache and install pip3 
+  - name: Update cache and install pip3
     apt:
       name: python3-pip
       update_cache: yes
@@ -77,14 +77,14 @@
       dest: /var/lib/jobs/{{ job_name }}
       version: '{{ job_hash }}'
   # Networking (communication w nlp-job-manager)
-  - name: Copy private key to remote servers to allow communication with this host 
+  - name: Copy private key to remote servers to allow communication with this host
     copy:
       src: /root/sharedkeys/id_ecdsa
       dest: /root/.ssh/id_ecdsa
       owner: root
       group: root
       mode: 0600
-  - name: Copy public key to remote servers to allow communication with this host 
+  - name: Copy public key to remote servers to allow communication with this host
     copy:
       src: /root/sharedkeys/id_ecdsa.pub
       dest: /root/.ssh/id_ecdsa.pub
@@ -96,13 +96,13 @@
     with_items:
     - 'Host *'
     - '  StrictHostKeyChecking no'
-  - name: Add job manager master server to known hosts 
+  - name: Add job manager master server to known hosts
     local_action: shell ssh-keyscan {{ inventory_hostname }} >> ~/.ssh/known_hosts
   - name: Install autossh to create long-running ssh tunnels
     apt:
       name: autossh
   # ELK stack logging
-  - name: Create important directories for storing SSL Certificate and logs 
+  - name: Create important directories for storing SSL Certificate and logs
     file:
       path: "{{ item }}"
       state: directory
@@ -121,7 +121,7 @@
   - name: Install filebeat package, create the Beats source list
     shell: echo "deb https://packages.elastic.co/beats/apt stable main" |  tee -a /etc/apt/sources.list.d/beats.list
   - name: Install filebeat package, add elastic search GPG key
-    shell: wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add - 
+    shell: wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add -
   - name: Install filebeat package, finish install
     apt:
       name: filebeat
@@ -146,26 +146,19 @@
     - python-mysqldb
     - libmysqlclient-dev
   # Prepare system monitor to run
-  - name: Install system monitor requirements 
+  - name: Install system monitor requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/venv
       virtualenv_python: /usr/bin/python3.6
-  # Prepare vectorizer and reducer and start job
-  - name: Install sentencer requirements (includes spacy)
-    pip:
-      requirements: /var/lib/jobs/{{ job_name }}/sentencer/requirements.txt
-      virtualenv: /var/lib/jobs/{{ job_name }}/sentencer/venv
-      virtualenv_python: /usr/bin/python3.6
-  - name: Install sentencer requirements part2 (spacy model) 
-    shell: /var/lib/jobs/{{ job_name }}/sentencer/venv/bin/python3 -m spacy download en_core_web_sm 
+  # Prepare reducer and start job
   - name: Install reducer requirements
     pip:
       requirements: /var/lib/jobs/{{ job_name }}/reducer/requirements.txt
       virtualenv: /var/lib/jobs/{{ job_name }}/reducer/venv
       virtualenv_python: /usr/bin/python3.6
-  - name: Install reducer requirements part2 (spacy model) 
-    shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m spacy download en_core_web_sm 
+  - name: Install reducer requirements part2 (spacy model)
+    shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m spacy download en_core_web_sm
   - name: Change the working directory, then execute start script
     shell: nohup ./start.sh > /var/log/jobrunnerlogs/{{ job_name }}.log 2>&1 </dev/null &
     args:
