@@ -54,4 +54,4 @@ sleep 10m
 
 # the droplet is no longer needed, droplet makes
 # a DELETE request on itself.
-curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID
+# curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID
