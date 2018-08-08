@@ -9,7 +9,7 @@ CHUNK_SIZE = 1000
 
 def get_sentences(link):
     link = json.loads(link) # unquoute the quoted string
-    r = requests.get('http://{}'.format(link))
+    r = requests.get(link)
     z = zipfile.ZipFile(io.BytesIO(r.content))
     for fname in z.namelist():
         text = str(z.open(fname).read())
