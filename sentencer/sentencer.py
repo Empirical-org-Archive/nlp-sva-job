@@ -7,6 +7,7 @@ import pika
 import io
 import re
 import socket
+import json
 
 FNAME=os.path.basename(__file__)
 PID=os.getpid()
