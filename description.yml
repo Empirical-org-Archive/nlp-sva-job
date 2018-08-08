@@ -4,7 +4,9 @@ job:
   droplet_count: 2
 droplet:
   # supply name or names. name is str, names is [] or autogenerate
-  names: autogenerate
+  names:
+    - nlp-sva-job-reducer0
+    - nlp-sva-job-reducer1
   region: nyc1
   # size c-8 is typical for production, 512mb is smallest
   size: c-8
