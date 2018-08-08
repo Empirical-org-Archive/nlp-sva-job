@@ -5,6 +5,8 @@ import spacy
 import json
 nlp = spacy.load('en_core_web_sm')
 
+CHUNK_SIZE = 1000
+
 def get_sentences(link):
     link = json.loads(link) # unquoute the quoted string
     r = requests.get('http://{}'.format(link))
@@ -14,5 +16,28 @@ def get_sentences(link):
         return get_sents_from_text(text)
 
 def get_sents_from_text(text):
-    doc = nlp(text)
-    return list(doc.sents)
+    # we use spacy to extract sentences from the whole book at once (memory
+    # problem) instead, break the text into chunks.
+    sents = [] 
+    text_left = len(text)
+    start_index=0
+    leftovers = ''
+    while CHUNK_SIZE > text_left: 
+        # create text chunk
+        chunk = leftovers + text[start_index:CHUNK_SIZE]
+        # collect sentences
+        doc = nlp(chunk)
+        sents += list(doc.sents)[:-1]
+        # store leftovers
+        leftovers = chunk[list(doc.sents)[-1].start_char:]
+        start_index += CHUNK_SIZE
+        text_left -= CHUNK_SIZE
+    # last chunk may not be even chunk.
+    chunk = leftovers + text[start_index:-1]
+    # collect sentences
+    doc = nlp(chunk)
+    sents += list(doc.sents)[:-1]
+    # store leftovers
+    leftovers = chunk[list(doc.sents)[-1].start_char:]
+
+    return [str(s) for s in sents]
