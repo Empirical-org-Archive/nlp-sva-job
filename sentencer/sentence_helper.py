@@ -22,9 +22,9 @@ def get_sents_from_text(text):
     text_left = len(text)
     start_index=0
     leftovers = ''
-    while CHUNK_SIZE > text_left: 
+    while CHUNK_SIZE < text_left: 
         # create text chunk
-        chunk = leftovers + text[start_index:CHUNK_SIZE]
+        chunk = leftovers + text[start_index:start_index+CHUNK_SIZE]
         # collect sentences
         doc = nlp(chunk)
         sents += list(doc.sents)[:-1]
