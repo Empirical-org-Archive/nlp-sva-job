@@ -36,8 +36,5 @@ def get_sents_from_text(text):
     chunk = leftovers + text[start_index:-1]
     # collect sentences
     doc = nlp(chunk)
-    sents += list(doc.sents)[:-1]
-    # store leftovers
-    leftovers = chunk[list(doc.sents)[-1].start_char:]
-
+    sents += list(doc.sents)
     return [str(s) for s in sents]
