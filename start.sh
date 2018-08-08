@@ -29,9 +29,10 @@ link_publisher_process=$!
 #nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
 #sentence_writer_process=$!
 #
-# start x sentence extractors
-cpu_count=$(grep -c ^processor /proc/cpuinfo)
-worker_count=$(( cpu_count / 1 ))
+# start sentence extractor (2 per box, memory overhead)
+#cpu_count=$(grep -c ^processor /proc/cpuinfo)
+#worker_count=$(( cpu_count / 1 ))
+worker_count=$(( 2 / 1 ))
 extractor_processes=()
 for i in $(seq 1 $worker_count)
 do
