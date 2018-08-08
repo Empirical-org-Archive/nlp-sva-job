@@ -67,7 +67,7 @@ if __name__ == '__main__':
         raise Exception('This job already has a dedicated sentence publisher. Exiting')
 
     # Issue select statements - cast to json from jsonb
-    cur.execute("SELECT data->>link FROM nlpdata WHERE setname='gutenberg' and typename='booklink' ORDER BY RANDOM()")
+    cur.execute("SELECT data->>'link' FROM nlpdata WHERE setname='gutenberg' and typename='booklink' ORDER BY RANDOM()")
 
     # Connect to pika
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
