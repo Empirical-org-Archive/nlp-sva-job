@@ -9,9 +9,9 @@ import json
 import subjects_with_verbs_to_reductions
 
 
-def load_predictor():
-    """Load model from AllenNLP, which we've downloaded"""
-    return Predictor.from_path("elmo-constituency-parser-2018.03.14.tar.gz")
+def load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz"):
+    """Load local copy of AllenNLP model"""
+    return Predictor.from_path(path)
 
 def get_verb_subject_pairs(tree):
     """ Returns the individual words associated with each verb and noun phraseself.
