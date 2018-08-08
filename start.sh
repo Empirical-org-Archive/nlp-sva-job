@@ -29,15 +29,15 @@ link_publisher_process=$!
 #nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
 #sentence_writer_process=$!
 #
-## start x sentence extractors
-#cpu_count=$(grep -c ^processor /proc/cpuinfo)
-#worker_count=$(( cpu_count / 1 ))
-#extractor_processes=()
-#for i in $(seq 1 $worker_count)
-#do
-#  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
-#  extractor_processes+=($!)
-#done
+# start x sentence extractors
+cpu_count=$(grep -c ^processor /proc/cpuinfo)
+worker_count=$(( cpu_count / 1 ))
+extractor_processes=()
+for i in $(seq 1 $worker_count)
+do
+  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
+  extractor_processes+=($!)
+done
 
 # TODO: bad code, remove this - fix should be in reducers where job state is
 # updated
