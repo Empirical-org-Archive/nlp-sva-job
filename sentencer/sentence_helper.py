@@ -14,6 +14,7 @@ def get_sentences(link):
     for fname in z.namelist():
         text = str(z.open(fname).read())
         text = text.replace('\r\n', ' ').replace('\r',' ').replace('\n', ' ')
+        # TODO: we should get rid of the licence and stuff too probly
         return get_sents_from_text(text)
 
 def get_sents_from_text(text):
