@@ -21,6 +21,9 @@ sleep 10s
 # start the system monitor script
 nohup /var/lib/jobs/$JOB_NAME/venv/bin/python3 /var/lib/jobs/$JOB_NAME/system_monitor.py &
 
+# make sure requirements are fully installed
+sleep 5m
+
 # start pre-reduction publisher
 nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/publisher.py &
 prereduction_publisher_process=$!
