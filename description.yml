@@ -1,6 +1,6 @@
 ---
 job:
-  name: &job_name nlp-sva-job
+  name: &job_name max-job
   droplet_count: 2
 droplet:
   # supply name or names. name is str, names is [] or autogenerate
