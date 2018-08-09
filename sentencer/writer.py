@@ -65,11 +65,13 @@ class SentenceCopyManager():
         self.length = 0
 
     def insert(self, sentence, job_id):
-        self.f.write(sentence + '\t' + job_id + '\n')
+        sdata = json.dumps({'text':sentence})
+        self.f.write('gutenberg'+'\t'+'sentence'+'\t'+job_id+'\t'+sdata +'\n')
         self.length += 1
         if self.length >= self.max_len:
             self.f.seek(0) # be kind, rewind
-            cur.copy_from(self.f, 'sentences', columns=('sentence', 'job_id'))
+            cur.copy_from(self.f, 'nlpdata', columns=('setname', 'typename',
+                'generator', 'data'))
             conn.commit()
             self.f.close()
             self.f = io.StringIO()
@@ -99,19 +101,18 @@ def handle_message(ch, method, properties, body):
 
 
 if __name__ == '__main__':
-
-    # Check if a writer is already running for this job, if so, exit, if not
+    # Check if a publisher is already running for this job, if so exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{sentence_writer}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'sentence_writer')
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{sentence_writer}', %s)
+                    WHERE NOT(data ? 'sentence_writer')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
-    cur.execute("""SELECT COUNT(*) FROM jobs
-                    WHERE meta->'sentence_writer'=%s
+    cur.execute("""SELECT COUNT(*) FROM nlpjobs WHERE
+                    data->'sentence_writer'=%s
                     AND id=%s
                 """,
-            (json.dumps(DROPLET_NAME),JOB_ID))
+            (json.dumps(DROPLET_NAME), JOB_ID))
     continue_running = cur.fetchone()[0] == 1
     if not continue_running:
         logger.info('job has dedicated sentence writer. exiting')
