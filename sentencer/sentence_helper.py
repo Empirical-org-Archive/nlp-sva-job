@@ -14,6 +14,8 @@ def get_sentences(link):
     z = zipfile.ZipFile(io.BytesIO(r.content))
     for fname in z.namelist():
         text = str(z.open(fname).read())
+        # strip out newline characters
+        text = text.replace('\\n', ' ').replace('\\r', ' ')
         # Replace all runs of whitespace with a single space
         text = re.sub(r"\s+", ' ', text)
         # TODO: we should get rid of the licence and stuff too probly
