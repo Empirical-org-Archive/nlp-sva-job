@@ -46,7 +46,7 @@ cur = conn.cursor()
 class LogManager():
     def __init__(self):
         self.messages = []
-        self.max_len = 0
+        self.max_len = 1000
 
 log_mgr = LogManager()
 def add_logger_info(msg):
@@ -61,7 +61,7 @@ def add_logger_info(msg):
 class ReductionCopyManager():
     def __init__(self):
         self.f = io.StringIO()
-        self.max_len = 0
+        self.max_len = 1000
         self.length = 0
 
     def insert(self, reduction, job_id):
