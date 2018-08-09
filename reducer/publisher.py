@@ -49,26 +49,27 @@ if __name__ == '__main__':
             host='localhost')
     cur = conn.cursor()
 
+
+
     # Check if a publisher is already running for this job, if so exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{reduction_publisher}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'reduction_publisher')
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{reduction_publisher}', %s)
+                    WHERE NOT(data ? 'reduction_publisher')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
-    cur.execute("""SELECT COUNT(*) FROM jobs WHERE
-                    meta->'reduction_publisher'=%s
+    cur.execute("""SELECT COUNT(*) FROM nlpjobs WHERE
+                    data->'reduction_publisher'=%s
                     AND id=%s
                 """,
             (json.dumps(DROPLET_NAME), JOB_ID))
     continue_running = cur.fetchone()[0] == 1
     if not continue_running:
         logger.info('job already has dedicated pre-reductions publisher, exiting')
-        raise Exception('This job already has a dedicated reduction publisher. Exiting')
+        raise Exception('This job already has a dedicated pre-reduction publisher. Exiting')
 
-    # Issue select statements
-    cur.execute("SELECT sentence from sentences WHERE job_id=%s ORDER BY RANDOM()",
-            (JOB_ID,))
+    # Issue select statements - cast to json from jsonb
+    cur.execute("SELECT data->>'text' FROM nlpdata WHERE setname='gutenberg' and typename='sentence' ORDER BY RANDOM()")
 
     # Connect to pika
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
@@ -98,9 +99,9 @@ if __name__ == '__main__':
             q_len = q.method.message_count
 
     # update state to pre-reductions-queued
-    cur.execute("""UPDATE jobs SET state=%s, updated=DEFAULT
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{state}', %s)
                     WHERE id=%s
-                """, ('pre-reductions-queued',JOB_ID))
+                """, (json.dumps('pre-reductions-queued'),JOB_ID))
     conn.commit()
     logger.info('all pre-reductions have been queued. waiting for acks')
 
@@ -115,9 +116,9 @@ if __name__ == '__main__':
     logger.info('all pre-reductions have been acked. setting state to reduced.')
 
     # update state to reduced
-    cur.execute("""UPDATE jobs SET state=%s, updated=DEFAULT
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{state}', %s)
                     WHERE id=%s
-                """, ('reduced',JOB_ID))
+                """, (json.dumps('reduced'),JOB_ID))
     conn.commit()
 
     logger.info('exiting')
