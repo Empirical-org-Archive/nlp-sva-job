@@ -58,7 +58,6 @@ def add_logger_info(msg):
 
 class SentenceCopyManager():
     def __init__(self):
-        self.f = io.StringIO()
         self.argslist = []
         self.max_len = 1000
 
@@ -67,7 +66,6 @@ class SentenceCopyManager():
         argslist = []
         self.argslist.append(('gutenberg','sentence',job_id, sdata))
         if len(self.argslist) >= self.max_len:
-            self.f.seek(0) # be kind, rewind
             stmt = "insert into nlpdata (setname, typename, generator, data) values %s"
             psycopg2.extras.execute_values(cur, stmt, self.argslist)
             self.argslist = []

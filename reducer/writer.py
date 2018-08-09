@@ -60,20 +60,18 @@ def add_logger_info(msg):
 
 class ReductionCopyManager():
     def __init__(self):
-        self.f = io.StringIO()
         self.max_len = 1000
         self.length = 0
 
     def insert(self, reduction, job_id):
-        self.f.write(reduction + '\t' + job_id + '\n')
-        self.length += 1
-        if self.length >= self.max_len:
-            self.f.seek(0) # be kind, rewind
-            cur.copy_from(self.f, 'reductions', columns=('reduction', 'job_id'))
+        rdata = json.dumps({'reduction':json.loads(reduction)})
+        argslist = []
+        self.argslist.append(('gutenberg','reduction',job_id, rdata))
+        if len(self.argslist) >= self.max_len:
+            stmt = "insert into nlpdata (setname, typename, generator, data) values %s"
+            psycopg2.extras.execute_values(cur, stmt, self.argslist)
+            self.argslist = []
             conn.commit()
-            self.f.close()
-            self.f = io.StringIO()
-            self.length = 0
 
 reduction_copy_manager = ReductionCopyManager()
 
@@ -102,16 +100,17 @@ if __name__ == '__main__':
 
     # Check if a writer is already running for this job, if so, exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{reduction_writer}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'reduction_writer')
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{reduction_writer}', %s)
+                    WHERE NOT(data ? 'reduction_writer')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
-    cur.execute("""SELECT COUNT(*) FROM jobs
-                    WHERE meta->'reduction_writer'=%s
+    cur.execute("""SELECT COUNT(*) FROM nlpjobs WHERE
+                    data->'reduction_writer'=%s
                     AND id=%s
                 """,
-            (json.dumps(DROPLET_NAME),JOB_ID))
+            (json.dumps(DROPLET_NAME), JOB_ID))
+
     continue_running = cur.fetchone()[0] == 1
     if not continue_running:
         logger.info('job has dedicated reduction writer. exiting')
