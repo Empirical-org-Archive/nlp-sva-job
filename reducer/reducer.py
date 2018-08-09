@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 from allennlp.service.predictors import Predictor
 from reducer_helper import get_reduction, load_predictor
+import io
+import json
 import logging
 import os
 import pika
-import io
 import re
 import socket
 
@@ -43,7 +44,7 @@ def handle_message(ch, method, properties, body):
         body = body.decode('utf-8')
         for reduction in get_reduction(body, allen_predictor):
             channel.basic_publish(exchange='', routing_key=REDUCTIONS_QUEUE,
-                    body=reduction)
+                    body=json.dumps(reduction))
         logger.info("queued reductions")
     except Exception as e:
         logger.error("problem handling message - {}".format(e))
