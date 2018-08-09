@@ -26,9 +26,9 @@ nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME
 link_publisher_process=$!
 
 ## start sentence writer
-#nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
-#sentence_writer_process=$!
-#
+nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
+sentence_writer_process=$!
+
 # start sentence extractor (2 per box, memory overhead)
 #cpu_count=$(grep -c ^processor /proc/cpuinfo)
 #worker_count=$(( cpu_count / 1 ))
