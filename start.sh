@@ -33,7 +33,7 @@ sentence_writer_process=$!
 # Start x reducers
 cpu_count=$(grep -c ^processor /proc/cpuinfo)
 #worker_count=$(( cpu_count / 2 ))
-worker_count=$(( 3/1 ))
+worker_count=$(( 4/1 ))
 extractor_processes=()
 for i in $(seq 1 $worker_count)
 do
@@ -41,40 +41,40 @@ do
   extractor_processes+=($!)
 done
 
-# wait for some sentences to end up in db
-sleep 1m
-
-# start pre-reduction (sentence) publisher
-nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/publisher.py &
-prereduction_publisher_process=$!
-
-# start reduction writer
-nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/writer.py &
-reduction_writer_process=$!
-
-# Start x reducers
-cpu_count=$(grep -c ^processor /proc/cpuinfo)
-#worker_count=$(( cpu_count / 2 ))
-worker_count=$(( 3/1 ))
-reducer_processes=()
-for i in $(seq 1 $worker_count)
-do
-  nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/reducer.py &
-  reducer_processes+=($!)
-done
-
-# wait until reduction is complete
-while [ true ]
-do
-    sleep 1m
-    export r=$(curl --user $JM_USER:$JM_PASS $JOB_MANAGER/jobs/$JOB_ID/state) && [ $r == \"reduced\" ] && break || continue
-done
-
-# TODO: bad code, remove this - fix should be in reducers where job state is
-# updated
-# wait for all reducers in queue to finish
-sleep 20m
-
-# the droplet is no longer needed, droplet makes
-# a DELETE request on itself.
-curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID
+## wait for some sentences to end up in db
+#sleep 1m
+#
+## start pre-reduction (sentence) publisher
+#nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/publisher.py &
+#prereduction_publisher_process=$!
+#
+## start reduction writer
+#nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/writer.py &
+#reduction_writer_process=$!
+#
+## Start x reducers
+#cpu_count=$(grep -c ^processor /proc/cpuinfo)
+##worker_count=$(( cpu_count / 2 ))
+#worker_count=$(( 3/1 ))
+#reducer_processes=()
+#for i in $(seq 1 $worker_count)
+#do
+#  nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/reducer.py &
+#  reducer_processes+=($!)
+#done
+#
+## wait until reduction is complete
+#while [ true ]
+#do
+#    sleep 1m
+#    export r=$(curl --user $JM_USER:$JM_PASS $JOB_MANAGER/jobs/$JOB_ID/state) && [ $r == \"reduced\" ] && break || continue
+#done
+#
+## TODO: bad code, remove this - fix should be in reducers where job state is
+## updated
+## wait for all reducers in queue to finish
+#sleep 20m
+#
+## the droplet is no longer needed, droplet makes
+## a DELETE request on itself.
+#curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID
