@@ -19,7 +19,8 @@ def get_sentences(link):
         # Replace all runs of whitespace with a single space
         text = re.sub(r"\s+", ' ', text)
         # TODO: we should get rid of the licence and stuff too probly
-        return get_sents_from_text(text)
+        sents = get_sents_from_text(text)
+        return remove_odd_sents(sents)
 
 def get_sents_from_text(text):
     # we use spacy to extract sentences from the whole book at once (memory
@@ -44,3 +45,11 @@ def get_sents_from_text(text):
     doc = nlp(chunk)
     sents += list(doc.sents)
     return [str(s) for s in sents]
+
+def remove_odd_sents(sents):
+    result = []
+    for s in sents:
+        if re.match('''"?[A-Z][a-z][0-9a-zA-Z'.\s?!()\\"/,;–:-]+[.!?]"?''', s):
+            result.append(s)
+    return result
+
