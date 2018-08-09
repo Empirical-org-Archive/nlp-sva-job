@@ -46,7 +46,7 @@ cur = conn.cursor()
 class LogManager():
     def __init__(self):
         self.messages = []
-        self.max_len = 1000
+        self.max_len = 0
 
 log_mgr = LogManager()
 def add_logger_info(msg):
@@ -61,9 +61,9 @@ def add_logger_info(msg):
 class ReductionCopyManager():
     def __init__(self):
         self.f = io.StringIO()
-        self.max_len = 1000
+        self.max_len = 0
         self.length = 0
-    
+
     def insert(self, reduction, job_id):
         self.f.write(reduction + '\t' + job_id + '\n')
         self.length += 1
@@ -79,7 +79,7 @@ reduction_copy_manager = ReductionCopyManager()
 
 # #Steps:
 # 1. Read reduced strings from Reduction Queue
-# 2. Write reduced strings to database 
+# 2. Write reduced strings to database
 
 def handle_message(ch, method, properties, body):
     try:
@@ -94,7 +94,7 @@ def handle_message(ch, method, properties, body):
     except UnicodeError as e:
         logger.error("problem handling message, unicode error - {}".format(
             e))
-        
+
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
 
