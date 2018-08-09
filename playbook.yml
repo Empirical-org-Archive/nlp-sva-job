@@ -159,6 +159,8 @@
       virtualenv_python: /usr/bin/python3.6
   - name: Install reducer requirements part2 (spacy model)
     shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m spacy download en_core_web_sm
+  - name: Download NLTK data for Pattern.en
+    shell: /var/lib/jobs/{{ job_name }}/reducer/venv/bin/python3 -m nltk.downloader all
   - name: Copy AllenNLP model from job-manager to droplet
     copy:
       src: /var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz
