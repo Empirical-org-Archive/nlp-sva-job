@@ -30,8 +30,16 @@ nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME
 sentence_writer_process=$!
 
 # start sentence extractor (1 per box, memory overhead)
-nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
-extractor_processes+=($!)
+# Start x reducers
+cpu_count=$(grep -c ^processor /proc/cpuinfo)
+#worker_count=$(( cpu_count / 2 ))
+worker_count=$(( 3/1 ))
+extractor_processes=()
+for i in $(seq 1 $worker_count)
+do
+  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
+  extractor_processes+=($!)
+done
 
 # wait for some sentences to end up in db
 sleep 1m
@@ -46,7 +54,8 @@ reduction_writer_process=$!
 
 # Start x reducers
 cpu_count=$(grep -c ^processor /proc/cpuinfo)
-worker_count=$(( cpu_count / 2 ))
+#worker_count=$(( cpu_count / 2 ))
+worker_count=$(( 3/1 ))
 reducer_processes=()
 for i in $(seq 1 $worker_count)
 do
