@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from psycopg2.extras import execute_values
 import io
 import json
@@ -61,21 +59,19 @@ def add_logger_info(msg):
 class SentenceCopyManager():
     def __init__(self):
         self.f = io.StringIO()
+        self.argslist = []
         self.max_len = 1000
-        self.length = 0
 
     def insert(self, sentence, job_id):
-        sdata = json.dumps({'text':sentence})
-        self.f.write('gutenberg'+'\t'+'sentence'+'\t'+job_id+'\t'+sdata +'\n')
-        self.length += 1
-        if self.length >= self.max_len:
+        sdata = json.dumps({'text':json.loads(sentence)})
+        argslist = []
+        self.argslist.append(('gutenberg','sentence',job_id, sdata))
+        if len(self.argslist) >= self.max_len:
             self.f.seek(0) # be kind, rewind
-            cur.copy_from(self.f, 'nlpdata', columns=('setname', 'typename',
-                'generator', 'data'))
+            stmt = "insert into nlpdata (setname, typename, generator, data) values %s"
+            psycopg2.extras.execute_values(cur, stmt, self.argslist)
+            self.argslist = []
             conn.commit()
-            self.f.close()
-            self.f = io.StringIO()
-            self.length = 0
 
 sentence_copy_manager = SentenceCopyManager()
 
@@ -93,6 +89,7 @@ def handle_message(ch, method, properties, body):
         logger.error('problem handling message, psycopg2 error, {}'.format(
             e.diag.message_primary))
         conn.rollback()
+        raise e
     except UnicodeError as e:
         logger.error("problem handling message, unicode error - {}".format(
             e))
