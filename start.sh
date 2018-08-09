@@ -21,10 +21,22 @@ sleep 10s
 # start the system monitor script
 nohup /var/lib/jobs/$JOB_NAME/venv/bin/python3 /var/lib/jobs/$JOB_NAME/system_monitor.py &
 
-# make sure requirements are fully installed
-sleep 5m
+# start link publisher
+nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/publisher.py &
+link_publisher_process=$!
 
-# start pre-reduction publisher
+## start sentence writer
+nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/writer.py &
+sentence_writer_process=$!
+
+# start sentence extractor (1 per box, memory overhead)
+nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
+extractor_processes+=($!)
+
+# wait for some sentences to end up in db
+sleep 1m
+
+# start pre-reduction (sentence) publisher
 nohup /var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/publisher.py &
 prereduction_publisher_process=$!
 
@@ -34,7 +46,7 @@ reduction_writer_process=$!
 
 # Start x reducers
 cpu_count=$(grep -c ^processor /proc/cpuinfo)
-worker_count=$(( cpu_count / 1 ))
+worker_count=$(( cpu_count / 2 ))
 reducer_processes=()
 for i in $(seq 1 $worker_count)
 do
@@ -49,12 +61,11 @@ do
     export r=$(curl --user $JM_USER:$JM_PASS $JOB_MANAGER/jobs/$JOB_ID/state) && [ $r == \"reduced\" ] && break || continue
 done
 
-
 # TODO: bad code, remove this - fix should be in reducers where job state is
 # updated
 # wait for all reducers in queue to finish
-sleep 10m
+sleep 20m
 
 # the droplet is no longer needed, droplet makes
 # a DELETE request on itself.
-# curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID
+curl --user $JM_USER:$JM_PASS -X DELETE $JOB_MANAGER/droplets/$DROPLET_UID

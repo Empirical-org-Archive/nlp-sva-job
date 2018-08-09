@@ -51,13 +51,13 @@ if __name__ == '__main__':
 
     # Check if a publisher is already running for this job, if so exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{sentence_publisher}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'sentence_publisher')
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{sentence_publisher}', %s)
+                    WHERE NOT(data ? 'sentence_publisher')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
-    cur.execute("""SELECT COUNT(*) FROM jobs WHERE
-                    meta->'sentence_publisher'=%s
+    cur.execute("""SELECT COUNT(*) FROM nlpjobs WHERE
+                    data->'sentence_publisher'=%s
                     AND id=%s
                 """,
             (json.dumps(DROPLET_NAME), JOB_ID))
@@ -67,7 +67,7 @@ if __name__ == '__main__':
         raise Exception('This job already has a dedicated sentence publisher. Exiting')
 
     # Issue select statements - cast to json from jsonb
-    cur.execute("SELECT link from books ORDER BY RANDOM()")
+    cur.execute("SELECT data->>'link' FROM nlpdata WHERE setname='gutenberg' and typename='booklink' ORDER BY RANDOM()")
 
     # Connect to pika
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
@@ -97,9 +97,9 @@ if __name__ == '__main__':
             q_len = q.method.message_count
 
     # update state to pre-sentences-queued
-    cur.execute("""UPDATE jobs SET state=%s, updated=DEFAULT
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{state}', %s)
                     WHERE id=%s
-                """, ('pre-sentences-queued',JOB_ID))
+                """, (json.dumps('pre-sentences-queued'),JOB_ID))
     conn.commit()
     logger.info('all pre-sentences have been queued. waiting for acks')
 
@@ -112,11 +112,10 @@ if __name__ == '__main__':
         q_len = q.method.message_count
 
     logger.info('all pre-sentences have been acked. setting state to sentenced.')
-
     # update state to sentenced
-    cur.execute("""UPDATE jobs SET state=%s, updated=DEFAULT
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{state}', %s)
                     WHERE id=%s
-                """, ('sentenced',JOB_ID))
+                """, (json.dumps('sentenced'),JOB_ID))
     conn.commit()
 
     logger.info('exiting')

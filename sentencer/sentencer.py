@@ -7,6 +7,7 @@ import pika
 import io
 import re
 import socket
+import json
 
 FNAME=os.path.basename(__file__)
 PID=os.getpid()
@@ -40,7 +41,7 @@ def handle_message(ch, method, properties, body):
         body = body.decode('utf-8')
         for sentence in get_sentences(body):
             channel.basic_publish(exchange='', routing_key=SENTENCES_QUEUE,
-                    body=sentence)
+                    body=json.dumps(sentence))
         logger.info("queued sentences")
     except Exception as e:
         logger.error("problem handling message - {}".format(e))

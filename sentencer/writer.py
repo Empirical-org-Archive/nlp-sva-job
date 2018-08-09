@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 from psycopg2.extras import execute_values
 import io
 import json
@@ -61,19 +59,19 @@ def add_logger_info(msg):
 class SentenceCopyManager():
     def __init__(self):
         self.f = io.StringIO()
+        self.argslist = []
         self.max_len = 1000
-        self.length = 0
 
     def insert(self, sentence, job_id):
-        self.f.write(sentence + '\t' + job_id + '\n')
-        self.length += 1
-        if self.length >= self.max_len:
+        sdata = json.dumps({'text':json.loads(sentence)})
+        argslist = []
+        self.argslist.append(('gutenberg','sentence',job_id, sdata))
+        if len(self.argslist) >= self.max_len:
             self.f.seek(0) # be kind, rewind
-            cur.copy_from(self.f, 'sentences', columns=('sentence', 'job_id'))
+            stmt = "insert into nlpdata (setname, typename, generator, data) values %s"
+            psycopg2.extras.execute_values(cur, stmt, self.argslist)
+            self.argslist = []
             conn.commit()
-            self.f.close()
-            self.f = io.StringIO()
-            self.length = 0
 
 sentence_copy_manager = SentenceCopyManager()
 
@@ -99,19 +97,18 @@ def handle_message(ch, method, properties, body):
 
 
 if __name__ == '__main__':
-
-    # Check if a writer is already running for this job, if so, exit, if not
+    # Check if a publisher is already running for this job, if so exit, if not
     # mark that one is running then continue.
-    cur.execute("""UPDATE jobs SET meta=jsonb_set(meta, '{sentence_writer}', %s), updated=DEFAULT
-                    WHERE NOT(meta ? 'sentence_writer')
+    cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{sentence_writer}', %s)
+                    WHERE NOT(data ? 'sentence_writer')
                     AND id=%s
                 """, (json.dumps(DROPLET_NAME),JOB_ID))
     conn.commit()
-    cur.execute("""SELECT COUNT(*) FROM jobs
-                    WHERE meta->'sentence_writer'=%s
+    cur.execute("""SELECT COUNT(*) FROM nlpjobs WHERE
+                    data->'sentence_writer'=%s
                     AND id=%s
                 """,
-            (json.dumps(DROPLET_NAME),JOB_ID))
+            (json.dumps(DROPLET_NAME), JOB_ID))
     continue_running = cur.fetchone()[0] == 1
     if not continue_running:
         logger.info('job has dedicated sentence writer. exiting')
