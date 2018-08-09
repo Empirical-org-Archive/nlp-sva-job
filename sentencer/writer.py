@@ -89,7 +89,6 @@ def handle_message(ch, method, properties, body):
         logger.error('problem handling message, psycopg2 error, {}'.format(
             e.diag.message_primary))
         conn.rollback()
-        raise e
     except UnicodeError as e:
         logger.error("problem handling message, unicode error - {}".format(
             e))
