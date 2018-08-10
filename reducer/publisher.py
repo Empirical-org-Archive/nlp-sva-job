@@ -112,7 +112,7 @@ def main(start_id=0):
 
     # Reduce sentences from database in successive batches
     while start_id is not None:
-        start_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=start_id+1, limit=1000)
+        start_id = reduce_and_queue_sentences(cur, connection, channel, start_id=start_id+1, limit=1000)
         logger.info("Reduced and queued sentences up to ID ".format(start_id))
 
 
