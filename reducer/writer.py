@@ -60,8 +60,8 @@ def add_logger_info(msg):
 
 class ReductionCopyManager():
     def __init__(self):
+        self.argslist = []
         self.max_len = 1000
-        self.length = 0
 
     def insert(self, reduction, job_id):
         rdata = json.dumps({'reduction':json.loads(reduction)})
