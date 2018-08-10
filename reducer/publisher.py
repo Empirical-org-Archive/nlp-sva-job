@@ -37,7 +37,7 @@ except KeyError as e:
     raise Exception('Warning: Important environment variables were not set')
 
 
-def reduce_and_queue_sentences(cursor, connection, channel, logger, start_id, limit=1000):
+def reduce_and_queue_sentences(cursor, connection, channel, start_id, limit=1000):
     """
     Pulls sentences from database starting at start_id, up to a max of limit
     Reduces then queues those sentences
