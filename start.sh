@@ -65,7 +65,8 @@ reduction_writer_process=$!
 #
 ## Start x reducers
 cpu_count=$(grep -c ^processor /proc/cpuinfo)
-monitor "/var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/reducer.py" $cpu_count reducer.py &
+reducer_count=$(($cpu_count / 2))
+monitor "/var/lib/jobs/$JOB_NAME/reducer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/reducer/reducer.py" $reducer_count reducer.py &
 
 ## the droplet is no longer needed, droplet makes
 ## a DELETE request on itself.
