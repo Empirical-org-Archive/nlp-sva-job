@@ -12,6 +12,27 @@ autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -L 5672:l
 autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -L 5432:localhost:5432 root@206.81.5.140 &
 #autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -L 5000:localhost:5000 root@206.81.5.140 &
 
+
+#### FUNCTIONS
+
+function monitor()
+{
+  while true; do
+    executable_line=$1 # /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py
+    process_count=$2 # 4
+    short_name=$3 # sentencer.py 
+    echo $executable_line $process_count $short_name
+    if [[ "$(ps aux | grep $short_name | awk '{print $2}' | wc -l)" < $process_count ]]; then
+      nohup $executable_line &
+      echo 'restarted dead process' >> /var/log/jobrunnerlogs/monitor.log
+    fi
+    sleep 5s
+  done
+}
+
+
+#### END FUNCTIONS
+
 # wait for ssh tunnels to be created, ready to go
 sleep 10s
 
@@ -32,14 +53,9 @@ sentence_writer_process=$!
 # start sentence extractor (1 per box, memory overhead)
 # Start x reducers
 cpu_count=$(grep -c ^processor /proc/cpuinfo)
-#worker_count=$(( cpu_count / 2 ))
-worker_count=$(( 4/1 ))
-extractor_processes=()
-for i in $(seq 1 $worker_count)
-do
-  nohup /var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py &
-  extractor_processes+=($!)
-done
+monitor "/var/lib/jobs/$JOB_NAME/sentencer/venv/bin/python3 /var/lib/jobs/$JOB_NAME/sentencer/sentencer.py" $cpu_count sentencer.py &
+
+
 
 ## wait for some sentences to end up in db
 #sleep 1m
