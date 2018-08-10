@@ -111,7 +111,7 @@ if __name__ == '__main__':
     # Reduce sentences from database in successive batches
     last_id = 0
     while last_id is not None:
-        last_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=max_sent_id+1, limit=1000)
+        last_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=last_id+1, limit=1000)
 
 
     # update state to pre-reductions-queued
