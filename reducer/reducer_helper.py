@@ -267,9 +267,7 @@ def sentence_to_pairs(sent, predictor):
     }
 
 def get_reduction(sent, predictor):
-    print("Inside get_reduction")
     svpair_info = sentence_to_pairs(sent, predictor)
-    print("svpairinfo is: ", svpair_info)
     text, pairs = svpair_info['text'], svpair_info['subjects_with_verbs']
     return [subjects_with_verbs_to_reductions.get_reduction(pair, text) for pair in pairs]
 
@@ -331,6 +329,7 @@ if __name__ == '__main__':
 
     test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
     predictor = load_predictor()
+    print("Model loaded, testing beginning")
 
     num_correct = 0
     for (text, expected) in test_sents:
