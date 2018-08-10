@@ -76,7 +76,9 @@ def reduce_and_queue_sentences(cursor, connection, channel, start_id, limit=1000
 # 1. Connect to the database
 # 2. Start adding sentences to PRE_REDUCTIONS_QUEUE
 
-if __name__ == '__main__':
+# start_id determines the minimum ID of the sentences we reduce
+
+def main(start_id=0):
     # Connect to the database
     conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD,
             host='localhost')
@@ -109,9 +111,8 @@ if __name__ == '__main__':
 
 
     # Reduce sentences from database in successive batches
-    last_id = 0
-    while last_id is not None:
-        last_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=last_id+1, limit=1000)
+    while start_id is not None:
+        start_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=start_id+1, limit=1000)
 
 
     # update state to pre-reductions-queued
@@ -140,3 +141,7 @@ if __name__ == '__main__':
     logger.info('exiting')
     cur.close()
     conn.close()
+
+
+if __name__ == '__main__':
+    main()
