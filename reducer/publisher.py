@@ -48,7 +48,7 @@ def reduce_and_queue_sentences(cursor, connection, channel, start_id, limit=1000
     cursor.execute("SELECT data->>'text', id FROM nlpdata WHERE setname='gutenberg' and typename='sentence' and id>={} ORDER BY id LIMIT {}".format(start_id, limit))
 
     some_pre_reductions_not_queued = True
-    max_id = None
+    max_id = 0
     while some_pre_reductions_not_queued:
         messages = []
         some_pre_reductions_not_queued = False
@@ -78,7 +78,7 @@ def reduce_and_queue_sentences(cursor, connection, channel, start_id, limit=1000
 
 # start_id determines the minimum ID of the sentences we reduce
 
-def main(start_id=0):
+def main(start_id=1):
     # Connect to the database
     conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD,
             host='localhost')
@@ -111,7 +111,7 @@ def main(start_id=0):
 
 
     # Reduce sentences from database in successive batches
-    while start_id is not None:
+    while start_id is not 0:
         start_id = reduce_and_queue_sentences(cur, connection, channel, start_id=start_id+1, limit=1000)
         logger.info("Reduced and queued sentences up to ID ".format(start_id))
 
