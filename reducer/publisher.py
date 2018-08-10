@@ -37,19 +37,50 @@ except KeyError as e:
     raise Exception('Warning: Important environment variables were not set')
 
 
+def reduce_and_queue_sentences(cursor, connection, channel, logger, start_id, limit=1000):
+    """
+    Pulls sentences from database starting at start_id, up to a max of limit
+    Reduces then queues those sentences
+
+    Returns the max ID of the selected sentences, or None if no sentences were returned.
+    """
+
+    cursor.execute("SELECT data->>'text', id FROM nlpdata WHERE setname='gutenberg' and typename='sentence' and id>={} ORDER BY id LIMIT {}".format(start_id, limit))
+
+    some_pre_reductions_not_queued = True
+    max_id = None
+    while some_pre_reductions_not_queued:
+        messages = []
+        some_pre_reductions_not_queued = False
+        for row in cursor.fetchmany(MAX_QUEUE_LEN):
+            some_pre_reductions_not_queued = True # at least one row
+            sent_str = row[0]
+            channel.basic_publish(exchange='', routing_key=PRE_REDUCTIONS_QUEUE,
+                    body=json.dumps(sent_str))
+            messages.append('queued pre-reduction')
+            max_id = row[1] if row[1] > max_id else max_id
+        for message in messages:
+            logger.info(message)
+        q = channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE)
+        q_len = q.method.message_count
+        while q_len > MAX_QUEUE_LEN:
+            sleep(.1) # max speed w sleep (1) is MAX_QUEUE_LEN / s
+            logger.info('pre reductions queue at capacity, sleeping')
+            q = channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE)
+            q_len = q.method.message_count
+    return max_id
+
+
 # #Steps
 #
 # 1. Connect to the database
 # 2. Start adding sentences to PRE_REDUCTIONS_QUEUE
-
 
 if __name__ == '__main__':
     # Connect to the database
     conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD,
             host='localhost')
     cur = conn.cursor()
-
-
 
     # Check if a publisher is already running for this job, if so exit, if not
     # mark that one is running then continue.
@@ -68,9 +99,6 @@ if __name__ == '__main__':
         logger.info('job already has dedicated pre-reductions publisher, exiting')
         raise Exception('This job already has a dedicated pre-reduction publisher. Exiting')
 
-    # Issue select statements - cast to json from jsonb
-    cur.execute("SELECT data->>'text' FROM nlpdata WHERE setname='gutenberg' and typename='sentence' ORDER BY RANDOM()")
-
     # Connect to pika
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT))
     channel = connection.channel()
@@ -78,25 +106,13 @@ if __name__ == '__main__':
     # Declare queue if doesn't exist, get reference to queue
     q = channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE)
     q_len = q.method.message_count
-    some_pre_reductions_not_queued = True
-    while some_pre_reductions_not_queued:
-        messages = []
-        some_pre_reductions_not_queued = False
-        for row in cur.fetchmany(MAX_QUEUE_LEN):
-            some_pre_reductions_not_queued = True # at least one row
-            sent_str = row[0]
-            channel.basic_publish(exchange='', routing_key=PRE_REDUCTIONS_QUEUE,
-                    body=json.dumps(sent_str))
-            messages.append('queued pre-reduction')
-        for message in messages:
-            logger.info(message)
-        q = channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE)
-        q_len = q.method.message_count
-        while q_len > MAX_QUEUE_LEN:
-            sleep(.1) # max speed w sleep (1) is MAX_QUEUE_LEN / s
-            logger.info('pre reductions queue at capacity, sleeping')
-            q = channel.queue_declare(queue=PRE_REDUCTIONS_QUEUE)
-            q_len = q.method.message_count
+
+
+    # Reduce sentences from database in successive batches
+    last_id = 0
+    while last_id is not None:
+        last_id = reduce_and_queue_sentences(cur, connection, channel, logger, start_id=max_sent_id+1, limit=1000)
+
 
     # update state to pre-reductions-queued
     cur.execute("""UPDATE nlpjobs SET data=jsonb_set(data, '{state}', %s)
