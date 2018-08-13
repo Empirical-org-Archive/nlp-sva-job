@@ -23,14 +23,19 @@ predictor = load_predictor(path="elmo-constituency-parser-2018.03.14.tar.gz")
 cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
 
-CORRECT_THRESHOLD = 0.00001 #TODO: Improve this threshold
+CORRECT_THRESHOLD = 0.00005 #TODO: Improve this threshold
 
 @app.route("/", methods=["GET"])
 def hello():
     sentence = request.args['sentence']
     print("Sentence: ", sentence)
     reductions = get_reduction(sentence, predictor)
-    return str([get_count(r) for r in reductions])
+    reduction_counts = [get_count(r) for r in reductions]
+    correct = False
+    if reduction_counts:
+        correct = all([cnt > CORRECT_THRESHOLD for cnt in reduction_counts])
+    correct_str = "CORRECT" if correct else "INCORRECT"
+    return str(reductions) + "\n" + str(reduction_counts) + "\n" + correct_str
 
 def get_count(reduction):
     cur.execute("""SELECT count FROM reductions_to_count_tmp WHERE
