@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 # Connect to the database
 try:
-    DB_NAME = os.environ.get('SVA_DB_NAME', 'sva')
-    DB_PASSWORD = os.environ.get('SVA_DB_PASS', '')
-    DB_USER = os.environ.get('SVA_DB_USER', 'etang')
+    DB_NAME = os.environ.get('DB_NAME', 'sva')
+    DB_PASSWORD = os.environ.get('DB_PASS', '')
+    DB_USER = os.environ.get('DB_USER', 'etang')
 except KeyError as e:
     print('important environment variables were not set')
     raise Exception('Warning: Important environment variables were not set')
