@@ -3,3 +3,4 @@ git+git://github.com/clips/pattern.git@53245196139c6ef26dc9c34873dda8a16f236d23#
 textacy==0.6.2
 pika==0.12.0
 psycopg2==2.7.5
+Flask==0.12.1
