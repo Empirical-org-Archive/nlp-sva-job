@@ -19,7 +19,7 @@ except KeyError as e:
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host='localhost')
 cur = conn.cursor()
 
-predictor = load_predictor(path="elmo-constituency-parser-2018.03.14.tar.gz")
+predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz")
 cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
 
@@ -42,3 +42,7 @@ def get_count(reduction):
                     reduction=%s""", (reduction, ))
     row = cur.fetchone()
     return row[0]/num_reductions if row else 0
+
+
+if __name__ == '__main__':
+    app.run(port=10300, host='0.0.0.0', debug=True)
