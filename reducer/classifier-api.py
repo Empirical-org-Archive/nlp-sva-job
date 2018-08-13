@@ -20,6 +20,10 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host
 cur = conn.cursor()
 
 predictor = load_predictor(path="elmo-constituency-parser-2018.03.14.tar.gz")
+cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
+num_reductions = cur.fetchone()[0]
+
+CORRECT_THRESHOLD = 0.00001 #TODO: Improve this threshold
 
 @app.route("/", methods=["GET"])
 def hello():
@@ -32,4 +36,4 @@ def get_count(reduction):
     cur.execute("""SELECT count FROM reductions_to_count_tmp WHERE
                     reduction=%s""", (reduction, ))
     row = cur.fetchone()
-    return row[0] if row else 0
+    return row[0]/num_reductions if row else 0
