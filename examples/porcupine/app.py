@@ -17,7 +17,7 @@ from sqlalchemy.ext.declarative import declarative_base
 DB_PASS = os.environ['PORCUPINE_DB_PASS']
 Base = declarative_base()
 engine = \
-        create_engine('postgres://porcupine:{}@localhost:54321/porcupine'.format(DB_PASS))
+        create_engine('postgres://porcupine:{}@localhost:5432/porcupine'.format(DB_PASS))
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -131,4 +131,4 @@ def check_sentence():
     return render_template('check_sentence.html', text=text)
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', debug=True)
+    app.run(port=10400, host= '0.0.0.0', debug=True)

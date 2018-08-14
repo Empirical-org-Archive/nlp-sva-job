@@ -17,3 +17,4 @@ def check(sentence):
     result.human_readable = "This is a piece of human readable advice."
     result.primary_error = 'DUMMY_MODEL_PRIMARY_ERROR'
     result.specific_error = 'DUMMY_MODEL_SPECIFIC_ERROR'
+    return result
