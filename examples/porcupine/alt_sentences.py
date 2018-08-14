@@ -1,6 +1,7 @@
 from pattern.en import conjugate,tenses
 import itertools
 import textacy
+from pseudo_verbs import pseudo_verbs
 
 def permute_sentence(s, alt_verbs):
     '''
@@ -15,13 +16,21 @@ def permute_sentence(s, alt_verbs):
     result = [s.format(*perm) for perm in itertools.product(*alt_verbs)]
     return result
 
-def get_possible_forms(verb):
+def get_possible_forms(verb, tense=None):
     """Given a verb return alternative forms of the verb that
     have the same tense, but a different person, number, or both.
 
     ie, verb="is", return ["is", "are", "am"]
     """
-    tense, aspect = get_tense_and_aspect(verb)
+    if verb in pseudo_verbs:
+        vs = pseudo_verbs[verb]
+        return (get_possible_forms(vs[0], tense="past") +
+                get_possible_forms(vs[1],tense="pastparticiple"))
+    if tense:
+        _, aspect = get_tense_and_aspect(verb)
+    else:
+        tense, aspect = get_tense_and_aspect(verb)
+
     results = []
     for number in ["singular", "plural"]:
         for person in [1,2,3]:
