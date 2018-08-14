@@ -53,7 +53,7 @@ def get_noun_phrase_reduction(noun_phrase_word_list):
         return 'PL'
     # THEYLIKE, list len > 1 and is filled with nouns and pronouns
     elif len(npwl) > 1 and all(npw['label'] in ['PRP','NN','NNP','NNS','NNPS'] for npw in npwl):
-        return 'THEYLIKE'
+        return 'THEY' # TODO: Temporary fix for Porcupine. Should be "THEYLIKE"
     # <determiner literal>, list len is 1, a single determiner
     elif len(npwl) == 1 and npwl[0]['label'] == 'DT':
         return npwl[0]['word'].upper()
