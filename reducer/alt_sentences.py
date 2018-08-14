@@ -53,7 +53,8 @@ def get_alt_sentences(sent):
     ghost_sentence += sent[end_idx_of_last_verb:]
 
     alt_verbs = [get_possible_forms(v) for v in initial_verbs]
-    return permute_sentence(ghost_sentence, alt_verbs)
+    results =  permute_sentence(ghost_sentence, alt_verbs)
+    return [r for r in results if r != sent]
 
 
 def get_tense_and_aspect(verb):
