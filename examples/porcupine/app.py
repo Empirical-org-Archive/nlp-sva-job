@@ -4,7 +4,7 @@ from flask import request, \
 from flask import jsonify
 from pathlib import Path
 print('Loading subject-verb agreement models...')
-from dummy_model import check # TODO: Update for SVA pipeline
+from sva_classifier import get_feedback
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
@@ -112,7 +112,7 @@ def check_sentence():
             error = 'No input'
             flash_message = error
         else:
-            fb = check(request.form['text'])
+            fb = get_feedback(request.form['text'])
             correct = False
             if request.form.get('is_correct') and not fb.primary_error:
                 correct = True

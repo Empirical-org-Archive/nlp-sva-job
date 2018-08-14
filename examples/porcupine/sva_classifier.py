@@ -1,19 +1,15 @@
 #TODO: Move this file to another folder
-from flask import Flask,jsonify
-from flask import request
 from reducer_helper import get_reduction, load_predictor
 import psycopg2
 import os
 from pattern.en import conjugate,tenses
 import textacy
 
-app = Flask(__name__)
-
 # Connect to the database
 try:
-    DB_NAME = os.environ.get('DB_NAME', 'sva')
-    DB_PASSWORD = os.environ.get('DB_PASS', '')
-    DB_USER = os.environ.get('DB_USER', 'etang')
+    DB_NAME = os.environ.get('SVA_DB_NAME', 'sva')
+    DB_PASSWORD = os.environ.get('SVA_DB_PASS', '')
+    DB_USER = os.environ.get('SVA_DB_USER', 'etang')
 except KeyError as e:
     print('important environment variables were not set')
     raise Exception('Warning: Important environment variables were not set')
@@ -25,8 +21,20 @@ predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018
 cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
 
-CORRECT_THRESHOLD = 0.00005 #TODO: Improve this threshold
 
+class Feedback(object):
+    """Result feedback class"""
+    def __init__(self):
+        self.human_readable = '' # human readable advice
+        self.primary_error = None
+        self.specific_error = None
+        self.matches = {}        # possible errors
+
+    def to_dict(self):
+        return self.__dict__
+
+    def __repr__(self):
+        return self.human_readable
 
 def get_alt_sentences(sentence):
     d = textacy.Doc(sentence, lang='en_core_web_sm')
@@ -69,15 +77,9 @@ def get_alt_sentences(sentence):
                     alt_sentences.append(new_sentence)
     return list(set(alt_sentences))
 
-
-@app.route("/", methods=["GET"])
-def hello():
-    sentence = request.args['sentence']
+def get_feedback(sentence):
+    result = Feedback()
     alt_sentences = get_alt_sentences(sentence)
-    print("Sentence: ", sentence)
-    print("Alt. Sentences: ")
-    for alt_s in alt_sentences:
-        print(" >" + alt_s)
     reductions = get_reduction(sentence, predictor)
     reduction_counts = [get_count(r) for r in reductions]
     score = sum(reduction_counts)
@@ -95,16 +97,16 @@ def hello():
         correct = False
     else:
         correct = True
-        
-    #correct = False
-    #if reduction_counts:
-    #    correct = all([cnt > CORRECT_THRESHOLD for cnt in reduction_counts])
-    correct_str = "CORRECT" if correct else "INCORRECT"
-    result = correct_str
-    if not correct:
-        result += '-- suggestion: {}'.format(suggestion)
 
-    return jsonify(result)
+    if not correct:
+        result.human_readable = "Incorrect -- suggestion: {}".format(suggestion)
+        result.primary_error = 'SUBJECT_VERB_AGREEMENT_PRIMARY_ERROR'
+        result.specific_error = 'SUBJECT_VERB_AGREEMENT_SPECIFIC_ERROR'
+    else:
+        result.human_readable = "Correct -- no subject verb agreement error found"
+        result.primary_error = 'NONE'
+        result.specific_error = 'NONE'
+    return result
 
 def get_count(reduction):
     cur.execute("""SELECT count FROM reductions_to_count_tmp WHERE
@@ -119,9 +121,3 @@ def get_tense_and_aspect(verb):
         if tx[0] and tx[4]:
             return (tx[0], tx[4])
     return (None, None)
-
-
-
-
-if __name__ == '__main__':
-    app.run(port=10300, host='0.0.0.0', debug=True)
