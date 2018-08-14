@@ -1,10 +1,10 @@
 # Porcupine
 
-A minimal website that uses Quill.org's QFragment to give useful feedback on
-sentences and sentence fragments.
+A minimal website that uses Quill.org's subject-verb agreement (SVA) model to give useful feedback on
+subject-verb agreement errors.
 
-Porcupine is meant to demonstrate QFragment's functionality.  You can use and
-modify it, or play with it to see if QFragment is right for your application.
+Porcupine is meant to demonstrate the model's functionality.  You can use and
+modify it, or play with it to see if Quill's SVA model is right for your application.
 
 
 ## Getting started
@@ -25,6 +25,5 @@ Have fun.
 
 ## Please Note:
 
-QFragment is still under rapid development and feedback may not always be
+Quill's SVA model is still under rapid development and feedback may not always be
 accurate. Please remember this when deciding whether to use it.
-

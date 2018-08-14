@@ -4,7 +4,7 @@ from flask import request, \
 from flask import jsonify
 from pathlib import Path
 print('Loading qfragment models...')
-from qfragment import check
+from qfragment import check # TODO: Update for SVA pipeline
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
@@ -68,14 +68,14 @@ def get_submissions():
         correct_filter = [True]
     else:
         correct_filter = [False]
-    
+
     if request.args.get('order[0][column]', '0') == '0':
         column = 'id'
     elif request.args['order[0][column]'] == '1':
         column = 'text'
     else:
         column = 'primary_error'
-        
+
     order_str = "{} {}".format(column, request.args.get('order[0][dir]', 'desc'))
 
     search_val = request.args.get('search[value]')
@@ -95,11 +95,11 @@ def get_submissions():
     i = 0
     for i, submission in enumerate(subs):
        submissions['data'].append([submission.id, submission.text,
-           submission.primary_error, submission.correct]) 
-    submissions['recordsTotal'] = session.query(Submission).count() 
-    submissions['recordsFiltered'] = filtered_len 
+           submission.primary_error, submission.correct])
+    submissions['recordsTotal'] = session.query(Submission).count()
+    submissions['recordsFiltered'] = filtered_len
 
-    return jsonify(submissions) 
+    return jsonify(submissions)
 
 
 @app.route('/', methods=['GET', 'POST'])
