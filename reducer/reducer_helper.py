@@ -222,14 +222,13 @@ def subject_words_from_phrase(subject):
     for i, child in enumerate(subject):
         if child.label() == "NP": # Recursively identify sub-phrases
             noun_words += subject_words_from_phrase(child)
-            noun_indices.append(i)
+            noun_indices += [i] * len(noun_words)
         elif child.label() in noun_tags:
             noun_words.append({'word': child[0], 'label': child.label()})
             noun_indices.append(i)
         elif child.label() in adj_tags:
             adj_words.append({'word': child[0], 'label': child.label()})
-    # Check if any nouns are adjacent
-    # If so, they are likely singular nouns like "Farmer Brown" or "Mrs. Jones"
+    # Compress any adjacent nouns (e.g. "Farmer Brown" or "Mrs. Jones")
     noun_words = compress_nouns(noun_words, noun_indices)
     return noun_words if noun_words else adj_words
     return []
