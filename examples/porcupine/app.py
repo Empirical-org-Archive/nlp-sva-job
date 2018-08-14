@@ -131,4 +131,4 @@ def check_sentence():
     return render_template('check_sentence.html', text=text)
 
 if __name__ == '__main__':
-    app.run(port=10400, host= '0.0.0.0', debug=True)
+    app.run(port=10400, host= '0.0.0.0', debug=False)

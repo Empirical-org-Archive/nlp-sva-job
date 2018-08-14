@@ -1,5 +1,6 @@
 #TODO: Move this file to another folder
 from reducer_helper import get_reduction, load_predictor
+from alt_sentences import get_alt_sentences
 import psycopg2
 import os
 from pattern.en import conjugate,tenses
@@ -13,14 +14,15 @@ try:
 except KeyError as e:
     print('important environment variables were not set')
     raise Exception('Warning: Important environment variables were not set')
-
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host='localhost')
 cur = conn.cursor()
-
-predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz")
 cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
 
+# Load AllenNLP Model
+print("Loading AllenNLP Model ...")
+predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz")
+print("API ready.")
 
 class Feedback(object):
     """Result feedback class"""
@@ -35,47 +37,6 @@ class Feedback(object):
 
     def __repr__(self):
         return self.human_readable
-
-def get_alt_sentences(sentence):
-    d = textacy.Doc(sentence, lang='en_core_web_sm')
-    alt_sentences = []
-    for t in d:
-        if t.tag_.startswith('VB'):
-            tense, aspect = get_tense_and_aspect(t.text)
-            if tense and aspect:
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='singular', person=1)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='plural', person=1)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-                # 2
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='singular', person=2)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='plural', person=2)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-                # 3
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='singular', person=3)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-                new_word = conjugate(t.text, tense=tense, aspect=aspect,
-                        number='plural', person=3)
-                if new_word != t.text:
-                    new_sentence = sentence[:t.idx] + new_word + sentence[t.idx+len(t.text):]
-                    alt_sentences.append(new_sentence)
-    return list(set(alt_sentences))
 
 def get_feedback(sentence):
     result = Feedback()

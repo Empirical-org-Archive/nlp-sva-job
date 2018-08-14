@@ -1,4 +1,3 @@
-#TODO: Move this file to another folder
 from pattern.en import conjugate,tenses
 import itertools
 import textacy
@@ -19,7 +18,7 @@ def permute_sentence(s, alt_verbs):
 def get_possible_forms(verb):
     """Given a verb return alternative forms of the verb that
     have the same tense, but a different person, number, or both.
-    
+
     ie, verb="is", return ["is", "are", "am"]
     """
     tense, aspect = get_tense_and_aspect(verb)
