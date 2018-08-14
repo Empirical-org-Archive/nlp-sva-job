@@ -3,8 +3,8 @@ from flask import request, \
      render_template, flash, Flask
 from flask import jsonify
 from pathlib import Path
-print('Loading qfragment models...')
-from qfragment import check # TODO: Update for SVA pipeline
+print('Loading subject-verb agreement models...')
+from dummy_model import check # TODO: Update for SVA pipeline
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
