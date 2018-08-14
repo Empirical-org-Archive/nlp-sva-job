@@ -196,7 +196,6 @@ def subject_words_from_phrase(subject):
     """
     Given subject phrase as a tree, returns list of relevant nouns with labels
     """
-
     pronoun_tags = ["PRP"]
     singular_tags = ["NN", "NNP"]
     plural_tags = ["NNS", "NNPS"]
@@ -204,29 +203,54 @@ def subject_words_from_phrase(subject):
     determiners = ["DT"]
     noun_tags = pronoun_tags + singular_tags + plural_tags
 
-    noun_words = []
-    if subject is None: # No subject
-        return noun_words
-    elif subject.label() == "S":
+    if subject is None:
+        # No subject
+        return []
+
+    if subject.label() == "S":
         # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
         return verb_words_from_phrase(subject)
-    else:
-        # If noun phrase is only one determiner, return that:
-        if len(subject) == 1 and subject[0].label() in determiners:
-            return [{'word': subject[0][0], 'label': subject[0].label()}]
 
-        # Standard noun phrase. Gather noun words from the phrase.
-        # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
-        adj_words = []
-        for child in subject:
-            if child.label() == "NP": # Recursively identify sub-phrases
-                noun_words += subject_words_from_phrase(child)
-            elif child.label() in noun_tags:
-                noun_words.append({'word': child[0], 'label': child.label()})
-            elif child.label() in adj_tags:
-                adj_words.append({'word': child[0], 'label': child.label()})
-        return noun_words if noun_words else adj_words
+    if len(subject) == 1 and subject[0].label() in determiners:
+        # If noun phrase is only one determiner, return that:
+        return [{'word': subject[0][0], 'label': subject[0].label()}]
+
+    # Standard noun phrase. Gather noun words from the phrase.
+    # If no noun phrases are present, subject may be adjective: "Melancholy hung over James"
+    noun_words, noun_indices = [], []
+    adj_words = []
+    for i, child in enumerate(subject):
+        if child.label() == "NP": # Recursively identify sub-phrases
+            noun_words += subject_words_from_phrase(child)
+            noun_indices.append(i)
+        elif child.label() in noun_tags:
+            noun_words.append({'word': child[0], 'label': child.label()})
+            noun_indices.append(i)
+        elif child.label() in adj_tags:
+            adj_words.append({'word': child[0], 'label': child.label()})
+    # Check if any nouns are adjacent
+    # If so, they are likely singular nouns like "Farmer Brown" or "Mrs. Jones"
+    noun_words = compress_nouns(noun_words, noun_indices)
+    return noun_words if noun_words else adj_words
     return []
+
+def compress_nouns(noun_words, noun_indices):
+    """
+    Compresses nouns into singular if they are immediately adjacent.
+    For example, [(Mickey), (Mantle)] will get compressed to [(Mickey Mantle)]
+
+    noun_words is a list of objects in the form {'word': 'Mickey', 'label': 'NNS'}
+    noun_indices is the list of indices of those words from the subject tree
+
+    We perform this recursively, by merging the first two elements of the list if adjacent
+    """
+    if len(noun_words) <= 1:
+        return noun_words
+    if noun_indices[0] + 1 == noun_indices[1]:
+        # Adjacent, compress nouns
+        noun_words[1]['word'] = noun_words[0]['word'] + " " + noun_words[1]['word']
+        return compress_nouns(noun_words[1:], noun_indices[1:])
+    return noun_words[:1] + compress_nouns(noun_words[1:], noun_indices[1:])
 
 # MARK: Verbs
 
@@ -267,6 +291,12 @@ def sentence_to_pairs(sent, predictor):
     }
 
 def get_reduction(sent, predictor):
+    """
+    High-level function to take a sentence and AllenNLP predictor,
+    returns list of reductions of sentence.
+
+    Imported and used in several other modules
+    """
     svpair_info = sentence_to_pairs(sent, predictor)
     text, pairs = svpair_info['text'], svpair_info['subjects_with_verbs']
     return [subjects_with_verbs_to_reductions.get_reduction(pair, text) for pair in pairs]

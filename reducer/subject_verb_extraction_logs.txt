@@ -1,3 +1,4 @@
+Model loaded, testing beginning
 Original Sentence:  John is a boy
 Processed Sentence:  John is a boy
 Tree: 
@@ -1155,12 +1156,10 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  Farmer Brown
 Verb Phrase:  cried
-[{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]
+[{'word': 'Farmer Brown', 'label': 'NNP'}]
 [{'word': 'cried', 'label': 'VBD'}]
-[{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Farmer Brown', 'label': 'NNP'}], 'vp': [{'word': 'cried', 'label': 'VBD'}]}]
-Got: [{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer', 'label': 'NNP'}, {'word': 'Brown', 'label': 'NNP'}]}]
+[{'vp': [{'word': 'cried', 'label': 'VBD'}], 'np': [{'word': 'Farmer Brown', 'label': 'NNP'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1293,12 +1292,10 @@ Tree:
 Verb Subject Pairs: 
 Noun Phrase:  Man boy
 Verb Phrase:  is the most powerful member of the lightning squad
-[{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]
+[{'word': 'Man boy', 'label': 'NN'}]
 [{'word': 'is', 'label': 'VBZ'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]}]
-MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-Expected: [{'np': [{'word': 'Man boy', 'label': 'NN'}], 'vp': [{'word': 'is', 'label': 'VBZ'}]}]
-Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man', 'label': 'NN'}, {'word': 'boy', 'label': 'NN'}]}]
+[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Man boy', 'label': 'NN'}]}]
+PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
 
@@ -1393,4 +1390,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.7413793103448276
+TEST ACCURACY:  0.7758620689655172
