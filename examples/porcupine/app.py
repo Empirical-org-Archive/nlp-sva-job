@@ -4,7 +4,8 @@ from flask import request, \
 from flask import jsonify
 from pathlib import Path
 print('Loading subject-verb agreement models...')
-from sva_classifier import get_feedback
+#from sva_classifier import get_feedback
+from check import check as get_feedback
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError

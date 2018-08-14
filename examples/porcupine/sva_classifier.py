@@ -60,13 +60,9 @@ def get_feedback(sentence):
         correct = True
 
     if not correct:
-        result.human_readable = "Incorrect -- suggestion: {}".format(suggestion)
-        result.primary_error = 'SUBJECT_VERB_AGREEMENT_PRIMARY_ERROR'
-        result.specific_error = 'SUBJECT_VERB_AGREEMENT_SPECIFIC_ERROR'
+        result = "That looks like a subject verb agreement error.\n suggestion: {}".format(suggestion)
     else:
-        result.human_readable = "Correct -- no subject verb agreement error found"
-        result.primary_error = None
-        result.specific_error = None
+        result = None
     return result
 
 def get_count(reduction):
