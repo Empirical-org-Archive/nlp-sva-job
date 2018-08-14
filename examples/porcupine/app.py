@@ -113,11 +113,7 @@ def check_sentence():
             flash_message = error
         else:
             fb = get_feedback(request.form['text'])
-            correct = False
-            if request.form.get('is_correct') and not fb.primary_error:
-                correct = True
-            elif not request.form.get('is_correct') and fb.primary_error:
-                correct = True
+            correct = request.form.get('is_correct') or not fb.primary_error
             sub = Submission(text=text, correct=correct, primary_error=fb.primary_error,
                     specific_error=fb.specific_error)
             session.add(sub)

@@ -65,8 +65,8 @@ def get_feedback(sentence):
         result.specific_error = 'SUBJECT_VERB_AGREEMENT_SPECIFIC_ERROR'
     else:
         result.human_readable = "Correct -- no subject verb agreement error found"
-        result.primary_error = 'NONE'
-        result.specific_error = 'NONE'
+        result.primary_error = None
+        result.specific_error = None
     return result
 
 def get_count(reduction):
