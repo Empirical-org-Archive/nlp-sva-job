@@ -6,5 +6,6 @@ numpy==1.14.2
 pandas==0.19.2
 pathlib==1.0.1
 requests==2.18.4
+spacy==2.0.12
 tensorflow==1.5.1
 tflearn==0.3.2
