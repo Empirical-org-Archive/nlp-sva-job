@@ -13,6 +13,7 @@ import subprocess
 import tensorflow as tf
 import tflearn
 from sva_classifier import get_feedback as get_subject_verb_agreement_feedback
+from pattern.en import conjugate
 
 model_name = os.environ.get('QUILL_SPACY_MODEL', 'en_core_web_lg')
 if model_name != 'en_core_web_lg':
@@ -21,7 +22,7 @@ else:
     import en_core_web_lg
     nlp = en_core_web_lg.load()
 
-# relative path resolution 
+# relative path resolution
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 LT_SERVER = \
@@ -57,7 +58,7 @@ def _build_trigram_indices(trigram_index):
 def _build_model(trigram_count):
     # This resets all parameters and variables, leave this here
     tf.reset_default_graph()
-    
+
     net = tflearn.input_data([None, trigram_count])
     net = tflearn.fully_connected(net, 200, activation='ReLU')      # Hidden
     net = tflearn.fully_connected(net, 25, activation='ReLU')      # Hidden
@@ -88,7 +89,7 @@ def _trigramsToDictKeys(trigrams):
         keys.append('>'.join(trigram))
     return keys
 
-def _textToTrigrams(text): 
+def _textToTrigrams(text):
     return _trigramsToDictKeys(_getPOSTrigramsForTextString(text))
 
 def _text_to_vector(text,trigram2idx, trigram_count):
@@ -105,7 +106,7 @@ def _begins_with_one_of(sentence, parts_of_speech):
     doc = nlp(sentence)
     if doc[0].tag_ in parts_of_speech:
         return True
-    return False 
+    return False
 
 # Initializations
 
@@ -123,7 +124,7 @@ for prefix in prefixes:
     models[prefix] = _build_model(trigram_count[prefix])
     models[prefix].load(os.path.join(__location__, 'models',
             '{}_model2.tfl'.format(prefix)))
-    
+
 # Public methods
 
 
@@ -137,7 +138,7 @@ def get_language_tool_feedback(sentence):
         not running.  Try starting it with "ltserver" ''')
     if r.status_code >= 200 and r.status_code < 300:
         return r.json().get('matches', [])
-    return [] 
+    return []
 
 
 def is_participle_clause_fragment(sentence):
@@ -156,7 +157,7 @@ def is_participle_clause_fragment(sentence):
 
     # short circuit if sentence starts with a gerund and the gerund is the
     # subject.
-    
+
     if _begins_with_one_of(sentence, ['VBG']):
         doc = nlp(sentence)
         fw = [w for w in doc][0]
@@ -173,6 +174,19 @@ def is_participle_clause_fragment(sentence):
         trigram2idx['participle'], trigram_count['participle'])])[0][1]
     return float(positive_prob)
 
+def has_incorrect_infinitive_form(sentence):
+    """
+    Returns whether the sentence has an incorrect infinitive
+
+    For example: "To eats" or "To danced" (should be "To eat" and "To dance")
+    """
+    doc = nlp(sentence)
+    prev_word = None
+    for w in doc:
+        if prev_word == 'to' and w.tag_.startswith('VB') and w.tag_ != 'VB':
+            return True
+        prev_word = w.text.lower()
+    return False
 
 def check(sentence):
     """Supply a sentence or fragment and recieve feedback"""
@@ -193,14 +207,15 @@ def check(sentence):
     is_infinitive = detect_infinitive_phrase(sentence)
     is_participle = is_participle_clause_fragment(sentence)
     lang_tool_feedback = get_language_tool_feedback(sentence)
+    is_incorrect_infinitive_form = has_incorrect_infinitive_form(sentence)
     subject_and_verb_agree = get_subject_verb_agreement_feedback(sentence)
     ####
     if is_missing_verb: # Lowest priority
-        result.matches['missing_verb'] = True 
-        result.human_readable = MISSING_VERB_ADVICE.replace('\n', '') 
+        result.matches['missing_verb'] = True
+        result.human_readable = MISSING_VERB_ADVICE.replace('\n', '')
         result.primary_error = 'MISSING_VERB_ERROR'
         result.specific_error = 'MISSING_VERB'
-    if is_participle > .5: 
+    if is_participle > .5:
         result.matches['participle_phrase'] = is_participle
         result.human_readable = PARTICIPLE_FRAGMENT_ADVICE.replace('\n', '')
         result.primary_error = 'FRAGMENT_ERROR'
@@ -213,8 +228,8 @@ def check(sentence):
                 result.primary_error = 'FRAGMENT_ERROR'
                 result.specific_error = 'SUBORDINATE_CLAUSE'
     if is_infinitive:
-        result.matches['infinitive_phrase'] = True 
-        result.human_readable = INFINITIVE_PHRASE_ADVICE.replace('\n', '') 
+        result.matches['infinitive_phrase'] = True
+        result.human_readable = INFINITIVE_PHRASE_ADVICE.replace('\n', '')
         result.primary_error = 'INFINITIVE_PHRASE_ERROR'
         result.specific_error = 'INFINITIVE_PHRASE'
     if lang_tool_feedback:
@@ -228,9 +243,14 @@ def check(sentence):
             result.human_readable = ltf['message']
             result.primary_error = 'OTHER_ERROR'
             result.specific_error = ltf['rule']['id']
+    if is_incorrect_infinitive_form:
+        result.matches['incorrect_infinitive_form'] = is_incorrect_infinitive_form
+        result.human_readable = INCORRECT_INFINITIVE_FORM_ADVICE.replace('\n', '')
+        result.primary_error = 'INFINITIVE_FORM_ERROR'
+        result.specific_error = 'INFINITIVE_FORM_ERROR'
     if subject_and_verb_agree: # Highest priority (spelling, other lang tool errors)
         result.matches['subject_verb_agreement'] = True
-        result.human_readable = subject_and_verb_agree 
+        result.human_readable = subject_and_verb_agree
         result.primary_error = 'SUBJECT_VERB_AGREEMENT_ERROR'
         result.specific_error = 'SUBJECT_VERB_AGREEMENT'
 
@@ -238,6 +258,4 @@ def check(sentence):
     if not result.matches:
         result.human_readable = STRONG_SENTENCE_ADVICE.replace('\n', '')
 
-    return result 
-
-
+    return result

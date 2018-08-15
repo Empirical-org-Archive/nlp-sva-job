@@ -7,3 +7,6 @@ SUBJECT_VERB_AGREEMENT_ADVICE = """It looks like you might have a subject verb
 INFINITIVE_PHRASE_ADVICE = """This is an infinitive phrase with no main clause.
 Try adding a main clause to make it into a bona fide sentence."""
 MISSING_VERB_ADVICE = """Try adding a main verb to make this a sentence."""
+INCORRECT_INFINITIVE_FORM_ADVICE = """It looks like you are trying to use an
+ infinitive. Infinitives always use the base form of the verb, as in 'She likes
+ to run.' It is also possible you misspelled 'too' or are missing a comma."""
