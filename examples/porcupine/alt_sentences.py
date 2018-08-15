@@ -32,6 +32,8 @@ def get_possible_forms(verb, tense=None):
         tense, aspect = get_tense_and_aspect(verb)
 
     results = []
+    if not tense:
+        return results
     for number in ["singular", "plural"]:
         for person in [1,2,3]:
             results.append(conjugate(verb, tense=tense, aspect=aspect,
