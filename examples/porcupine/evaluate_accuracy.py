@@ -1,12 +1,14 @@
 from sva_classifier import get_feedback as get_sva_feedback
 # get_feedback currently returns None if no error, otherwise human-readable feedback
 
+ANNOTATED_FILE = "../../test/data/nucle-test-official-2014.combined.m2"
+
 """
 This evaluation program takes a file of annotations and returns metrics about
 how well our model performs on detecting errors within those annotations.
 """
 
-def read_test_data(annotated_file):
+def get_test_data(annotated_file):
     """
     Reads test data into a list of dictionaries. Each dictionary in the form:
     {
@@ -17,8 +19,57 @@ def read_test_data(annotated_file):
 
     We will currently store only one correct modification, though there may be
     multiple acceptable correct modifications.
+
+    Currently, we are reading from a m2 file in the style of the NUCLE .m2 files
+    These contain each sentence followed by their annotations
     """
-    # TODO: Read in test data from existing m2 file
+    examples = []
+    with open(annotated_file, "r") as file:
+        cur_sentence = ""
+        for line in file.read().splitlines():
+            if len(line) == 0:
+                continue
+            elif line[0] == 'S':
+                cur_sentence = line[2:]
+            elif line[0] == 'A':
+                # TODO: If a sentence has multiple errors, we should only add one example
+                annotation = parse_annotation(line)
+                if annotation["error_type"] == "SVA":
+                    example = training_example_from_annotation(cur_sentence, annotation)
+                    examples.append(example)
+    return examples
+
+def parse_annotation(annotation_line):
+    """
+    Given annotation line in form
+    A 22 23|||Wform|||combining|||REQUIRED|||-NONE-|||0
+
+    Returns annotation dictionary with relevant information
+    """
+    words = annotation_line.split("|||")
+    annotation = {}
+    annotation["error_type"] = words[1]
+    annotation["start_index"] = int(words[0].split()[1])
+    annotation["end_index"] = int(words[0].split()[2])
+    annotation["correct_words"] = words[2]
+    return annotation
+
+def training_example_from_annotation(sent, annotation):
+    """
+    Given a sentence, and annotation dictionary as described above
+    Reconstructs the correct sentence and returns as full object.
+    """
+    example = {"original": sent}
+    example["sva_error"] = (annotation["error_type"] == "SVA")
+    words = sent.split()
+    words[annotation["start_index"]:annotation["end_index"]] = annotation["correct_words"].split()
+    example["correct"] = " ".join(words)
+    return example
+
+def get_dummy_test_data():
+    """
+    Returns three dummy test sentences for debugging use.
+    """
     return [
         {
             "original": "Hence , the social media sites serves as a platform for the connection .",
@@ -83,5 +134,7 @@ def evaluate_examples(examples, strict=False, verbose=True):
 
 
 if __name__ == '__main__':
-    test_data = read_test_data(None)
+    test_data = get_test_data(ANNOTATED_FILE)
+    print(test_data[:10])
+    print("Num examples: ", len(test_data))
     evaluate_examples(test_data, strict=False, verbose=True)
