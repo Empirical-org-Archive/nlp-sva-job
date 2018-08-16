@@ -1,0 +1,39 @@
+Accuracy: 0.4
+rall , what affects one family may or may not affect another although the families has a common genetic make up , shared by either of the parents .
+SVA Error: True
+Correct: Afterall , what affects one family may or may not affect another although the families have a common genetic make up , shared by either of the parents .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Afterall , what affect one family may or may not affects another although the families have a common genetic make up , shared by either of the parents .
+-----------------------------------------------------
+
+Original: Afterall , what affects one family may or may not affect another although the families has a common genetic make up , shared by either of the parents .
+SVA Error: True
+Correct: Afterall , what affects one family may or may not affect another although the families have a common genetic make up , shared by either of the parents .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Afterall , what affect one family may or may not affects another although the families have a common genetic make up , shared by either of the parents .
+-----------------------------------------------------
+
+Original: Do one who suffered from this disease keep it a secret of infrom their relatives ?
+SVA Error: True
+Correct: Does one who suffered from this disease keep it a secret of infrom their relatives ?
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: Do one who suffered from this disease keep it a secret of infrom their relatives ?
+SVA Error: True
+Correct: Does one who suffered from this disease keep it a secret of infrom their relatives ?
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: Depending on whom the genetic risk was discovered from : the son or daughter for example , the parents who knows about this would decide who gets told and whom takes the precedence in being 'allowed ' to tell .
+SVA Error: True
+Correct: Depending on whom the genetic risk was discovered from : the son or daughter for example , the parents who know about this would decide who gets told and whom takes the precedence in being 'allowed ' to tell .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Accuracy: 0.4

@@ -1,7 +1,6 @@
+import sys
 from sva_classifier import get_feedback as get_sva_feedback
 # get_feedback currently returns None if no error, otherwise human-readable feedback
-
-ANNOTATED_FILE = "../../test/data/nucle-test-official-2014.combined.m2"
 
 """
 This evaluation program takes a file of annotations and returns metrics about
@@ -88,7 +87,7 @@ def get_dummy_test_data():
         }
     ]
 
-def evaluate_example(example, strict=False, verbose=True):
+def evaluate_example(example, strict=False, verbose=True, log_sock=sys.stdout):
     """
     Takes in one example in the dictionary format described above:
     { "original": ---, "sva_error": ---,  "correct": ---}
@@ -105,36 +104,52 @@ def evaluate_example(example, strict=False, verbose=True):
     sva_error_found = True if feedback else False
     matches = (sva_error_found == example["sva_error"])
     if verbose:
-        print("Original: {}".format(example["original"]))
-        print("SVA Error: {}".format(example["sva_error"]))
-        print("Correct: {}".format(example["correct"]))
+        log_sock.write("Original: {}\n".format(example["original"]))
+        log_sock.write("SVA Error: {}\n".format(example["sva_error"]))
+        log_sock.write("Correct: {}\n".format(example["correct"]))
         if matches:
-            print("MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+            log_sock.write("MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n")
         else:
-            print("MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!")
+            log_sock.write("MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!\n")
         if feedback:
-            print(feedback)
+            log_sock.write(feedback + "\n")
         else:
-            print("No SVA error found.")
-        print("-----------------------------------------------------")
-        print()
+            log_sock.write("No SVA error found.\n")
+        log_sock.write("-----------------------------------------------------\n\n")
     return matches
 
 
-def evaluate_examples(examples, strict=False, verbose=True):
+def evaluate_examples(examples, strict=False, verbose=True, log_sock=sys.stdout):
     """
     Evaluates many examples, returns accuracy metrics on those examples.
     Strict and verbose params are identical to evaluate_example
     """
-    num_matched = len([ex for ex in examples if evaluate_example(ex, strict=strict, verbose=verbose)])
-    accuracy = num_matched/len(examples)
+    num_examples = len(examples)
+    num_matched = 0
+    report_frequency = 3
+
+    for i, ex in enumerate(examples):
+        if evaluate_example(ex, strict=strict, verbose=verbose, log_sock=log_sock):
+            num_matched += 1
+        if i % report_frequency == 0:
+            print("Evaluated {} examples, {} % complete. ".format(i, 100*i/num_examples))
+
+    accuracy = num_matched/num_examples
     if verbose:
         print("Accuracy: {}".format(accuracy))
+        log_sock.write("Accuracy: {}\n".format(accuracy))
     return accuracy
 
 
 if __name__ == '__main__':
+    ANNOTATED_FILE = "../../test/data/nucle-test-official-2014.combined.m2"
+    LOG_FILE = "../../test/logs/nucle-test-data-logs.txt"
+
+    print("Reading test data")
     test_data = get_test_data(ANNOTATED_FILE)
-    print(test_data[:10])
-    print("Num examples: ", len(test_data))
-    evaluate_examples(test_data, strict=False, verbose=True)
+    print("Number of test examples: ", len(test_data))
+    print("Evaluating examples. Logging output to ", LOG_FILE)
+    with open(LOG_FILE, 'w') as log_sock:
+        accuracy = evaluate_examples(test_data, strict=False, verbose=True, log_sock=log_sock)
+        log_sock.seek(0, 0) #be kind, rewind
+        log_sock.write("Accuracy: {}\n\n".format(accuracy))
