@@ -22,7 +22,7 @@ num_reductions = cur.fetchone()[0]
 # Load AllenNLP Model
 print("Loading AllenNLP Model ...")
 predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz")
-print("API ready.")
+print("AllenNLP Model Loaded.")
 
 class Feedback(object):
     """Result feedback class"""
