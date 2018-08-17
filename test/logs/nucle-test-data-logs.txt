@@ -1,13 +1,6 @@
-Accuracy: 0.4
-rall , what affects one family may or may not affect another although the families has a common genetic make up , shared by either of the parents .
-SVA Error: True
-Correct: Afterall , what affects one family may or may not affect another although the families have a common genetic make up , shared by either of the parents .
-MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-That looks like a subject verb agreement error.
- suggestion: Afterall , what affect one family may or may not affects another although the families have a common genetic make up , shared by either of the parents .
------------------------------------------------------
+Accuracy: 0.8222222222222222
 
-Original: Afterall , what affects one family may or may not affect another although the families has a common genetic make up , shared by either of the parents .
+cts one family may or may not affect another although the families has a common genetic make up , shared by either of the parents .
 SVA Error: True
 Correct: Afterall , what affects one family may or may not affect another although the families have a common genetic make up , shared by either of the parents .
 MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -22,18 +15,341 @@ MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
 No SVA error found.
 -----------------------------------------------------
 
-Original: Do one who suffered from this disease keep it a secret of infrom their relatives ?
+Original: The law 's spirit also include the fairness .
 SVA Error: True
-Correct: Does one who suffered from this disease keep it a secret of infrom their relatives ?
+Correct: The law 's spirit also includes the fairness .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: The law 's spirit also includes the fairness .
+-----------------------------------------------------
+
+Original: It is because a carrier with bad gene may not necessary have those genetic disease , if they can have coresponding healthy lifestyle before the age that the gene 's function become stronger .
+SVA Error: True
+Correct: It is because a carrier with bad gene may not necessary have those genetic disease , if they can have coresponding healthy lifestyle before the age that the gene 's function becomes stronger .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: It is because a carrier with bad gene may not necessary have those genetic disease , if they can have coresponding healthy lifestyle before the age that the gene 's function becomes stronger .
+-----------------------------------------------------
+
+Original: Thus , much thought need to put on the immediate family as it could caused a stir of unwanted events from the patient or the family members itself .
+SVA Error: True
+Correct: Thus , much thought needs to put on the immediate family as it could caused a stir of unwanted events from the patient or the family members itself .
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
 No SVA error found.
 -----------------------------------------------------
 
-Original: Depending on whom the genetic risk was discovered from : the son or daughter for example , the parents who knows about this would decide who gets told and whom takes the precedence in being 'allowed ' to tell .
+Original: Having support from relatives are vital as they ensure the genetic risk carrier that he/she is not alone in facing this illness and it will certainly provide a morale boost as the whole family will share a common sentiment with regards towards the future prospect of the genetic disorder which could be inherited by anyone in the family .
 SVA Error: True
-Correct: Depending on whom the genetic risk was discovered from : the son or daughter for example , the parents who know about this would decide who gets told and whom takes the precedence in being 'allowed ' to tell .
+Correct: Having support from relatives is vital as they ensure the genetic risk carrier that he/she is not alone in facing this illness and it will certainly provide a morale boost as the whole family will share a common sentiment with regards towards the future prospect of the genetic disorder which could be inherited by anyone in the family .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: having support from relatives is vital as they ensure the genetic risk carrier that he/she are not alone in facing this illness and it will certainly provides a morale boost as the whole family will share a common sentiment with regards towards the future prospect of the genetic disorder which could are inherited by anyone in the family .
+-----------------------------------------------------
+
+Original: As a result , in the case that when one of the members happen to feel uncomfortable or unnormal , he or she should aware that whether the disorder in his or her body is a genetic risk or not .
+SVA Error: True
+Correct: As a result , in the case that when one of the members happens to feel uncomfortable or unnormal , he or she should aware that whether the disorder in his or her body is a genetic risk or not .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: As a result , in the case that when one of the members happens to feel uncomfortable or unnormal , he or she should aware that whether the disorder in his or her body are a genetic risk or not .
+-----------------------------------------------------
+
+Original: For every action there is always pros and cons .
+SVA Error: True
+Correct: For every action there are always pros and cons .
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
 No SVA error found.
 -----------------------------------------------------
 
-Accuracy: 0.4
+Original: However , we will never know whether this negative effects will happen when the carrier decide to tell his or her family of the his or her condition .
+SVA Error: True
+Correct: However , we will never know whether this negative effects will happen when the carrier decides to tell his or her family of the his or her condition .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: However , we will never know whether this negative effects will happen when the carrier decides to tell his or her family of the his or her condition .
+-----------------------------------------------------
+
+Original: This is an issue need to be addressed as family-related ethical dilemma is involved .
+SVA Error: True
+Correct: This is an issue needs to be addressed as family-related ethical dilemma is involved .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: With the nature that the results will be known once the tests are done , each individual that is diagnosed to be a genetic risk carrier face an ethical problem : They should warn their relatives about the risking of being the same genetic risk carrier .
+SVA Error: True
+Correct: With the nature that the results will be known once the tests are done , each individual that is diagnosed to be a genetic risk carrier faces an ethical problem : They should warn their relatives about the risking of being the same genetic risk carrier .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: With the nature that the results will are known once the tests are done , each individual that are diagnosed to are a genetic risk carrier faces an ethical problem : They should warn their relatives about the risking of being the same genetic risk carrier .
+-----------------------------------------------------
+
+Original: Many syndromes such as Down Syndrome and Taylor Syndrome can be prevented to happen if the mother undergo proper medication and do n't consume harmful goods during the pregnancy period .
+SVA Error: True
+Correct: Many syndromes such as Down Syndrome and Taylor Syndrome can be prevented to happen if the mother undergoes proper medication and do n't consume harmful goods during the pregnancy period .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Many syndromes such as Down Syndrome and Taylor Syndrome can is prevented to happen if the mother undergoes proper medication and does n't consume harmful goods during the pregnancy period .
+-----------------------------------------------------
+
+Original: A study of New York University in 2010 shown that patients with family members around generally recovers 2-4 days faster than those taken care by professional nurses .
+SVA Error: True
+Correct: A study of New York University in 2010 shown that patients with family members around generally recover 2-4 days faster than those taken care by professional nurses .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: A study of New York University in 2010 shown that patients with family members around generally recover 2-4 days faster than those taken care by professional nurses .
+-----------------------------------------------------
+
+Original: Just as the lyrics of Kelly Clarkson , what does n't kill you make you stronger .
+SVA Error: True
+Correct: Just as the lyrics of Kelly Clarkson , what does n't kill you makes you stronger .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: < no suggestion >
+-----------------------------------------------------
+
+Original: It is still early for parents to decide whether they can foster a new life that are not able to work and may suffer the pain in the entire life .
+SVA Error: True
+Correct: It is still early for parents to decide whether they can foster a new life that is not able to work and may suffer the pain in the entire life .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: It is still early for parents to decide whether they can foster a new life that are not able to works and may suffer the pain in the entire life .
+-----------------------------------------------------
+
+Original: This means both of his parents has gene A and they are both under high risk of having disease C. They could save the cost of runing two separate tests to see whether they are under high risk of having disease C. If he runs a test and know that he has the gene Aa .
+SVA Error: True
+Correct: This means both of his parents have gene A and they are both under high risk of having disease C. They could save the cost of runing two separate tests to see whether they are under high risk of having disease C. If he runs a test and know that he has the gene Aa .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: This mean both of his parents have gene A and they are both under high risk of having disease C. They could save the cost of runing two separate tests to see whether they are under high risk of having disease C. If he runs a test and know that he has the gene Aa .
+-----------------------------------------------------
+
+Original: Spouses usually have very close relationships , if person A tell his family that he has this gene , his uncle C knows and tells his wife D that he needed to run a test because his cousine has this disease .
+SVA Error: True
+Correct: Spouses usually have very close relationships , if person A tells his family that he has this gene , his uncle C knows and tells his wife D that he needed to run a test because his cousine has this disease .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Spouses usually have very close relationships , if person A tells his family that he has this gene , his uncle C knows and tells his wife D that he needed to runs a test because his cousine has this disease .
+-----------------------------------------------------
+
+Original: If your wife is not aware of the truth and give birth to the baby , it will be possible for your child to carry the same genetic risk as well .
+SVA Error: True
+Correct: If your wife is not aware of the truth and gives birth to the baby , it will be possible for your child to carry the same genetic risk as well .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: If the person tell their relatives that he or she carries a disease gene , his or her relatives can go to hospital to check whether they also get a disease gene .
+SVA Error: True
+Correct: If the person tells their relatives that he or she carries a disease gene , his or her relatives can go to hospital to check whether they also get a disease gene .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: If the person tells their relatives that he or she carry a disease gene , his or her relatives can go to hospital to check whether they also get a disease gene .
+-----------------------------------------------------
+
+Original: In addition , emotional preparations and the ways you explain your genetic condition is also important so that you can convey the correct information to your family and relatives and if necessary to guide them if he/she wish to conduct a similar genetic testing .
+SVA Error: True
+Correct: In addition , emotional preparations and the ways you explain your genetic condition are also important so that you can convey the correct information to your family and relatives and if necessary to guide them if he/she wish to conduct a similar genetic testing .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: In addition , emotional preparations and the ways you explain your genetic condition are also important so that you can convey the correct information to your family and relatives and if necessary to guides them if he/she wish to conducts a similar genetic testing .
+-----------------------------------------------------
+
+Original: And even we gather together more people find themselves has less topics to talk than before and choose to digging from their social media again .
+SVA Error: True
+Correct: And even we gather together more people find themselves have less topics to talk than before and choose to digging from their social media again .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: And even we gathers together more people find themselves have less topics to talk than before and choose to digging from their social media again .
+-----------------------------------------------------
+
+Original: Interpersonal skills , like any other skills requires practice .
+SVA Error: True
+Correct: Interpersonal skills , like any other skills require practice .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Interpersonal skills , like any other skills require practice .
+-----------------------------------------------------
+
+Original: Howard Garner studied the effect of multiple intelligences amongst people and stated that interpersonal intelligence is a form of skills on its own - some has it , some does not .
+SVA Error: True
+Correct: Howard Garner studied the effect of multiple intelligences amongst people and stated that interpersonal intelligence is a form of skills on its own - some have it , some do not .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Howard Garner studied the effect of multiple intelligences amongst people and stated that interpersonal intelligence is a form of skills on its own - some have it , some does not .
+-----------------------------------------------------
+
+Original: For those who lives within the community should at least meet up , and not use social media as the primary source of communcation with each other .
+SVA Error: True
+Correct: For those who live within the community should at least meet up , and not use social media as the primary source of communcation with each other .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: For those who live within the community should at least meets up , and not use social media as the primary source of communcation with each other .
+-----------------------------------------------------
+
+Original: Therefore , social networks brings more and more connections between people and they may have a chance to chat with people they never known before , and this helps to develop the interpersonal skills as well .
+SVA Error: True
+Correct: Therefore , social networks bring more and more connections between people and they may have a chance to chat with people they never known before , and this helps to develop the interpersonal skills as well .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Therefore , social networks bring more and more connections between people and they may have a chance to chats with people they never known before , and this helps to develops the interpersonal skills as well .
+-----------------------------------------------------
+
+Original: It not only affect the interpersonal skills but also bad for people 's health if the ones spend to much time on the social media .
+SVA Error: True
+Correct: It not only affects the interpersonal skills but also bad for people 's health if the ones spend to much time on the social media .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: It not only affects the interpersonal skills but also bad for people 's health if the ones spend to much time on the social media .
+-----------------------------------------------------
+
+Original: Social network sites provides us many convenience .
+SVA Error: True
+Correct: Social network sites provide us many convenience .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Social network sites provide us many convenience .
+-----------------------------------------------------
+
+Original: The cyber communication is quite different to face to face communication and people who depends on cyber communication too much will not get used to the real life communication .
+SVA Error: True
+Correct: The cyber communication is quite different to face to face communication and people who depend on cyber communication too much will not get used to the real life communication .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: The cyber communication is quite different to faces to face communication and people who depend on cyber communication too much will not get uses to the real life communication .
+-----------------------------------------------------
+
+Original: First of all , people saves money by using internet to contact other people and reading news .
+SVA Error: True
+Correct: First of all , people save money by using internet to contact other people and reading news .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: First of all , people save money by using internet to contact other people and reading news .
+-----------------------------------------------------
+
+Original: Secondly , people makes friends all over the world and able to update their friends his recent activity easily .
+SVA Error: True
+Correct: Secondly , people make friends all over the world and able to update their friends his recent activity easily .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Secondly , people make friends all over the world and able to updates their friends his recent activity easily .
+-----------------------------------------------------
+
+Original: With the aids of social media , people bonds globally , information flows rapidly , and human lives happily .
+SVA Error: True
+Correct: With the aids of social media , people bond globally , information flows rapidly , and human lives happily .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: As I mentioned in the beginning , there is also disadvantages of social media tools .
+SVA Error: True
+Correct: As I mentioned in the beginning , there are also disadvantages of social media tools .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: In increasingly globalised world , such platforms even enhances and compliccates the links between indivduals in the world .
+SVA Error: True
+Correct: In increasingly globalised world , such platforms even enhance and complicate the links between indivduals in the world .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: In increasingly globalised world , such platforms even enhance and compliccate the links between indivduals in the world .
+-----------------------------------------------------
+
+Original: However , such sparks of sudden attention is extremely short-termed and gone eaily thus does not add any value or meaning to the user 's life .
+SVA Error: True
+Correct: However , such sparks of sudden attention are extremely short-termed and gone eaily thus does not add any value or meaning to the user 's life .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: However , such sparks of sudden attention are extremely short-termed and gone eaily thus do not adds any value or meaning to the user 's life .
+-----------------------------------------------------
+
+Original: Twitter only allow users to give update that is limited to short sentences in order to spread the words fast , that only highlighted messages are delivered .
+SVA Error: True
+Correct: Twitter only allows users to give update that is limited to short sentences in order to spread the words fast , that only highlighted messages are delivered .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Twitter only allows users to gives update that am limited to short sentences in order to spread the words fast , that only highlighted messages are delivered .
+-----------------------------------------------------
+
+Original: These advantages also comes in handy as most of these social media sites are accessible through mobile application in our smartphones .
+SVA Error: True
+Correct: These advantages also come in handy as most of these social media sites are accessible through mobile application in our smartphones .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: These advantages also come in handy as most of these social media sites is accessible through mobile application in our smartphones .
+-----------------------------------------------------
+
+Original: These social media serves a purpose to bind people in spite of their geographical boundaries but it does n't mean that surrounding people are neglected as the payoff .
+SVA Error: True
+Correct: These social media serve a purpose to bind people in spite of their geographical boundaries but it does n't mean that surrounding people are neglected as the payoff .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: These social media serve a purpose to bind people in spite of their geographical boundaries but it does n't mean that surrounding people are neglected as the payoff .
+-----------------------------------------------------
+
+Original: However , calling a person by using a phone and writing a person a letter require some cost , and sending a letter to a person who live far away , especially in villages , takes much time .
+SVA Error: True
+Correct: However , calling a person by using a phone and writing a person a letter require some cost , and sending a letter to a person who lives far away , especially in villages , takes much time .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: However , calling a person by using a phone and writing a person a letter requires some cost , and sending a letter to a person who live far away , especially in villages , takes much time .
+-----------------------------------------------------
+
+Original: Hence , the social media sites serves as a platform for the connection .
+SVA Error: True
+Correct: Hence , the social media sites serve as a platform for the connection .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Hence , the social media sites serve as a platform for the connection .
+-----------------------------------------------------
+
+Original: All users ' needs are an internet connection and an email account so that everyone can have a Facebook or Twitter ID to start their journey in social media life .
+SVA Error: True
+Correct: All users ' need are an internet connection and an email account so that everyone can have a Facebook or Twitter ID to start their journey in social media life .
+MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!
+No SVA error found.
+-----------------------------------------------------
+
+Original: The most popular information get circulated the most so I can seldom miss it .
+SVA Error: True
+Correct: The most popular information gets circulated the most so I can seldom miss it .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: The most popular information gets circulated the most so I can seldom misses it .
+-----------------------------------------------------
+
+Original: In this case , interpersonal skill is not as important because our goal is not to impress somebody , but to get the information that we are both interested in .
+SVA Error: True
+Correct: In this case , interpersonal skill are not as important because our goal is not to impress somebody , but to get the information that we are both interested in .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: In this case , interpersonal skill is not as important because our goal is not to impresses somebody , but to get the information that we are both interested in .
+-----------------------------------------------------
+
+Original: Social media also provides people huge brunch information about people and things that they interests .
+SVA Error: True
+Correct: Social media also provide people huge brunch information about people and things that they interests .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Social media also provide people huge brunch information about people and things that they interest .
+-----------------------------------------------------
+
+Original: Many people says they will support the social media since it really helps them to have a closer view about how their friends are going in other parts of the world .
+SVA Error: True
+Correct: Many people say they will support the social media since it really helps them to have a closer view about how their friends are going in other parts of the world .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: Many people say they will support the social media since it really help them to have a closer view about how their friends are going in other parts of the world .
+-----------------------------------------------------
+
+Original: On the other hand , with the help of social media , some homeless people or someone who need the money to cure the disease can get the help from the world quickly because once one person know the information , his or her will share it to their " friends area " , then many people will know it and spread the information to the person who can give help .
+SVA Error: True
+Correct: On the other hand , with the help of social media , some homeless people or someone who needs the money to cure the disease can get the help from the world quickly because once one person know the information , his or her will share it to their " friends area " , then many people will know it and spread the information to the person who can give help .
+MATCH $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+That looks like a subject verb agreement error.
+ suggestion: On the other hand , with the help of social media , some homeless people or someone who needs the money to cures the disease can get the help from the world quickly because once one person knows the information , his or her will shares it to their " friends area " , then many people will know it and spreads the information to the person who can give help .
+-----------------------------------------------------
+
+Accuracy: 0.8222222222222222

@@ -22,20 +22,24 @@ def get_test_data(annotated_file):
     Currently, we are reading from a m2 file in the style of the NUCLE .m2 files
     These contain each sentence followed by their annotations
     """
+    LENGTH_CUTOFF = 500 #Toss out any sentences that are ridiculously long
     examples = []
+    cur_sentence = None
+    cur_annotations = []
     with open(annotated_file, "r") as file:
-        cur_sentence = ""
         for line in file.read().splitlines():
             if len(line) == 0:
                 continue
             elif line[0] == 'S':
+                if cur_sentence and len(cur_sentence) < LENGTH_CUTOFF:
+                    example = training_example_from_annotations(cur_sentence, cur_annotations)
+                    if example["sva_error"]: # Currently only positive sampling
+                        examples.append(example)
                 cur_sentence = line[2:]
+                cur_annotations = []
             elif line[0] == 'A':
-                # TODO: If a sentence has multiple errors, we should only add one example
                 annotation = parse_annotation(line)
-                if annotation["error_type"] == "SVA":
-                    example = training_example_from_annotation(cur_sentence, annotation)
-                    examples.append(example)
+                cur_annotations.append(annotation)
     return examples
 
 def parse_annotation(annotation_line):
@@ -44,6 +48,8 @@ def parse_annotation(annotation_line):
     A 22 23|||Wform|||combining|||REQUIRED|||-NONE-|||0
 
     Returns annotation dictionary with relevant information
+    Note: the last number denotes the grader's ID. We only add sentences if
+    both graders agree on a given annotation.
     """
     words = annotation_line.split("|||")
     annotation = {}
@@ -53,16 +59,30 @@ def parse_annotation(annotation_line):
     annotation["correct_words"] = words[2]
     return annotation
 
-def training_example_from_annotation(sent, annotation):
+def training_example_from_annotations(sent, annotations):
     """
-    Given a sentence, and annotation dictionary as described above
-    Reconstructs the correct sentence and returns as full object.
+    Given a sentence and list of annotations, returns a training example
+
+    Generates the correct sentence by implementing all SVA annotation changes
     """
     example = {"original": sent}
-    example["sva_error"] = (annotation["error_type"] == "SVA")
+    annotations = [a for a in annotations if a["error_type"] == "SVA"]
+    # Only add annotations if at least two graders agree on the annotation:
+    annotations = [a for a in annotations if annotations.count(a) > 1]
+    example["sva_error"] = len(annotations) > 0
+    for ann in annotations:
+        sent = correct_sentence_from_annotation(sent, ann)
+    example["correct"] = sent
+    return example
+
+def correct_sentence_from_annotation(sent, annotation):
+    """
+    Given a sentence, and annotation dictionary as described above
+    Reconstructs the correct sentence and returns that sentence
+    """
     words = sent.split()
     words[annotation["start_index"]:annotation["end_index"]] = annotation["correct_words"].split()
-    example["correct"] = " ".join(words)
+    return " ".join(words)
     return example
 
 def get_dummy_test_data():
@@ -148,6 +168,7 @@ if __name__ == '__main__':
     print("Reading test data")
     test_data = get_test_data(ANNOTATED_FILE)
     print("Number of test examples: ", len(test_data))
+    print("Test data head: ", test_data[:3])
     print("Evaluating examples. Logging output to ", LOG_FILE)
     with open(LOG_FILE, 'w') as log_sock:
         accuracy = evaluate_examples(test_data, strict=False, verbose=True, log_sock=log_sock)
