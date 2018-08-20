@@ -1,4 +1,5 @@
 import sys
+import time
 from sva_classifier import get_feedback as get_sva_feedback
 # get_feedback currently returns None if no error, otherwise human-readable feedback
 
@@ -164,13 +165,17 @@ def evaluate_examples(examples, strict=False, verbose=True, log_sock=sys.stdout)
 if __name__ == '__main__':
     ANNOTATED_FILE = "../../test/data/nucle-test-official-2014.combined.m2"
     LOG_FILE = "../../test/logs/nucle-test-data-logs.txt"
+    start_time = time.time()
 
     print("Reading test data")
     test_data = get_test_data(ANNOTATED_FILE)
+    test_data = test_data[:3]
     print("Number of test examples: ", len(test_data))
     print("Test data head: ", test_data[:3])
     print("Evaluating examples. Logging output to ", LOG_FILE)
     with open(LOG_FILE, 'w') as log_sock:
         accuracy = evaluate_examples(test_data, strict=False, verbose=True, log_sock=log_sock)
         log_sock.seek(0, 0) #be kind, rewind
-        log_sock.write("Accuracy: {}\n\n".format(accuracy))
+        log_sock.write("Accuracy: {}\n".format(accuracy))
+        end_time = time.time()
+        log_sock.write("Evaluation Time: {0:.2f} seconds\n\n".format(end_time - start_time))

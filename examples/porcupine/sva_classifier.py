@@ -1,4 +1,3 @@
-#TODO: Move this file to another folder
 from reducer_helper import get_reduction, load_predictor
 from alt_sentences import get_alt_sentences
 import psycopg2
