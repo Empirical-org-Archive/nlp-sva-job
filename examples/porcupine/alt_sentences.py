@@ -50,7 +50,7 @@ def get_alt_sentences(sent):
     ["John {} smart but Theresa {} a genius.", [['is', 'are', 'am'],
     ['is','are','am']]]
     '''
-    d = textacy.Doc(sent, lang='en_core_web_sm')
+    d = textacy.Doc(sent, lang='en_core_web_lg')
     # create ghost sentence and initial verb list
     ghost_sentence = ''
     initial_verbs = []

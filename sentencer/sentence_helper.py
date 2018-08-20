@@ -4,7 +4,7 @@ import requests, zipfile, io
 import spacy
 import json
 import re
-nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_lg')
 
 CHUNK_SIZE = 1000
 
