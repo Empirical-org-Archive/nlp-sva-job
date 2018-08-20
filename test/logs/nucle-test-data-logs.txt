@@ -1,5 +1,5 @@
 Accuracy: 0.6666666666666666
-Evaluation Time: 8.44 seconds
+Evaluation Time: 7.83 seconds
 
 affect another although the families has a common genetic make up , shared by either of the parents .
 SVA Error: True

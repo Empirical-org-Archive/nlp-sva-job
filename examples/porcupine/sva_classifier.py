@@ -6,14 +6,15 @@ from pattern.en import conjugate,tenses
 import textacy
 
 # Connect to the database
+# Requires starting an ssh tunnel to nlp-job-manager box
 try:
-    DB_NAME = os.environ.get('SVA_DB_NAME', 'sva')
+    DB_NAME = os.environ.get('SVA_DB_NAME', '')
     DB_PASSWORD = os.environ.get('SVA_DB_PASS', '')
-    DB_USER = os.environ.get('SVA_DB_USER', 'etang')
+    DB_USER = os.environ.get('SVA_DB_USER', '')
 except KeyError as e:
     print('important environment variables were not set')
     raise Exception('Warning: Important environment variables were not set')
-conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host='localhost')
+conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host='localhost', port=54322)
 cur = conn.cursor()
 cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
