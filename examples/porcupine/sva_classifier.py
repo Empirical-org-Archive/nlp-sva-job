@@ -78,3 +78,9 @@ def get_tense_and_aspect(verb):
         if tx[0] and tx[4]:
             return (tx[0], tx[4])
     return (None, None)
+
+if __name__ == '__main__':
+    test_sents = ["From her jade palace, the empress stared down at her subjects snivelling below", "Where's the damn catsup at, Jimmy?", "I swimmed so fast the shark couldn't ate me.", "She are the best in the state at rodeo jumping", "So we beat on, boats against the current, borne back ceaselessly into the past.", "The queen of Egypt trips over her shoelace and stumble into the pit of vipers."]
+    for sent in test_sents:
+        feedback = get_feedback(sent)
+        print(feedback)
