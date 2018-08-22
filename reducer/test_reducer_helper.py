@@ -27,4 +27,4 @@ def test_get_reduction():
 
 if __name__ == '__main__':
     accuracy = test_get_reduction()
-    assert accuracy > 72 # Refactor began at 72% accuracy
+    assert accuracy == 72.41379310344827 # Refactor began at this accuracy
