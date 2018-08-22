@@ -20,9 +20,7 @@ cur.execute("""SELECT SUM(count) FROM reductions_to_count_tmp""")
 num_reductions = cur.fetchone()[0]
 
 # Load AllenNLP Model
-print("Loading AllenNLP Model ...")
 predictor = load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz")
-print("API ready.")
 
 class Feedback(object):
     """Result feedback class"""

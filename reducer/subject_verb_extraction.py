@@ -312,7 +312,7 @@ def test_pipeline(sent, predictor):
     return pairs
 
 def subject_verb_pairs_are_equal(actual, expected):
-    """ Evaluates two given subjects_with_verbs object to check their equality, prints """
+    """ Evaluates two given subjects_with_verbs object to check their equality"""
     # We do some really tedious checking here because sorting this list of
     # dictionaries is otherwise sorta annoying
     equal = True

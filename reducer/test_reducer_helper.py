@@ -56,6 +56,4 @@ def test_get_subject_verb_pairs():
     print("TEST ACCURACY: {}".format(num_correct/num_sentences))
 
 if __name__ == '__main__':
-    # accuracy = test_get_reduction()
-    # assert accuracy == 72.41379310344827 # Refactor began at this accuracy
-    test_get_subject_verb_pairs()
+    test_get_reduction()
