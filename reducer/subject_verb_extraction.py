@@ -289,10 +289,8 @@ def get_subject_verb_pairs(sent, predictor):
 
 def test_pipeline(sent, predictor):
     """
-    Test and log whole pipeline, from sentence to reductions
+    Test and log whole pipeline, from sentence to subject-verb pairs
     Takes sentence and AllenNLP predictor
-    Current pipeline: preprocess, AllenNLP parse, verb_subject pair extraction,
-    verb phrase extraction, noun phrase extraction, mood
     """
     print("Original Sentence: ", sent)
     sent = preprocess_sent(sent)
@@ -313,7 +311,7 @@ def test_pipeline(sent, predictor):
     print(pairs)
     return pairs
 
-def evaluate_subjects_with_verbs(actual, expected):
+def subject_verb_pairs_are_equal(actual, expected):
     """ Evaluates two given subjects_with_verbs object to check their equality, prints """
     # We do some really tedious checking here because sorting this list of
     # dictionaries is otherwise sorta annoying
@@ -327,28 +325,8 @@ def evaluate_subjects_with_verbs(actual, expected):
 
     if equal:
         print("PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")
-        return 1
     else:
         print("MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
         print("Expected:", expected)
         print("Got:", actual)
-        return 0
-
-# MARK: Test Script
-
-if __name__ == '__main__':
-    # Test our subject-verb accuracy
-    with open('../test/data/sentences.json') as test_file:
-        tests = json.load(test_file)
-
-    test_sents = [(example["text"], example["subjects_with_verbs"]) for example in tests["sentences"]]
-    predictor = load_predictor()
-    print("Model loaded, testing beginning")
-
-    num_correct = 0
-    for (text, expected) in test_sents:
-        pairs = test_pipeline(text, predictor)
-        num_correct += evaluate_subjects_with_verbs(pairs, expected)
-        print("\n\n")
-
-    print("TEST ACCURACY: ", num_correct/len(test_sents))
+    return equal

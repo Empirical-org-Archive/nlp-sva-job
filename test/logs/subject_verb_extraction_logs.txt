@@ -1390,4 +1390,4 @@ Got: [{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'To', 'label': 'T
 
 
 
-TEST ACCURACY:  0.7758620689655172
+TEST ACCURACY: 0.7758620689655172
