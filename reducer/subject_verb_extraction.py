@@ -1,21 +1,47 @@
-from allennlp.service.predictors import Predictor
+#!/usr/bin/env python
+""" Tools for extracting subject-verb pairs from sentences """
 from nltk.tree import Tree
 from preprocess import preprocess_sent
-from pattern.en import mood, tenses, lemma
-from hashlib import sha256
-import top100
-import json
 
-def load_predictor(path="/var/lib/allennlp/elmo-constituency-parser-2018.03.14.tar.gz"):
-    """Load local copy of AllenNLP model"""
-    return Predictor.from_path(path)
+
+# MARK: Extract pairs from sentence
+
+def get_subject_verb_pairs(sent, predictor):
+    """ Returns subject-verb pairs of a given sentence.
+
+    Returns subject-verb pairs in the format:
+    [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},
+              {‘word’: ‘been’, ‘label’: ‘VBG’},
+              {‘word’: ‘owed’, ‘label’: ‘VBZ’} ],
+      ‘np’: [ {‘word’: ‘so’, ‘label’: ‘DT’},
+              {‘word’: ‘much’, ‘label’: ‘PN’}]
+      },
+    ...
+    ]
+
+    sentence: sentence to be parsed
+    predictor: AllenNLP constituency parser predictor
+    """
+    processed = preprocess_sent(sent)
+    parse = predictor.predict_json({"sentence": processed})
+    tree = Tree.fromstring(parse["trees"])
+    return subject_verb_pairs_from_tree(tree)
+
+
+# MARK: Extracting pairs from NLTK constituency-parsed trees
+
 
 def subject_verb_pairs_from_tree(tree):
-    """ Returns the individual words associated with each verb and noun phraseself.
+    """ Returns the individual words associated with each verb and noun phrases
 
-    Will soon return pairs in the format:
-    [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},  {‘word’: ‘been’, ‘label’: ‘VBG’ }, { ‘word’: ‘owed’, ‘label’: ‘VBZ’ } ],
-                    ‘np’: [ { ‘word’: ‘so’, ‘label’: ‘DT’ }, { ‘word’: ‘much’, ‘label’: ‘PN’ }] },  ….  ]
+    Returns pairs in the format:
+    [{‘vp’: [ {‘word’: ‘has’, ‘label’: ‘VBZ’},
+              {‘word’: ‘been’, ‘label’: ‘VBG’},
+              {‘word’: ‘owed’, ‘label’: ‘VBZ’} ],
+      ‘np’: [ {‘word’: ‘so’, ‘label’: ‘DT’},
+              {‘word’: ‘much’, ‘label’: ‘PN’}]
+      },
+    ]
     """
     pairs = get_verb_subject_phrases(tree)
     words = []
@@ -29,7 +55,10 @@ def subject_verb_pairs_from_tree(tree):
 def get_verb_subject_phrases(tree):
     """
     Returns pairs in the format:
-    { 'subjects_with_verbs': [{'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)}, {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)}, ...] }
+    {'subjects_with_verbs': [
+        {'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)},
+        {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)},
+    ...]}
     """
     pairs = []
 
@@ -57,7 +86,7 @@ def get_verb_subject_phrases(tree):
     for s in tree.subtrees(lambda t: t.label() == 'SINV'):
         pairs += verb_subject_for_subject_inversion(s)
 
-    return { 'subjects_with_verbs': pairs }
+    return {'subjects_with_verbs': pairs}
 
 # MARK: Extracting pairs from various clauses:
 
@@ -73,18 +102,16 @@ def verb_subject_for_declarative_clause(tree):
     """
     np, s_child = None, None # Possible subjects
     vps = []
-    for i in range(0, len(tree)):
-        child = tree[i]
+    for child in tree:
         np = child if child.label() == "NP" else np
         s_child = child if child.label() == "S" else s_child
         vps += [child] if child.label() == "VP" else []
 
     vps = sum([unpack_verb_phrases(vp) for vp in vps], [])
     if np is not None: # Noun phrase as subject
-        return [{ 'vp': vp, 'np': np } for vp in vps]
-    elif s_child is not None: # Declarative clause as subject
-        return [{ 'vp': vp, 'np': s_child } for vp in vps]
-    # TODO: Under what circumstances should we return a pair with None np?
+        return [{'vp': vp, 'np': np} for vp in vps]
+    if s_child is not None: # Declarative clause as subject
+        return [{'vp': vp, 'np': s_child} for vp in vps]
     return []
 
 def verb_subject_for_sq(tree):
@@ -92,17 +119,14 @@ def verb_subject_for_sq(tree):
     Takes tree for an SQ clause: follows a wh-word or a wh-phrase, or inverted yes-no question
     Returns list of subject, verb pairs, empty if none
 
-    The verb is typically contained as usual inside the SQ as a series of verbs
-    So we simply manually pass the noun
+    The verb is typically contained inside the SQ as a series of verb
     Misses subjects in SBARQs, which are caught in SBARQ method
     """
-    verb_labels = ["VP", "MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
-
     np = None
     for child in tree:
         np = child if child.label() == "NP" else np
     if np is not None:
-        return [{ 'vp': tree, 'np': np }]
+        return [{'vp': tree, 'np': np}]
     return []
 
 def verb_subject_for_sbar(tree):
@@ -121,7 +145,7 @@ def verb_subject_for_sbar(tree):
         s = tree[i + 1]
         if whnp.label() == 'WHNP' and s.label() == 'S':
             if subject_words_from_phrase(whnp):
-                return [{ 'vp': s, 'np': whnp}]
+                return [{'vp': s, 'np': whnp}]
     return []
 
 def verb_subject_for_sbarq(tree):
@@ -140,7 +164,7 @@ def verb_subject_for_sbarq(tree):
         sq = tree[i + 1]
         if wh.label() in wh_words and sq.label() == 'SQ':
             if wh.label() == "WHNP" and subject_words_from_phrase(wh):
-                return [{ 'vp': sq, 'np': wh}]
+                return [{'vp': sq, 'np': wh}]
     return []
 
 def verb_subject_for_subject_inversion(tree):
@@ -157,10 +181,10 @@ def verb_subject_for_subject_inversion(tree):
             # Find the verb, looking backwards
             for j in reversed(range(0, i)):
                 if tree[j].label() == 'VP':
-                    return [{ 'np': tree[i], 'vp': tree[j] }]
+                    return [{'np': tree[i], 'vp': tree[j]}]
                 if tree[j].label() in verb_labels:
                     vp = Tree('VP', [tree[j]])
-                    return [{ 'np': tree[i], 'vp': vp}]
+                    return [{'np': tree[i], 'vp': vp}]
     return []
 
 
@@ -175,15 +199,15 @@ def unpack_verb_phrases(vp):
     child_phrases = [child for child in vp if child.label() == 'VP']
     return child_phrases if len(child_phrases) > 1 else [vp]
 
-
-
 def print_verb_subject_phrases(pairs):
     """Print verb_subject pairs in readable form"""
     print("Verb Subject Pairs: ")
     for pair in pairs['subjects_with_verbs']:
-        print("Noun Phrase: ", ' '.join(pair['np'].leaves()) if type(pair['np']) is Tree else "None")
-        print("Verb Phrase: ", ' '.join(pair['vp'].leaves()) if type(pair['vp']) is Tree else "None")
-
+        np, vp = pair['np'], pair['vp']
+        readable_np = ' '.join(np.leaves()) if isinstance(np, Tree) else "None"
+        readable_vp = ' '.join(vp.leaves()) if isinstance(vp, Tree) else "None"
+        print("Noun Phrase: ", readable_np)
+        print("Verb Phrase: ", readable_vp)
 
 
 # MARK: SUBJECTS
@@ -205,7 +229,8 @@ def subject_words_from_phrase(subject):
         return []
 
     if subject.label() == "S":
-        # Declarative clause as subject: "Swinging from vines is fun". Extract verb phrases as subject.
+        # Declarative clause as subject e.g. "Swinging from vines is fun".
+        # Extract verb phrases as subject.
         return verb_words_from_phrase(subject)
 
     if len(subject) == 1 and subject[0].label() in determiners:
@@ -228,7 +253,6 @@ def subject_words_from_phrase(subject):
     # Compress any adjacent nouns (e.g. "Farmer Brown" or "Mrs. Jones")
     noun_words = compress_nouns(noun_words, noun_indices)
     return noun_words if noun_words else adj_words
-    return []
 
 def compress_nouns(noun_words, noun_indices):
     """
@@ -256,7 +280,7 @@ def verb_words_from_phrase(vp):
 
     Broadly, handles cases:
     (1) Typical verbs
-    (2) "to" before verbs without nesting. Usually in subjects: "To dance is to be free."
+    (2) Infinitives without nesting. Usually in subjects: "To dance is to be free."
     """
     verb_tags = ["MD", "VB", "VBZ", "VBP", "VBD", "VBN", "VBG"]
     to_labels = ["TO"]
@@ -268,22 +292,10 @@ def verb_words_from_phrase(vp):
     for i in range(0, len(vp)):
         child = vp[i]
         if child.label() in verb_tags + to_labels:
-            words.append( { 'word': child[0], 'label': child.label() })
+            words.append({'word': child[0], 'label': child.label()})
         if child.label() == "VP":
             words += verb_words_from_phrase(child)
     return words
-
-# MARK: Extract pairs from sentence
-
-def get_subject_verb_pairs(sent, predictor):
-    """
-    Takes a sentence and AllenNLP predictor, returns the subject-verb pairs
-    """
-    processed = preprocess_sent(sent)
-    parse = predictor.predict_json({"sentence": processed})
-    tree = Tree.fromstring(parse["trees"])
-    return subject_verb_pairs_from_tree(tree)
-
 
 # MARK: Test Sentences and Pipeline
 
@@ -313,8 +325,7 @@ def test_pipeline(sent, predictor):
 
 def subject_verb_pairs_are_equal(actual, expected):
     """ Evaluates two given subjects_with_verbs object to check their equality"""
-    # We do some really tedious checking here because sorting this list of
-    # dictionaries is otherwise sorta annoying
+    # Tedious checking because dictionaries aren't hashable
     equal = True
     for pair in actual:
         if pair not in expected:

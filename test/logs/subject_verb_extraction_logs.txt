@@ -1,3 +1,5 @@
+Loading AllenNLP predictor...
+AllenNLP predictor loaded.
 Model loaded, testing beginning
 Original Sentence:  John is a boy
 Processed Sentence:  John is a boy
