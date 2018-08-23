@@ -321,14 +321,9 @@ def test_pipeline(sent, predictor):
 
 def subject_verb_pairs_are_equal(actual, expected):
     """ Evaluates two given subjects_with_verbs object to check their equality"""
-    # Tedious checking because dictionaries aren't hashable
-    equal = True
-    for pair in actual:
-        if pair not in expected:
-            equal = False
-    for pair in expected:
-        if pair not in actual:
-            equal = False
+    mismatches = [p for p in actual if p not in expected]
+    mismatches += [p for p in expected if p not in actual]
+    equal = len(mismatches) == 0
 
     if equal:
         print("PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ ")

@@ -5,7 +5,7 @@ Original Sentence:  John is a boy
 Processed Sentence:  John is a boy
 Tree: 
  (S (NP (NNP John)) (VP (VBZ is) (NP (DT a) (NN boy))))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  John
 Verb Phrase:  is a boy
 [{'word': 'John', 'label': 'NNP'}]
@@ -19,7 +19,7 @@ Original Sentence:  Who is John?
 Processed Sentence:  Who is John?
 Tree: 
  (SBARQ (WHNP (WP Who)) (SQ (VBZ is) (NP (NNP John))) (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  John
 Verb Phrase:  is John
 [{'word': 'John', 'label': 'NNP'}]
@@ -33,7 +33,7 @@ Original Sentence:  Who is dancing?
 Processed Sentence:  Who is dancing?
 Tree: 
  (SBARQ (WHNP (WP Who)) (SQ (VBZ is) (VP (VBG dancing))) (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
@@ -61,7 +61,7 @@ Tree:
     (NP (NNP Jane)))
   (VP (VBD were) (ADJP (JJ sound) (ADJP (JJ asleep))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  the old man , George , and Jane
 Verb Phrase:  were sound asleep
 [{'word': 'man', 'label': 'NN'}, {'word': 'George', 'label': 'NNP'}, {'word': 'Jane', 'label': 'NNP'}]
@@ -78,7 +78,7 @@ Tree:
   (NP (NNP Jack) (CC and) (NNP Jill))
   (VP (VBZ is) (ADJP (JJ ill)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Jack and Jill
 Verb Phrase:  is ill
 [{'word': 'Jack', 'label': 'NNP'}, {'word': 'Jill', 'label': 'NNP'}]
@@ -97,7 +97,7 @@ Tree:
     (VBP have)
     (VP (VBN been) (NP (DT a) (JJ bad) (NN girlfriend))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Jill
 Verb Phrase:  have been a bad girlfriend
 [{'word': 'Jill', 'label': 'NNP'}]
@@ -114,7 +114,7 @@ Tree:
   (NP (NNP Jill))
   (VP (VBZ has) (VP (VBN been) (NP (DT a) (JJ bad) (NN girlfriend))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Jill
 Verb Phrase:  has been a bad girlfriend
 [{'word': 'Jill', 'label': 'NNP'}]
@@ -134,7 +134,7 @@ Tree:
       (VBZ has)
       (VP (VBN been) (NP (DT a) (JJ bad) (NN girlfriend)))))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'girlfriend', 'label': 'NN'}], 'vp': [{'word': 'has', 'label': 'VBZ'}, {'word': 'been', 'label': 'VBN'}]}]
@@ -149,7 +149,7 @@ Tree:
   (WHNP (WDT Which) (NNS dogs))
   (SQ (VP (VBP have) (VP (VBN been) (NP (JJ good) (NNS boys)))))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Which dogs
 Verb Phrase:  have been good boys
 [{'word': 'dogs', 'label': 'NNS'}]
@@ -172,7 +172,7 @@ Tree:
     (CC and)
     (VP (VBG burning) (PP (IN in) (NP (JJ hellish) (NN pain)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was in heaven
 Noun Phrase:  I
@@ -201,7 +201,7 @@ Tree:
       (VBD was)
       (VP (VBG burning) (PP (IN in) (NP (JJ hellish) (NN pain))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was in heaven
 Noun Phrase:  I
@@ -229,7 +229,7 @@ Tree:
       (ADVP (RB freely))
       (PP (IN on) (NP (DT the) (NN sand)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was in heaven
 Noun Phrase:  I
@@ -247,7 +247,7 @@ Original Sentence:  Running.
 Processed Sentence:  Running.
 Tree: 
  (S (VP (VBG Running)) (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
@@ -257,7 +257,7 @@ Original Sentence:  Run.
 Processed Sentence:  Run.
 Tree: 
  (S (VP (VB Run)) (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
@@ -274,7 +274,7 @@ Tree:
     (RB not)
     (ADJP (ADJP (RB so) (JJ darned)) (JJ cute)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  she
 Verb Phrase:  were not so darned cute
 [{'word': 'she', 'label': 'PRP'}]
@@ -295,7 +295,7 @@ Tree:
   (NP (PRP I))
   (VP (MD 'd) (VP (VB say) (S (VP (VB shoot) (NP (PRP him))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  'd say shoot him
 Noun Phrase:  he
@@ -324,7 +324,7 @@ Tree:
     (VBD was)
     (ADJP (RB too) (JJ dumb) (SBAR (S (VP (TO to) (VP (VB tell)))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was too dumb to tell
 Noun Phrase:  he
@@ -353,7 +353,7 @@ Tree:
     (VBD was)
     (ADJP (RB too) (JJ dumb) (SBAR (S (VP (TO to) (VP (VB tell)))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was too dumb to tell
 Noun Phrase:  he
@@ -392,7 +392,7 @@ Tree:
       (JJ unable)
       (S (VP (TO to) (VP (VB detect) (NP (PRP it)))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  was unable to detect it
 Noun Phrase:  he
@@ -425,7 +425,7 @@ Tree:
   (NP (PRP he))
   (VP (VBD used) (S (VP (TO to) (VP (VB whistle)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  he
 Verb Phrase:  used to whistle
 Noun Phrase:  he
@@ -459,7 +459,7 @@ Tree:
   (NP (PRP he))
   (VP (MD might) (VP (VB whistle)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  he
 Verb Phrase:  might whistle
 Noun Phrase:  he
@@ -491,7 +491,7 @@ Tree:
   (NP (PRP he))
   (VP (MD might) (VP (VB whistle)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  he
 Verb Phrase:  might whistle
 Noun Phrase:  he
@@ -516,7 +516,7 @@ Tree:
     (MD would)
     (VP (VB have) (VP (VBN faired) (ADVP (RBR better)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  she
 Verb Phrase:  would have faired better
 Noun Phrase:  she
@@ -542,7 +542,7 @@ Tree:
     (ADVP (RB even))
     (VP (VBN been) (PP (IN to) (NP (NNP Mars)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  He
 Verb Phrase:  had never even been to Mars
 [{'word': 'He', 'label': 'PRP'}]
@@ -567,7 +567,7 @@ Tree:
   (NP (PRP we))
   (VP (VBD saw) (NP (DT a) (NN fish)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  we
 Verb Phrase:  saw a fish
 Noun Phrase:  we
@@ -596,7 +596,7 @@ Tree:
   (NP (PRP we))
   (VP (VBD seen) (NP (DT some) (NN fish)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  we
 Verb Phrase:  seen some fish
 Noun Phrase:  we
@@ -629,7 +629,7 @@ Tree:
   (NP (PRP we))
   (VP (VBD saw) (NP (DT an) (NNP African) (NNP Brown) (NNP Whale)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  we
 Verb Phrase:  saw an African Brown Whale
 Noun Phrase:  we
@@ -663,7 +663,7 @@ Tree:
     (ADVP (RB haughtily))
     (PP (IN at) (NP (PRP$ his) (NNS subordinates))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Donald
 Verb Phrase:  laughed haughtily at his subordinates
 [{'word': 'Donald', 'label': 'NNP'}]
@@ -689,7 +689,7 @@ Tree:
     (ADVP (RB haughtily))
     (PP (IN at) (NP (PRP$ his) (NNS subordinates))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Donald
 Verb Phrase:  stood high on a precipice
 Noun Phrase:  Donald
@@ -720,7 +720,7 @@ Tree:
       (ADVP (RB haughtily))
       (PP (IN at) (NP (PRP$ his) (NNS subordinates)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Donald
 Verb Phrase:  stood high on a precipice
 Noun Phrase:  Donald
@@ -747,16 +747,16 @@ Tree:
   (VBD said)
   (NP (NNP Jane))
   (. .))
-Verb Subject Pairs: 
-Noun Phrase:  Swinging from vines
-Verb Phrase:  is fun
+Subject-Verb Pairs: 
 Noun Phrase:  Jane
 Verb Phrase:  said
-[{'word': 'Swinging', 'label': 'VBG'}]
-[{'word': 'is', 'label': 'VBZ'}]
+Noun Phrase:  Swinging from vines
+Verb Phrase:  is fun
 [{'word': 'Jane', 'label': 'NNP'}]
 [{'word': 'said', 'label': 'VBD'}]
-[{'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Swinging', 'label': 'VBG'}]}, {'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}]
+[{'word': 'Swinging', 'label': 'VBG'}]
+[{'word': 'is', 'label': 'VBZ'}]
+[{'vp': [{'word': 'said', 'label': 'VBD'}], 'np': [{'word': 'Jane', 'label': 'NNP'}]}, {'vp': [{'word': 'is', 'label': 'VBZ'}], 'np': [{'word': 'Swinging', 'label': 'VBG'}]}]
 PASSED $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ 
 
 
@@ -780,7 +780,7 @@ Tree:
   (NP (NNP Tarzan))
   (VP (VBD commented))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Tarzan
 Verb Phrase:  commented
 Noun Phrase:  To dance to Phil Collins
@@ -804,7 +804,7 @@ Tree:
     (PP (IN over) (NP (NNP James)))
     (PP (IN like) (NP (DT a) (VBN drenched) (NN parka))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  A melancholy
 Verb Phrase:  hung over James like a drenched parka
 [{'word': 'melancholy', 'label': 'JJ'}]
@@ -824,7 +824,7 @@ Tree:
     (RB not)
     (VP (VB begin) (S (VP (TO to) (VP (VB describe) (NP (PRP it)))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'Embarrassing', 'label': 'JJ'}], 'vp': [{'word': 'did', 'label': 'VBD'}, {'word': 'begin', 'label': 'VB'}]}]
@@ -839,7 +839,7 @@ Tree:
   (WHADJP (WRB How) (JJ hot))
   (SQ (VBZ is) (NP (DT the) (NNP Sun)))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  the Sun
 Verb Phrase:  is the Sun
 [{'word': 'Sun', 'label': 'NNP'}]
@@ -856,7 +856,7 @@ Tree:
   (WHADJP (WRB How) (JJ bright))
   (SQ (VBP are) (NP (PRP they)))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  they
 Verb Phrase:  are they
 [{'word': 'they', 'label': 'PRP'}]
@@ -873,7 +873,7 @@ Tree:
   (WHADVP (WRB How) (JJ fast))
   (SQ (VBZ is) (NP (PRP it)) (VP (VBG moving)))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  it
 Verb Phrase:  is it moving
 [{'word': 'it', 'label': 'PRP'}]
@@ -902,7 +902,7 @@ Tree:
               (ADJP (RB as) (JJ pretty))
               (PP (IN as) (NP (NNP Cleopatra)))))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had five daughters , none of which were as pretty as Cleopatra
 Noun Phrase:  none of which
@@ -937,7 +937,7 @@ Tree:
                 (IN as)
                 (NP (NP (DT the) (NNP Queen)) (NP (PRP herself))))))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had five daughters , each of whom was as pretty as the Queen herself
 Noun Phrase:  each of whom
@@ -969,7 +969,7 @@ Tree:
             (IN as)
             (NP (NP (DT the) (NNP Queen)) (NP (PRP herself))))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had five daughters , each was as pretty as the Queen herself
 Noun Phrase:  each
@@ -1006,7 +1006,7 @@ Tree:
               (NP (PRP$ their) (NNS jowls))
               (VP (VBD hung) (ADVP (RBR higher)))))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  She
 Verb Phrase:  had two chocolate labs
 Noun Phrase:  She
@@ -1035,7 +1035,7 @@ Tree:
   (NP (DT the) (NN constitution))
   (VP (VBN written))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 []
 MISMATCH !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 Expected: [{'np': [{'word': 'constitution', 'label': 'NN'}], 'vp': [{'word': 'was', 'label': 'VBD'}, {'word': 'written', 'label': 'VBN'}]}]
@@ -1051,7 +1051,7 @@ Tree:
   (NP (PRP you))
   (VP (VBN eaten) (NP (NN breakfast)) (ADVP (RB yet)))
   (. ?))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  you
 Verb Phrase:  Have you eaten breakfast yet ?
 [{'word': 'you', 'label': 'PRP'}]
@@ -1065,7 +1065,7 @@ Original Sentence:  Here is the book.
 Processed Sentence:  Here is the book.
 Tree: 
  (SINV (ADVP (RB Here)) (VP (VBZ is)) (NP (DT the) (NN book)) (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  the book
 Verb Phrase:  is
 [{'word': 'book', 'label': 'NN'}]
@@ -1085,7 +1085,7 @@ Tree:
   (VBZ does)
   (NP (NNP Jim))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  believe her
 [{'word': 'I', 'label': 'PRP'}]
@@ -1112,7 +1112,7 @@ Tree:
         (PP (IN by) (NP (RB so) (JJ many)))
         (PP (TO to) (NP (RB so) (JJ few))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  so much
 Verb Phrase:  has
 []
@@ -1134,7 +1134,7 @@ Tree:
     (NP (DT the) (NN chapter))
     (VP (VBG dealing) (PP (IN with) (NP (NN ordnance)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  the chapter dealing with ordnance
 Verb Phrase:  is
 [{'word': 'chapter', 'label': 'NN'}]
@@ -1155,7 +1155,7 @@ Tree:
   (VP (VBD cried))
   (NP (NNP Farmer) (NNP Brown))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Farmer Brown
 Verb Phrase:  cried
 [{'word': 'Farmer Brown', 'label': 'NNP'}]
@@ -1178,7 +1178,7 @@ Tree:
         (NP (NN everyone))
         (VP (VB be) (ADJP (NN computer) (JJ literate))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  recommend that everyone be computer literate
 Noun Phrase:  everyone
@@ -1205,7 +1205,7 @@ Tree:
         (NP (NN everyone))
         (VP (VBZ is) (ADJP (NN computer) (NN literate))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  recommend that everyone is computer literate
 Noun Phrase:  everyone
@@ -1232,7 +1232,7 @@ Tree:
         (NP (NN everyone))
         (VP (VBD was) (ADJP (NN computer) (NN literate))))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  I
 Verb Phrase:  wish that everyone was computer literate
 Noun Phrase:  everyone
@@ -1253,7 +1253,7 @@ Tree:
   (NP (JJ Yellow) (CC and) (JJ green))
   (VP (VBZ is) (NP (DT an) (JJ awful) (NN combination)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Yellow and green
 Verb Phrase:  is an awful combination
 [{'word': 'Yellow', 'label': 'JJ'}, {'word': 'green', 'label': 'JJ'}]
@@ -1270,7 +1270,7 @@ Tree:
   (NP (NP (JJ Green) (NN man)) (CC and) (NP (JJ yellow) (NN man)))
   (VP (VBP are) (ADJP (JJ great)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Green man and yellow man
 Verb Phrase:  are great
 [{'word': 'man', 'label': 'NN'}, {'word': 'man', 'label': 'NN'}]
@@ -1291,7 +1291,7 @@ Tree:
       (NP (DT the) (ADJP (RBS most) (JJ powerful)) (NN member))
       (PP (IN of) (NP (DT the) (NN lightning) (NN squad)))))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  Man boy
 Verb Phrase:  is the most powerful member of the lightning squad
 [{'word': 'Man boy', 'label': 'NN'}]
@@ -1308,7 +1308,7 @@ Tree:
   (NP (NP (PRP She)) (CC and) (NP (PRP I)))
   (VP (VBP are) (NP (NNS poets)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  She and I
 Verb Phrase:  are poets
 [{'word': 'She', 'label': 'PRP'}, {'word': 'I', 'label': 'PRP'}]
@@ -1325,7 +1325,7 @@ Tree:
   (S (VP (TO To) (VP (VB be) (NP (VBG dancing)))))
   (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  To be dancing
 Verb Phrase:  is a delightful thing
 [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}]
@@ -1351,7 +1351,7 @@ Tree:
         (S (VP (NN singing) (CC and) (NN laughing))))))
   (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  To be dancing , singing and laughing
 Verb Phrase:  is a delightful thing
 [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}]
@@ -1380,7 +1380,7 @@ Tree:
         (VP (VBG laughing)))))
   (VP (VBZ is) (NP (DT a) (JJ delightful) (NN thing)))
   (. .))
-Verb Subject Pairs: 
+Subject-Verb Pairs: 
 Noun Phrase:  To be dancing , singing , and laughing
 Verb Phrase:  is a delightful thing
 [{'word': 'To', 'label': 'TO'}, {'word': 'be', 'label': 'VB'}, {'word': 'dancing', 'label': 'VBG'}, {'word': 'laughing', 'label': 'VBG'}]
