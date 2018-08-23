@@ -43,23 +43,26 @@ def subject_verb_pairs_from_tree(tree):
       },
     ]
     """
-    pairs = get_verb_subject_phrases(tree)
+    subject_verb_phrases = get_verb_subject_phrases(tree)
     words = []
-    for pair in pairs['subjects_with_verbs']:
-        np = pair['np']
-        vp = pair['vp']
+    for subject_verb_phrase in subject_verb_phrases:
+        np = subject_verb_phrase['np']
+        vp = subject_verb_phrase['vp']
         words.append({'vp': verb_words_from_phrase(vp), 'np': subject_words_from_phrase(np)})
     return words
 
 
 def get_verb_subject_phrases(tree):
     """
-    Returns pairs in the format:
-    {'subjects_with_verbs': [
+    Returns subject-verb phrases in the format:
+    [
         {'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)},
         {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)},
-    ...]}
+    ...
+    ]
 
+    Note that subject-verb phrases store trees, while subject-verb pairs store
+    individual words.
     """
     # Documentation on the types of clauses we detect can be found at
     # http://languagelog.ldc.upenn.edu/myl/PennTreebank1995.pdf
@@ -72,11 +75,11 @@ def get_verb_subject_phrases(tree):
         'FRAG': verb_subject_for_declarative_clause
     }
     subtrees = tree.subtrees(lambda t: t.label() in labels_to_parsers.keys())
-    subject_verb_pairs = []
+    subject_verb_phrases = []
     for subtree in subtrees:
         parser = labels_to_parsers[subtree.label()]
-        subject_verb_pairs += parser(subtree)
-    return {'subjects_with_verbs': subject_verb_pairs}
+        subject_verb_phrases += parser(subtree)
+    return subject_verb_phrases
 
 # MARK: Extracting pairs from various clauses:
 
@@ -194,11 +197,11 @@ def unpack_verb_phrases(vp):
     child_phrases = [child for child in vp if child.label() == 'VP']
     return child_phrases if len(child_phrases) > 1 else [vp]
 
-def print_verb_subject_phrases(pairs):
-    """Print verb_subject pairs in readable form"""
-    print("Verb Subject Pairs: ")
-    for pair in pairs['subjects_with_verbs']:
-        np, vp = pair['np'], pair['vp']
+def print_verb_subject_phrases(subject_verb_phrases):
+    """Print verb_subject phrases in readable form"""
+    print("Subject-Verb Pairs: ")
+    for subject_verb_phrase in subject_verb_phrases:
+        np, vp = subject_verb_phrase['np'], subject_verb_phrase['vp']
         readable_np = ' '.join(np.leaves()) if isinstance(np, Tree) else "None"
         readable_vp = ' '.join(vp.leaves()) if isinstance(vp, Tree) else "None"
         print("Noun Phrase: ", readable_np)
@@ -305,18 +308,16 @@ def test_pipeline(sent, predictor):
     parse = predictor.predict_json({"sentence": sent})
     tree = Tree.fromstring(parse["trees"])
     print("Tree: \n", tree)
-    pairs = get_verb_subject_phrases(tree)
-    print_verb_subject_phrases(pairs)
-
-    for pair in pairs['subjects_with_verbs']:
-        subject = pair['np']
+    subject_verb_phrases = get_verb_subject_phrases(tree)
+    print_verb_subject_phrases(subject_verb_phrases)
+    for subject_verb_phrase in subject_verb_phrases:
+        subject = subject_verb_phrase['np']
         print(subject_words_from_phrase(subject))
-        vp = pair['vp']
+        vp = subject_verb_phrase['vp']
         print(verb_words_from_phrase(vp))
-
-    pairs = subject_verb_pairs_from_tree(tree)
-    print(pairs)
-    return pairs
+    subject_verb_pairs = subject_verb_pairs_from_tree(tree)
+    print(subject_verb_pairs)
+    return subject_verb_pairs
 
 def subject_verb_pairs_are_equal(actual, expected):
     """ Evaluates two given subjects_with_verbs object to check their equality"""
