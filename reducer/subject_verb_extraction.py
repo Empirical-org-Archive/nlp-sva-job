@@ -43,7 +43,7 @@ def subject_verb_pairs_from_tree(tree):
       },
     ]
     """
-    subject_verb_phrases = get_verb_subject_phrases(tree)
+    subject_verb_phrases = get_subject_verb_phrases(tree)
     words = []
     for subject_verb_phrase in subject_verb_phrases:
         np = subject_verb_phrase['np']
@@ -52,7 +52,7 @@ def subject_verb_pairs_from_tree(tree):
     return words
 
 
-def get_verb_subject_phrases(tree):
+def get_subject_verb_phrases(tree):
     """
     Returns subject-verb phrases in the format:
     [
@@ -67,12 +67,12 @@ def get_verb_subject_phrases(tree):
     # Documentation on the types of clauses we detect can be found at
     # http://languagelog.ldc.upenn.edu/myl/PennTreebank1995.pdf
     labels_to_parsers = {
-        'S': verb_subject_for_declarative_clause,
-        'SQ': verb_subject_for_sq,
-        'SBARQ': verb_subject_for_sbarq,
-        'SBAR': verb_subject_for_sbar,
-        'SINV': verb_subject_for_subject_inversion,
-        'FRAG': verb_subject_for_declarative_clause
+        'S': subject_verb_for_declarative_clause,
+        'SQ': subject_verb_for_sq,
+        'SBARQ': subject_verb_for_sbarq,
+        'SBAR': subject_verb_for_sbar,
+        'SINV': subject_verb_for_subject_inversion,
+        'FRAG': subject_verb_for_declarative_clause
     }
     subtrees = tree.subtrees(lambda t: t.label() in labels_to_parsers.keys())
     subject_verb_phrases = []
@@ -83,7 +83,7 @@ def get_verb_subject_phrases(tree):
 
 # MARK: Extracting pairs from various clauses:
 
-def verb_subject_for_declarative_clause(tree):
+def subject_verb_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
         Returns list of subject, verb pairs, empty if none
 
@@ -108,7 +108,7 @@ def verb_subject_for_declarative_clause(tree):
         return [{'vp': vp, 'np': s_child} for vp in vps]
     return []
 
-def verb_subject_for_sq(tree):
+def subject_verb_for_sq(tree):
     """
     Takes tree for an SQ clause:
     Returns list of subject, verb pairs, empty if none
@@ -125,7 +125,7 @@ def verb_subject_for_sq(tree):
         return [{'vp': tree, 'np': np}]
     return []
 
-def verb_subject_for_sbar(tree):
+def subject_verb_for_sbar(tree):
     """
     Takes tree for a SBAR clause: subordinating conjunction
     Returns list of subject, verb pairs, empty if none
@@ -144,7 +144,7 @@ def verb_subject_for_sbar(tree):
                 return [{'vp': s, 'np': whnp}]
     return []
 
-def verb_subject_for_sbarq(tree):
+def subject_verb_for_sbarq(tree):
     """
     Takes tree for a SBARQ clause
     Returns list of subject, verb pairs, empty if none
@@ -165,7 +165,7 @@ def verb_subject_for_sbarq(tree):
                 return [{'vp': sq, 'np': wh}]
     return []
 
-def verb_subject_for_subject_inversion(tree):
+def subject_verb_for_subject_inversion(tree):
     """
     Takes tree for a SINV clause: clause with subject-auxillary inversion
     Example: "Never had I seen such a place"
@@ -197,8 +197,8 @@ def unpack_verb_phrases(vp):
     child_phrases = [child for child in vp if child.label() == 'VP']
     return child_phrases if len(child_phrases) > 1 else [vp]
 
-def print_verb_subject_phrases(subject_verb_phrases):
-    """Print verb_subject phrases in readable form"""
+def print_subject_verb_phrases(subject_verb_phrases):
+    """Print subject_verb phrases in readable form"""
     print("Subject-Verb Pairs: ")
     for subject_verb_phrase in subject_verb_phrases:
         np, vp = subject_verb_phrase['np'], subject_verb_phrase['vp']
@@ -308,8 +308,8 @@ def test_pipeline(sent, predictor):
     parse = predictor.predict_json({"sentence": sent})
     tree = Tree.fromstring(parse["trees"])
     print("Tree: \n", tree)
-    subject_verb_phrases = get_verb_subject_phrases(tree)
-    print_verb_subject_phrases(subject_verb_phrases)
+    subject_verb_phrases = get_subject_verb_phrases(tree)
+    print_subject_verb_phrases(subject_verb_phrases)
     for subject_verb_phrase in subject_verb_phrases:
         subject = subject_verb_phrase['np']
         print(subject_words_from_phrase(subject))
