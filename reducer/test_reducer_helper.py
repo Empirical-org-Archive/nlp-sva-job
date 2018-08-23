@@ -1,9 +1,12 @@
 from reducer_helper import get_reduction, load_predictor
 from subject_verb_extraction import (get_subject_verb_pairs, test_pipeline,
     subject_verb_pairs_are_equal)
+from subjects_with_verbs_to_reductions import test as test_subjects_with_verbs_to_reductions
 import time
 import json
 from collections import Counter
+
+TEST_DATA_PATH = '../test/data/sentences.json'
 
 def test_get_reduction():
     """
@@ -11,7 +14,7 @@ def test_get_reduction():
     Prints accuracy
     """
     predictor = load_predictor()
-    with open('../test/data/sentences.json') as f:
+    with open(TEST_DATA_PATH) as f:
         test_dict = json.load(f)
 
     incorrect_sentences = 0
@@ -41,7 +44,7 @@ def test_get_subject_verb_pairs():
     Writes verbose output for each pair
     """
     predictor = load_predictor()
-    with open('../test/data/sentences.json') as f:
+    with open(TEST_DATA_PATH) as f:
         test_dict = json.load(f)
     print("Model loaded, testing beginning")
 
@@ -56,5 +59,6 @@ def test_get_subject_verb_pairs():
     print("TEST ACCURACY: {}".format(num_correct/num_sentences))
 
 if __name__ == '__main__':
-    test_get_reduction()
-    test_get_subject_verb_pairs()
+    # test_get_reduction()
+    # test_get_subject_verb_pairs()
+    test_subjects_with_verbs_to_reductions()

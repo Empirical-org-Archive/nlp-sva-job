@@ -1,0 +1,55 @@
+---------------------------------------------
+sentence:
+Lying in the backseat of the car, the old man, George, and Jane were sound asleep.
+Found 1 unexpected and 1 unmatched reductions
+unexpected:
+NONCONDITIONAL-WERE>THEY
+unmatched:
+NONCONDITIONAL-WERE>THEYLIKE
+---------------------------------------------
+sentence:
+Jack and Jill is ill.
+Found 1 unexpected and 1 unmatched reductions
+unexpected:
+NONCONDITIONAL-IS>THEY
+unmatched:
+NONCONDITIONAL-IS>THEYLIKE
+---------------------------------------------
+sentence:
+If he were dancing any slower, I was too dumb to tell.
+Found 2 unexpected and 2 unmatched reductions
+unexpected:
+CONDITIONAL-WAS>I
+CONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE
+unmatched:
+NONCONDITIONAL-WERE:VBG_9a272e51e009e0eec23b61d8235549ab92aa7136ba2f2b9e1a7751db02889515>HE
+NONCONDITIONAL-WAS>I
+---------------------------------------------
+sentence:
+ I recommend that everyone is computer literate.
+Found 2 unexpected and 2 unmatched reductions
+unexpected:
+NONCONDITIONAL-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I
+NONCONDITIONAL-IS>SG
+unmatched:
+SUBJUNCTIVE-VBP_cf611bfa95a7c03497a8dac46626cda2babd16b4221a7cb8316700cc3cadf56c>I
+SUBJUNCTIVE-IS>SG
+---------------------------------------------
+sentence:
+ Green man and yellow man are great.
+Found 1 unexpected and 1 unmatched reductions
+unexpected:
+NONCONDITIONAL-ARE>THEY
+unmatched:
+NONCONDITIONAL-ARE>THEYLIKE
+---------------------------------------------
+sentence:
+She and I are poets.
+Found 1 unexpected and 1 unmatched reductions
+unexpected:
+NONCONDITIONAL-ARE>THEY
+unmatched:
+NONCONDITIONAL-ARE>THEYLIKE
+Out of 58 sentences,
+There were 6 incorrect sentences.
+89.65517241379311 percent correct.
