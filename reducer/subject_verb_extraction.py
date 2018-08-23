@@ -59,34 +59,24 @@ def get_verb_subject_phrases(tree):
         {'vp': Tree(Verb phrase), 'np': Tree(Noun phrase)},
         {'vp': Tree(second verb phrase), 'np': Tree(second noun phrase)},
     ...]}
+
     """
-    pairs = []
-
-    # Declarative clause (most sentences):
-    for s in tree.subtrees(lambda t: t.label() == 'S'):
-        pairs += verb_subject_for_declarative_clause(s)
-
-    # SQ: yes-no question or following a wh-phrase:
-    for sq in tree.subtrees(lambda t: t.label() == 'SQ'):
-        pairs += verb_subject_for_sq(sq)
-
-    # SBARQ: "Direct question introduced by a wh-word or a wh-phrase"
-    for sbarq in tree.subtrees(lambda t: t.label() == 'SBARQ'):
-        pairs += verb_subject_for_sbarq(sbarq)
-
-    # SBAR: Subordinating conjunction
-    for sbar in tree.subtrees(lambda t: t.label() == 'SBAR'):
-        pairs += verb_subject_for_sbar(sbar)
-
-    # Fragments (parsed same as declarative clause):
-    for s in tree.subtrees(lambda t: t.label() == 'FRAG'):
-        pairs += verb_subject_for_declarative_clause(s)
-
-    # Clauses with subject-auxillary inversion
-    for s in tree.subtrees(lambda t: t.label() == 'SINV'):
-        pairs += verb_subject_for_subject_inversion(s)
-
-    return {'subjects_with_verbs': pairs}
+    # Documentation on the types of clauses we detect can be found at
+    # http://languagelog.ldc.upenn.edu/myl/PennTreebank1995.pdf
+    labels_to_parsers = {
+        'S': verb_subject_for_declarative_clause,
+        'SQ': verb_subject_for_sq,
+        'SBARQ': verb_subject_for_sbarq,
+        'SBAR': verb_subject_for_sbar,
+        'SINV': verb_subject_for_subject_inversion,
+        'FRAG': verb_subject_for_declarative_clause
+    }
+    subtrees = tree.subtrees(lambda t: t.label() in labels_to_parsers.keys())
+    subject_verb_pairs = []
+    for subtree in subtrees:
+        parser = labels_to_parsers[subtree.label()]
+        subject_verb_pairs += parser(subtree)
+    return {'subjects_with_verbs': subject_verb_pairs}
 
 # MARK: Extracting pairs from various clauses:
 
@@ -94,11 +84,12 @@ def verb_subject_for_declarative_clause(tree):
     """ Takes in the tree for a vanilla declarative clause (S tag)
         Returns list of subject, verb pairs, empty if none
 
+        Most English sentences fall into this category.
+
         Broadly, covers cases:
         (1) Standard noun-phrase and verb-phrase as siblings: "Joyce is amazing"
         (2) Multiple verb phrases: "At once I was in heaven and danced freely on the sand"
         (3) Declarative clause verb-phrase as subject: "Swinging from vines is fun"
-
     """
     np, s_child = None, None # Possible subjects
     vps = []
@@ -116,8 +107,10 @@ def verb_subject_for_declarative_clause(tree):
 
 def verb_subject_for_sq(tree):
     """
-    Takes tree for an SQ clause: follows a wh-word or a wh-phrase, or inverted yes-no question
+    Takes tree for an SQ clause:
     Returns list of subject, verb pairs, empty if none
+
+    SQ clauses follow a wh-word or a wh-phrase, or are inverted yes-no question
 
     The verb is typically contained inside the SQ as a series of verb
     Misses subjects in SBARQs, which are caught in SBARQ method
@@ -150,8 +143,10 @@ def verb_subject_for_sbar(tree):
 
 def verb_subject_for_sbarq(tree):
     """
-    Takes tree for a SBARQ clause: question introduced by a wh-word or a wh-phrase
+    Takes tree for a SBARQ clause
     Returns list of subject, verb pairs, empty if none
+
+    SBARQ clauses are questions introduced by a wh-word or a wh-phrase
 
     Subject is typically implied by the SQ after the question word.
     The subject of "Who is John" is "John", which is contained in the SQ
