@@ -1,6 +1,6 @@
 Loading AllenNLP predictor...
 AllenNLP predictor loaded.
-Time to test: 11.741034984588623
+Time to test: 13.151596069335938
 Out of 58 sentences,
 There were 16 incorrect sentences.
 72.41379310344827 percent correct.
