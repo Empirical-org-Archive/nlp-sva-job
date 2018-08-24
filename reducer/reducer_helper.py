@@ -1,4 +1,4 @@
-from allennlp.service.predictors import Predictor
+from allennlp.predictors import Predictor
 from subject_verb_extraction import get_subject_verb_pairs
 import subjects_with_verbs_to_reductions
 

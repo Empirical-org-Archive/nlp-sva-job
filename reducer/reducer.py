@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from allennlp.service.predictors import Predictor
+from allennlp.predictors import Predictor
 from reducer_helper import get_reduction, load_predictor
 import io
 import json

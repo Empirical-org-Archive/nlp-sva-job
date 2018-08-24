@@ -59,6 +59,6 @@ def test_get_subject_verb_pairs():
     print("TEST ACCURACY: {}".format(num_correct/num_sentences))
 
 if __name__ == '__main__':
-    # test_get_reduction()
-    # test_get_subject_verb_pairs()
+    test_get_reduction()
+    test_get_subject_verb_pairs()
     test_subjects_with_verbs_to_reductions()
